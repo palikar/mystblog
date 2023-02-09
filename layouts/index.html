@@ -1,0 +1,26 @@
+{{ define "main" }}
+<main aria-role="main">
+  <header class="homepage-header">
+    <h1>{{.Title}}</h1>
+    {{ with .Params.subtitle }}
+    <span class="subtitle">{{.}}</span>
+    {{ end }}
+  </header>
+  <div class="homepage-content">
+    {{.Content}}
+  </div>
+
+  <h3>Important posts:</h3>
+  <ul>
+    {{ range .Site.Pages  }}
+    {{if .Params.important_post}}
+    <li style="margin-top: 0px; margin-bottom: 0px">
+      <h4 style="display: inline-block; margin-top: 0px; margin-bottom: 0px"><a href="{{ .Permalink }}">{{ .Title }}</a></h4>
+      <span class="opacity-60">{{ .Description }}</span>
+    </li>
+    {{ end }}
+    {{ end }}
+  </ul>
+
+</main>
+{{ end }}

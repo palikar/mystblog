@@ -1,0 +1,99 @@
+languageCode = 'en-us'
+title = 'Stanislav Arnaudov'
+theme = 'hugo-paper'
+paginate = 100
+
+# used for the Disqus comment service
+disqusShortname = "palikar-github-io"
+
+# git revision hash in every source file
+enableGitInfo = true
+
+# generates Robots.txt files (used by web crawlers)
+enableRobotsTXT = true
+
+# all URLs will be absolute
+canonifyURLs = true
+
+# used by google to track traffic to the website
+googleAnalytics = "UA-158773896-1"
+
+[params]
+# color style
+color = 'linen'                 # linen, wheat, gray, light
+author = "Stanislav Arnaudov"
+description = "Personal website"
+bio = 'I try to make good software.'
+
+github = 'palikar'
+linkedin = 'in/stanislav-arnaudov-37b475164'
+facebook = 'stanislav.ts'
+
+postNavigation = false
+
+name = 'Stanislav'
+siteName = 'stanislavts.xyz'
+baseURL = 'https://stanislav.xyz/'
+avatar = '/logos/SA.png'
+
+highlightjs = true
+highlightjsstyle = "github"
+
+[markup]
+[markup.goldmark]
+[markup.goldmark.renderer]
+unsafe = true
+
+[menu]
+
+[[menu.main]]
+identifier = "home"
+name = "Home"
+url = "/"
+weight = 1
+
+
+[[menu.main]]
+identifier = "about"
+name = "About"
+url = "/about/"
+weight = 2
+
+[[menu.main]]
+identifier = "projects"
+name = "Projects"
+url = "/projects"
+weight = 3
+
+[[menu.main]]
+identifier = "posts"
+name = "Posts"
+url = "/posts/"
+weight = 4
+
+[[menu.main]]
+identifier = "contact"
+name = "Contact"
+url = "/contact/"
+weight = 5
+
+[taxonomies]
+category = "categories"
+
+[services]
+[services.instagram]
+disableInlineCSS = true
+[services.twitter]
+disableInlineCSS = true
+
+[privacy]
+[privacy.disqus]
+disable = false
+[privacy.googleAnalytics]
+anonymizeIP = false
+disable = false
+respectDoNotTrack = false
+useSessionStorage = false
+
+
+# newsletter thing: https://github.com/RoneoOrg/jamstack.club/blob/main/layouts/partials/newsletter.html

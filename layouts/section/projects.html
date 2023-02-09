@@ -1,0 +1,18 @@
+{{ define "main" }}
+<main aria-role="main">
+  <div class="homepage-content">
+    {{.Content}}
+  </div>
+  <ul>
+    {{ range .Pages.ByPublishDate.Reverse  }}
+    {{if .Params.is_project_page}}
+    <li style="margin-top: 0px; margin-bottom: 0px">
+      <time style="margin-top: 0px; margin-bottom: 0px" >{{ .Date.Format "2006, Jan 2, " }}</time> - 
+      <h4 style="display: inline-block; margin-top: 0px; margin-bottom: 0px"><a href="{{ .Permalink }}">{{ .Title }}</a></h4>
+      <span class="opacity-60">{{ .Description }}</span>
+    </li>
+    {{ end }}
+    {{ end }}
+  </ul>
+  </main>
+{{ end }}

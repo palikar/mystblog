@@ -1,0 +1,33 @@
+<div id="disqus_thread"></div>
+
+<script>
+
+ function readCookie(name)
+ {
+   var nameEQ = name + "=";
+   var ca = document.cookie.split(';');
+   for(var i=0;i < ca.length;i++) {
+     var c = ca[i];
+     while (c.charAt(0)==' ') c = c.substring(1,c.length);
+     if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+   }
+   return null;
+ }
+
+ (function() {
+   let cookieValue = readCookie('consent-settings');
+   if (cookieValue)
+   {
+     var consentValue = cookieValue.toString();
+     if (consentValue[1] === "1")
+     {	    
+       const disqusShortname = '{{ site.DisqusShortname }}';
+       const script = document.createElement('script');
+       script.src = 'https://' + disqusShortname + '.disqus.com/embed.js';
+       script.setAttribute('data-timestamp', + new Date());
+       document.head.appendChild(script);
+     }
+   }
+ })();
+ 
+</script>
