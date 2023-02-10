@@ -145,51 +145,51 @@ computer world.
         whole idea interesting, "fresh", mind-boggling and.....just
         different and unconventional.
 
-### Update 1 (#update-one)
+### Update 1 {#update-one}
 
-Since about the end of 2020 I now primarly deal with real time
+Since about the end of 2020, I now primarily deal with real-time
 computer graphics and game development. There are also some other
 major things that have changed in my views on software development and
-I like to sum them up here as a soft amendemnt of my words in the
-previsou section. In no particular order:
+I like to sum them up here as a soft amendment of my words in the
+previous section. In no particular order:
 
-* As I said in the beginning of the section, I now conider myself as
+* As I said at the beginning of the section, I now consider myself as
   "rendering engineer" in the context of the "game development
-  industry". Rendering has been a long standing interest of mine and
-  around the end fo 2020 I got the chance to work in a company where
+  industry". Rendering has been a long-standing interest of mine and
+  around the end of 2020 I got the chance to work in a company where
   this particular passion of mine was reignited. I never thought I
   would be working on computer graphics up that point so I never
-  really persue it by then (I thought I want to stay in Machine
-  Learning/AI). Another more posonal factor was me stumbling
+  really pursued it by then (I thought I want to stay in Machine
+  Learning/AI). Another more personal factor was me stumbling
   across [Jonathan Blow](https://en.wikipedia.org/wiki/Jonathan_Blow)
   and [Casey Muratori](https://caseymuratori.com/) and their ideas
-  about performance oriented good software that does not cause pain
-  the end user (as most software does these days). Now there is not
+  about performance-oriented good software that does not cause pain
+  to the end user (as most software does these days). Now there is no
   doubt in my mind that my path forward includes real-time rendering
   in games
 
-* My interest in game developement/game design has developed itself
+* My interest in game development/game design has developed itself
   into something more than "I think about this sometimes". Now I think
-  about these things all of the time and I want to persue a carreer in
-  game developement.
+  about these things all of the time and I want to pursue a career in
+  game development.
 
 * My views on how software should be developed, what should we expect
   from the final result, and how we should get there have shifted
   somewhat radically. I now much more emphasis on performance and
-  overall quality given to the end user. You can read more about that
+  overall quality is given to the end user. You can read more about that
   in my [software philosophy]({{< ref "software_philosophy.md" >}})
   post.
 
 * For the most part, I try to be minimalist in my development -- I
-  strive to use less tools, less software, less libraries, less
-  everthing. This is again touched upon in
+  strive to use fewer tools, less software, fewer libraries, and less
+  everything. This is again touched upon in
   the [software philosophy]({{< ref "software_philosophy.md" >}})
   post. To sum it up quickly -- in my experience using more (of
-  anything, software, technologies, third party tools, libraries)
+  anything, software, technologies, third-party tools, libraries)
   always brings more problems while being unclear whether the problems
-  that are solved are actual problems at all. By now my patiance for
-  dealing with all that complexity is waying off so I've decided to
-  put concious effort into removing dependencies on complexity in my
+  that are solved are actual problems at all. By now my patience for
+  dealing with all that complexity is paying off so I've decided to
+  put conscious effort into removing dependencies on complexity in my
   software live.
 
 * I now put MUCH less emphasis on Emacs. As with most of the other
@@ -200,15 +200,27 @@ previsou section. In no particular order:
 
 ## Supported Languages {#supported-languages}
 
--   Java, C++, Python, HTML/CSS/JavaScript, ELisp
--   Haskell, Prolog
--   PHP, Scala, Processing
+- C/C++
+- Java, Python, 
+- HTML/CSS/JavaScript
+- Haskell, Prolog, ELisp
+- PHP, Scala, Processing
 
+## Expertise (#expertise)
+- Graphics Programming in the context of Game Developement
+- Performance oriented software design and implementaion
+- Game Engines Design and Implementation
+- Low level optimization (SSE2/SSE3/SSE4/AVX)
+- Data-Oriented Design
+- Interdisciplinary attitude
+- Working based on first principles
+- Ability to quickly pickup learn technologies/libraries/product
+  implementation
 
 ## Technologies {#technologies}
 
 -   OpenGL, DirectX11, DirectX12, Vulkan, Metal, PS4/PS5, Xbox
--   Unrela Engine, Unity
+-   Unreal Engine, Unity
 -   Visual Studio, MSBuild
 -   Cmake, make, g++, Robot Operating System(ROS), RabbitMQ, OpenCV
 -   Tensorflow, SciKit-learn, Pandas, Jupytor, PyTorch
@@ -216,7 +228,7 @@ previsou section. In no particular order:
 -   Frontend(AngularJS, VueJS), Backend(NodeJS, Express, Flask),
     Websockets, Karma, Jasmine, SQL
 -   LaTeX, [Emacs Org-mode](https://orgmode.org/), UML
--   git
+-   git, JIRA
 
 
 ## Current work {#current-work}
@@ -230,7 +242,8 @@ previsou section. In no particular order:
 
 - Worked as a research assistant
   at [Fraunhofer IOSB](https://www.fraunhofer.de/en.html). I deal
-  mainly with "intelligent systems".
+  mainly with intelligent systems for detection and control in
+  industrial setting.
 
 - Took part in a research-oriented practical course at my
   University. The goal was to write a research paper and publish it in
