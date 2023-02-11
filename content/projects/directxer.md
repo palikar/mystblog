@@ -54,7 +54,7 @@ With that, the guiding principles for almost everything in DirectXer are:
 
 ## Notable applications
 
-Part of DirectXer ares:
+Part of DirectXer are:
 
 * [Mission Control]({{< ref "MissionControl.md">}}) -- my custom buidl
   system type of application. At some point I gor frustureated with
@@ -65,9 +65,42 @@ Part of DirectXer ares:
   C++, has no ependecies, and is compiled with simple BAT script by
   dirrectly calling `cl.exe` (Microsoft's C++ compiler)
 
-* CIBot --
+* [CIBot]({{< ref "CIBot.md.md">}})Bot -- At my work place
+  almost everyone has always be frustrated with our CI build system
+  (it's [BuildBot](https://buildbot.net/) btw). The CI has been doing
+  it'S job mostly fine but at some moments, the introduced complexity
+  was taking it's toll. At one point I started asking myself "Why is
+  this so hard? I just need my CI that run some commands on the
+  console. Why can't I have just this?". Then, predictably, I started
+  working on a CI solution for my persoanl projects and after a week
+  or two of spare time developing, I had my CIBot -- a simple
+  application that can connect to Mission Controll (started in daemonq
+  mod) and execute commands/build through it.
 
-* AssetBuilder --
+* [AssetBuilder]({{< ref "AssetBuilder.md">}}) -- as I am primarly
+  focused on game programming, I want my assets to be loaded as quick
+  as possible, without doing any extra work that I don't have to
+  do. Hence, I all the assets (images, models, animations, textures,
+  etc.) are packed in a custom file format from which the game runtime
+  can quickly load everything necessary. *AssetBuilder* is the
+  application that processes and packs the needed assets in this optimized
+  file.
+  
+* **SceneChecker** -- as I do a lot of rendering related things, it's
+  foten really important to know if I've accedently broken something
+  while programming and suddently things don't visually look the way
+  they should. At my workplace we also have similar concerns and there
+  we have several systems that run certain scenes and compare the
+  rendered output against a refrence one. *SceneChecker* is my attempt
+  to have such system. Currently the application can run 2D/3D scenes,
+  save outputs as reference and then run the same scenes to verify the
+  visual output. The while program is designed to be as performant as
+  possible so the tests can be run in a matter of seconds.
+
+* **PerfChecker** -- this is my tools that helps my track performance
+  of the example 2D and 3D scenes that I have. *PerfChecker* is very
+  similar to SceneChecker but its only job is to create reports of the
+  telemetry data gatherd during the running of the scenes.
 
 ## Notable achievements
 
@@ -86,6 +119,17 @@ Part of DirectXer ares:
 * ImGui integrations
 
 * 2D Rendering API
+
+* Fast Unit Builds -- every application in DirectXer is compiled in
+  three to four `.cpp` files. I don't use incremental builds and the
+  whole application I am woking on is compiled every time I make a
+  change to some file. Build times genrally vary in the range ~2-5
+  seconds while sometimes they go as low as 1.8 seconds. This is stark
+  contrast when working on large code bases with Visual Studio where
+  the MSBuild needs around 5 seconds to only start compiling the
+  changed files. I thought that compiling everything eevry single time
+  will be annoying but this hasn't relly been the case as 2-3 seconds
+  of build time do not get in my way when programming.
 
 ## Scenes 2D
 
