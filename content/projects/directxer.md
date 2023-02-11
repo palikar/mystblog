@@ -65,7 +65,9 @@ Part of DirectXer are:
   C++, has no ependecies, and is compiled with simple BAT script by
   dirrectly calling `cl.exe` (Microsoft's C++ compiler)
 
-* [CIBot]({{< ref "CIBot.md.md">}})Bot -- At my work place
+	{{< figure width=1024px src="/img/mission_control_demo.png" >}}
+	
+* [CIBot]({{< ref "CIBot.md">}})Bot -- At my work place
   almost everyone has always be frustrated with our CI build system
   (it's [BuildBot](https://buildbot.net/) btw). The CI has been doing
   it'S job mostly fine but at some moments, the introduced complexity
@@ -76,6 +78,8 @@ Part of DirectXer are:
   or two of spare time developing, I had my CIBot -- a simple
   application that can connect to Mission Controll (started in daemonq
   mod) and execute commands/build through it.
+  
+	{{< figure width=1024px src="/img/cibot_demo.png">}}
 
 * [AssetBuilder]({{< ref "AssetBuilder.md">}}) -- as I am primarly
   focused on game programming, I want my assets to be loaded as quick
@@ -86,6 +90,8 @@ Part of DirectXer are:
   application that processes and packs the needed assets in this optimized
   file.
   
+  {{< figure width=1024px src="/img/asset_builder_demo.png">}}
+  
 * **SceneChecker** -- as I do a lot of rendering related things, it's
   foten really important to know if I've accedently broken something
   while programming and suddently things don't visually look the way
@@ -95,28 +101,60 @@ Part of DirectXer are:
   to have such system. Currently the application can run 2D/3D scenes,
   save outputs as reference and then run the same scenes to verify the
   visual output. The while program is designed to be as performant as
-  possible so the tests can be run in a matter of seconds.
+  possible so the tests can be run in a matter of seconds. The tool
+  also can generate a HTML page sumerizing the results of the visual
+  tests.
+  
+  {{< figure width=1024px src="/img/scene_checker_demo.png" >}}
 
 * **PerfChecker** -- this is my tools that helps my track performance
   of the example 2D and 3D scenes that I have. *PerfChecker* is very
   similar to SceneChecker but its only job is to create reports of the
   telemetry data gatherd during the running of the scenes.
+  
+  {{< figure width=1024px src="/img/perf_checker_demo.png" >}}
 
 ## Notable achievements
 
-* PBR Rendering
+Here is a list of some random stuff that I've implemented in DirectXer
+and I am really proud of. By no means this is an exhausitve lists but
+I don't want to get into every small implementation detail I've dealt
+with in the past two years. The major things are:
 
-* Shadow mapping
+* PBR Rendering -- I wanted to learn and see how eevrvy modern game
+  does its PBR (Physically based rendering) materials so I spend some
+  time figuring this aspect out. My current implementation of PBR
+  rendering also includes IBL (Image based lighting) for getting
+  ambient diffuse and specular reflections.
 
-* Bloom filtering
+* Shadow mapping -- I've always wanted to implement shadow mapping and
+  at some point I got to it. Now my 3D scenes can be rendered with up
+  to 4 shadow maps for different parts of the view frustum
 
-* Water rendering
+* Bloom filter -- no modern game can be complete without the nice
+  glowing effects that the bloom filter provides so I decided to see
+  if I can implement it for myself. My implementation is fully done
+  with compute shaders and it's the
+  "standard"
+  [state of the art one](http://www.iryoku.com/next-generation-post-processing-in-call-of-duty-advanced-warfare).
 
-* Mesh Skinning and Animations
+* Water rendering -- probably not exactly what you would expect for
+  water rendreing but I really like the low poly style water from
+  the [ThimMatrix](https://www.youtube.com/watch?v=5yhDb9dzJ58). I
+  remember being in high-school watching this low poly water tutorial
+  and now I finally felt confident to pretty much do it myself... so I
+  did it.
 
-* UI Rendering
+* Mesh Skinning and Animations -- obviously animations are big part of
+  any game so I couldn't not have this. My current system does bone
+  transformation calculations and mesh skinning entirely in compute
+  shaders.
 
-* ImGui integrations
+* UI Rendering -- 
+
+* ImGui integrations -- not exactly a seeling point but I do use ImGui
+  extensivly for debugging/editor stuff and I wanted to mention
+  it. Also, the UI of CIBot is entierly ImGui.
 
 * 2D Rendering API
 
@@ -130,9 +168,3 @@ Part of DirectXer are:
   changed files. I thought that compiling everything eevry single time
   will be annoying but this hasn't relly been the case as 2-3 seconds
   of build time do not get in my way when programming.
-
-## Scenes 2D
-
-
-
-## Scenes 3D
