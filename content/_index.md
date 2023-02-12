@@ -7,7 +7,7 @@ comments = false
 This is my personal website. I try to make good software. Thanks for
 stopping by.
 
-For more info on my go to the [About]({{< ref "about.md" >}}) page.
+For more information on me go to the [About]({{< ref "about.md" >}}) page.
 
 Check out my [Projects]({{< ref "projects.md" >}}) that I've dediceted large amounts of my precious time.
 
