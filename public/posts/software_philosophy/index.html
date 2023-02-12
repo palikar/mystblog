@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<html
+  class="not-ready text-sm lg:text-base"
+  style="--bg: #faf6f1"
+  lang="en-us">
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, shrink-to-fit=no"
+  />
+
+  
+  <title>Software development philosophy - Stanislav Arnaudov</title>
+
+  
+  <meta name="theme-color" />
+  
+  <meta name="description" content="In the last couple of years, I&rsquo;ve had a major shift in the way I view the whole process of &ldquo;software development&rdquo;. In this post, I want to share my current views and clearly state what I (currently) believe about programming, what my priorities are, and what I am thinking about when starting a new software project.
+My shift in perspective Several factors made me reconsider what I believe bout software development." />
+  <meta
+    name="author"
+    content="Stanislav Arnaudov"
+  />
+  
+
+  
+  
+  
+  
+  
+  
+  <link rel="preload stylesheet" as="style" href="/main.min.css" />
+
+  
+  <script
+    defer
+    src="highlight.min.js"
+    onload="hljs.initHighlightingOnLoad();"
+  ></script>
+  
+
+  
+   
+  <link rel="preload" as="image" href="theme.png" />
+
+  
+  
+  
+  <link rel="preload" as="image" href="https://www.gravatar.com/avatar/6f49be4b1398e1936dd765ef2df3a6f2?s=160&amp;d=identicon" />
+  
+  
+
+  
+  <link rel="preload" as="image" href="github.svg" />
+  
+  <link rel="preload" as="image" href="linkedin.svg" />
+  
+  <link rel="preload" as="image" href="facebook.svg" />
+  
+
+  
+  <link rel="icon" href="favicon.ico" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+
+  
+  <meta name="generator" content="Hugo 0.110.0">
+
+  
+  
+
+  
+  
+  
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-158773896-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+  
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-158773896-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+  
+  
+  
+  <meta property="og:title" content="Software development philosophy" />
+<meta property="og:description" content="A statement on how I like to do software developement" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/posts/software_philosophy/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-12-25T00:00:00+00:00" />
+<meta property="article:modified_time" content="2023-02-10T02:27:18+02:00" />
+
+  
+  <meta itemprop="name" content="Software development philosophy">
+<meta itemprop="description" content="A statement on how I like to do software developement"><meta itemprop="datePublished" content="2022-12-25T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2023-02-10T02:27:18+02:00" />
+<meta itemprop="wordCount" content="2204">
+<meta itemprop="keywords" content="" />
+  
+  <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Software development philosophy"/>
+<meta name="twitter:description" content="A statement on how I like to do software developement"/>
+
+  
+  
+</head>
+
+  <body class="text-black duration-200 ease-out dark:text-white">
+    <header class="mx-auto flex h-[5rem] max-w-3xl px-8 lg:justify-center">
+  <div class="relative z-50 mr-auto flex items-center">
+
+    <img alt="" src='/logos/SA.png' width="48" height="48"/>
+    <a class="-translate-x-[1px] -translate-y-0.5 text-3xl font-bold ml-6" href="">
+      Stanislav Arnaudov
+    </a>
+
+    <a class="btn-dark ml-6 h-6 w-6 shrink-0 cursor-pointer [background:url(./theme.png)_left_center/_auto_theme('spacing.6')_no-repeat] [transition:_background-position_0.4s_steps(5)] dark:[background-position:right]">
+    </a>
+  </div>
+
+  <a
+    class="btn-menu relative z-50 -mr-8 flex h-[5rem] w-[5rem] shrink-0 cursor-pointer flex-col items-center justify-center gap-2.5 lg:hidden"
+  ></a>
+
+  
+  <script>
+    
+    const htmlClass = document.documentElement.classList;
+    setTimeout(() => {
+      htmlClass.remove('not-ready');
+    }, 10);
+
+    
+    const btnMenu = document.querySelector('.btn-menu');
+    btnMenu.addEventListener('click', () => {
+      htmlClass.toggle('open');
+    });
+
+    
+    const metaTheme = document.querySelector('meta[name="theme-color"]');
+    const lightBg = `"#faf6f1"`.replace(/"/g, '');
+    const setDark = (isDark) => {
+      metaTheme.setAttribute('content', isDark ? '#000' : lightBg);
+      htmlClass[isDark ? 'add' : 'remove']('dark');
+      localStorage.setItem('dark', isDark);
+    };
+
+    
+    const darkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+    if (htmlClass.contains('dark')) {
+      setDark(true);
+    } else {
+      const darkVal = localStorage.getItem('dark');
+      setDark(darkVal ? darkVal === 'true' : darkScheme.matches);
+    }
+
+    
+    darkScheme.addEventListener('change', (event) => {
+      setDark(event.matches);
+    });
+
+    
+    const btnDark = document.querySelector('.btn-dark');
+    btnDark.addEventListener('click', () => {
+      setDark(localStorage.getItem('dark') !== 'true');
+    });
+  </script>
+
+  <div
+    class="nav-wrapper fixed inset-x-0 top-full z-40 flex h-full select-none flex-col justify-center pb-16 duration-200 dark:bg-black lg:static lg:h-auto lg:flex-row lg:!bg-transparent lg:pb-0 lg:transition-none"
+  >
+    
+    
+    <nav class="lg:ml-12 lg:flex lg:flex-row lg:items-center lg:space-x-6">
+      
+      <a
+        class="block text-center text-2xl leading-[5rem] lg:text-base lg:font-normal"
+        href="/"
+        >Home</a
+      >
+      
+      <a
+        class="block text-center text-2xl leading-[5rem] lg:text-base lg:font-normal"
+        href="/about/"
+        >About</a
+      >
+      
+      <a
+        class="block text-center text-2xl leading-[5rem] lg:text-base lg:font-normal"
+        href="/projects"
+        >Projects</a
+      >
+      
+      <a
+        class="block text-center text-2xl leading-[5rem] lg:text-base lg:font-normal"
+        href="/posts/"
+        >Posts</a
+      >
+      
+      <a
+        class="block text-center text-2xl leading-[5rem] lg:text-base lg:font-normal"
+        href="/contact/"
+        >Contact</a
+      >
+      
+    </nav>
+    
+
+    
+    <nav
+      class="mt-12 flex justify-center space-x-10 dark:invert lg:mt-0 lg:ml-12 lg:items-center lg:space-x-6"
+    >
+      
+      <a
+        class="h-8 w-8 [background:var(--url)_center_center/cover_no-repeat] lg:h-6 lg:w-6"
+        style="--url: url(./github.svg)"
+        href=" https://github.com/palikar "
+        target="_blank"
+      ></a>
+      
+      <a
+        class="h-8 w-8 [background:var(--url)_center_center/cover_no-repeat] lg:h-6 lg:w-6"
+        style="--url: url(./linkedin.svg)"
+        href=" https://linkedin.com/in/stanislav-arnaudov-37b475164 "
+        target="_blank"
+      ></a>
+      
+      <a
+        class="h-8 w-8 [background:var(--url)_center_center/cover_no-repeat] lg:h-6 lg:w-6"
+        style="--url: url(./facebook.svg)"
+        href=" https://facebook.com/stanislav.ts "
+        target="_blank"
+      ></a>
+      
+    </nav>
+    
+  </div>
+</header>
+
+
+    <main class="prose prose-neutral relative mx-auto min-h-[calc(100%-10rem)] max-w-3xl px-4 pt-20 pb-32 dark:prose-invert">
+      
+
+<article>
+  <header class="mb-20">
+
+    <h1 class="!my-0 pb-2.5">Software development philosophy</h1>
+
+    
+    <div class="text-sm opacity-60">
+      
+      <time>Dec 25, 2022</time>
+      
+      
+      <span class="mx-1">&middot;</span>
+      <span>Stanislav Arnaudov</span>
+      <span class="mx-1">&middot;</span>
+      <span>10 minute read</span>
+      <span class="mx-1">&middot;</span>
+      <span>2204 words</span>
+      
+    </div>
+    
+  </header>
+
+  <section><p>In the last couple of years, I&rsquo;ve had a major shift in the way I view
+the whole process of &ldquo;software development&rdquo;. In this post, I want to
+share my current views and clearly state what I (currently) believe
+about programming, what my priorities are, and what I am thinking
+about when starting a new software project.</p>
+<h2 id="my-shift-in-perspective">My shift in perspective</h2>
+<p>Several factors made me reconsider what I believe bout software
+development. I&rsquo;ll summarize them here while giving a short explanation
+of why has each been relevant to me.</p>
+<ul>
+<li>
+<p><strong>
+<span style=" color: #e34b4b;">
+  Getting exposed to performance-oriented
+  software
+</span>
+
+</strong> &ndash; The people I can thank for that
+are <a href="https://en.wikipedia.org/wiki/Jonathan_Blow">Jonathan Blow</a>
+and <a href="https://caseymuratori.com/">Casey Muratori</a>. On Blow&rsquo;s side &ndash;
+he has a stream where he programs his compiler for
+the
+<a href="https://github.com/BSVino/JaiPrimer/blob/master/JaiPrimer.md">Jai Programming language</a>.
+The compiler is famous for its speed and Blow has claimed that he
+thinks the compiler can reach about <strong>1 million</strong> lines of code per
+second. The moment I saw how Blow compiles a ~30,000 LOC game
+written in Jai for less than 1 second, my immediate thought was
+&ldquo;Wait, this is possible?!?! I want everything I make to be this
+fast&rdquo;.</p>
+<p>The other person that influenced me &ndash; Muratori &ndash; has a series of
+streams where he develops <a href="https://handmadehero.org/">HandmadeHero</a>
+&ndash; a complete game written from scratch. I&rsquo;ve played with the game&rsquo;s
+source code for a while and I am amazed about how smoothly
+everything runs and everything loads instantly. On the other hand, I
+was amazed how during his streams Muratori does not present some
+wild concepts about how to write code, how to design the
+architecture, or what language feature (of C++) to use. He just
+&ldquo;types the code&rdquo; and creates as few moving parts as possible. This
+was a stark contrast to what <a href="https://cppcon.org/">CppCon</a> would
+have me believe about developing something with C++. The clarity and
+simplicity of the code coupled with its performance is what earned
+my admiration and me wanting to delve deeper into this style of
+programming/development.</p>
+</li>
+<li>
+<p><strong>
+<span style=" color: #e34b4b;">
+  Modern software development demanding an
+  ever-increasing metal strain
+</span>
+
+</strong> &ndash; Writing software
+these days bring a lot of what we can call &ldquo;artificial complexity&rdquo;
+with it. There is always some library to be used weirdly, some tool
+that needs complex setup, some language feature that claims to solve
+a problem that is only introduced by another language feature that
+we&rsquo;ve told ourselves we want to use. Earlier in my life as a
+developer, I almost enjoyed this complexity as it made be think that
+I was doing something exciting (I mean, it&rsquo;s complex so it HAS to be
+important and worthwhile, right?).</p>
+<p>This was keeping me going for some time but at some point, I started
+wanting something &ldquo;more&rdquo;. I was already sold on the idea of
+<em>minimalism</em> (through my experience with Linux) so it was only a
+matter of time for this to seep in in my programming. At some point
+I started forcing myself to use fewer and fewer c++ features, fewer
+std headers, fewer libraries, and fewer everything. And so I
+discovered that I don&rsquo;t actually need the vast majority of things I
+thought I needed to make a functional program run. Based on this, it
+seems rather obvious that if I can achieve more with less, there is
+no reason to ever go back to &ldquo;using more&rdquo;.</p>
+<p>Right now, I am at a point where glorifying complexity seems simply
+nonsensical. I do not want to be burdened with all of the
+complexities introduced by language features, third-party code, and
+frameworks that dictate how I should structure my program or
+cumbersome tools with questionable value added.</p>
+</li>
+<li>
+<p><strong>
+<span style=" color: #e34b4b;">
+  Seeing and experiencing the results of not
+  doing things "the modern way"
+</span>
+
+</strong> &ndash; This is closely
+related to the other two factors, but the focus here is on the
+results of not doing things the way my university, CppCon, and every
+book on modern software developer practices. For the most part, I
+was astonished at just how much value can &ldquo;simply typing the code&rdquo;
+can bring.</p>
+<p>Up to some point, I had the perspective that starting a new project
+always begins with some big planning/design step where you lay out
+the core components of the system you want to build. You think
+everything over, you discuss the design with yourself and
+others. You try to predict what problems are to be solved and you
+solve them before they are even actual problems. When it comes time
+to write the code, you maximize the use of language features, you
+use the standard library, and follow the best practices dictated by
+the gurus. At some point, you realized that you&rsquo;ve built a bloated
+and overly complex mess that runs slowly, has bugs, and you have no
+idea how it works. At this point is however too late to change it
+now, you tell yourself that you&rsquo;ll do better on your next
+project. This experience is repeated for every new project.</p>
+<p>I thought this was what software development was all about. I
+accepted that this is why people say that programming is hard. I
+thought there was no other way of doing programming. Spoiler alert
+&ndash; there is. Turns out, things I thought were not the only way of
+getting work done. I tried some other things, I discovered stuff for
+myself, and I listen to people who have been developing software
+since forever.</p>
+<ul>
+<li>
+<p>Questions about architecture and their answers become clearer
+once you know the domain of the problem. And the domain is only
+knowledgable through doing some exploratory programming experiments.</p>
+</li>
+<li>
+<p>Not using libraries keeps your compile times low. And having
+quick feedback from your compiler. And having quick feedback
+makes the developing experience that much more pleasant.</p>
+</li>
+<li>
+<p>Staying in your code avoids the insanity you go through when
+wanting to use some poorly documented third party. And dealing with
+this insanity is solving a problem that is not actually there.</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>These together with some other observations made me solidify my
+opinion that the &ldquo;modern&rdquo; dogma is something to be avoided.</p>
+<h2 id="my-core-values">My Core values</h2>
+<ul>
+<li>
+<p><strong>
+<span style=" color: #e34b4b;">
+  CPUs and computers are fast, so should be
+  software
+</span>
+
+</strong>. In this day and age, there&rsquo;s no reason why
+any newly developed software should be slow. CPUs can run millions
+of instructions per second so any slowness that is introduced comes
+at the software level. This should not be the case and every
+developer should be obsessed with the performance of their
+product. This is very often not the case and we have taught
+ourselves to put the performance question on the backburner in favor
+of more abstract goals like &ldquo;clean code&rdquo;, &ldquo;good design&rdquo;, and
+&ldquo;understandable architecture&rdquo;. As far as I am concerned, the primary
+reason for all of these should be to facilitate performant
+software. It is shame that these days users expect the software that
+they use to be slow and don&rsquo;t even question if something can be done
+about this. Something can be done about this and there is a way to
+make useful software that does not feel sluggish.</p>
+</li>
+<li>
+<p><strong>
+<span style=" color: #e34b4b;">
+  Polishing software is developing software
+</span>
+
+</strong>. There is this perception that when hunting and clearing
+up bugs in your software, you are not really doing exciting
+work. This should not be the case. Every solved bug is a measurable
+improvement of your product and it guarantees that the users of the
+product won&rsquo;t hit that bug. Having a great experience with a
+software product means not encountering bugs and weird
+behaviors. Cleaning up bugs and weird behavior is thus of the most
+importance for the health and perception of your product. Having a
+few features that function well and without problems brings a much
+better experience than having a bloated mess of half-baked features
+where every other user hits a crash. Because of this polishing and
+making sure that the existing features work as intended should take
+precedence over adding new functionality for the sake of &ldquo;having
+something new to show&rdquo;.</p>
+</li>
+<li>
+<p><strong>
+<span style=" color: #e34b4b;">
+  If there is no obvious reason for having
+  complexity, then complexity is bad
+</span>
+
+</strong>. Complexity, more
+often than not, <strong>kills</strong> software by introducing (usually) slow and
+hard-to-maintain code. Having high complexity in your system ensures
+that at some point no one will know how your software
+works. Debugging will be hard. Adding new features will be breaking
+things you didn&rsquo;t expect. Your confidence that your product works as
+intended will be low. No one should ever want this. Reducing
+complexity should be always on your mind when developing. Abstract
+promises of &ldquo;how to manage complexity&rdquo; should be taken with a grain
+of salt. Not having the complexity in the first place is almost
+always the preferable thing.</p>
+</li>
+<li>
+<p><strong>
+<span style=" color: #e34b4b;">
+  Writing your code is easier than using
+  someone else's
+</span>
+
+</strong>. There are two major modes I am in
+when writing software.</p>
+<ol>
+<li>I am developing the code for my program and I am solving the
+problem at hand through the code.</li>
+<li>I am trying to integrate some libraries into my code or use some
+API. The problem at hand here is the integration itself. I am
+not doing any real work, I&rsquo;m merely trying to get to a state
+where I would be able to do real work once the library is
+integrated with my own code.</li>
+</ol>
+<p>Doing number 1 feels great &ndash; I feel creative, I experiment and
+discover things, and I figure out new ways of doing things. Number 2
+is horrible and can be absolutely torturous. Given this, I want to
+avoid number 2 and I strive to stay completely in number 1.</p>
+<p>Also, rarely do I need the whole of the functionality that a library
+provides. I most often need a small piece of functionality. If this
+is the case, why not simply write this small piece of functionality
+myself, gain the knowledge of how to do it, and avoid the pain of
+using a third-party library? The time investment is often comparable
+to integrating the library, and if it is not, I am ok with it.</p>
+</li>
+<li>
+<p><strong>
+<span style=" color: #e34b4b;">
+  OOP sells you a promise that is yet to be
+  fulfilled
+</span>
+
+</strong>. <em>Object Oriented Programming</em> is the
+defacto way we teach programming these days. Since my early
+high-school days of programming, through university, and past work
+environment, the prevailing idea seems to be that your program
+should be this collection of objects, and if you manage to set up
+these objects in the right way with the correct relationships
+between them, you&rsquo;ll have <em>clean</em>, easy to maintain and modify
+software, that everyone can understand. This simply hasn&rsquo;t been the
+case for anything of medium complexity that I&rsquo;ve written. I know all
+the design patterns, I&rsquo;ve applied them all, and I&rsquo;ve followed the
+instructions, but still to no avail. The resulting software is slow,
+bug-prone, and hard to understand and reason about.</p>
+<p>The killer question that got me to actively start moving away from
+OOP &ndash; &ldquo;Can you give me one example of a software project that is
+well designed and it uses OOP?&rdquo;</p>
+</li>
+<li>
+<p><strong>
+<span style=" color: #e34b4b;">
+   All programs solve problems about data 
+</span>
+
+</strong> Moving away from OOP has led me to Data-Oriented
+Design. There are many ways to (not) describe what DOD is but the
+core principles I&rsquo;ve identified are:</p>
+<ul>
+<li>Objects are not carriers of behaviour but rather of data</li>
+<li>The data and how you transform it into other data is the problem</li>
+<li>Procedures transform one set of data into another</li>
+</ul>
+<p>I want to think about how I access my data, how I iterate on it, and
+what happens in the memory of the computer when I do so. This leads
+to software that respects its inputs and the hardware it&rsquo;s running
+on.</p>
+</li>
+</ul>
+<p>&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;- Yes, some of these (if not all) sound obvious. Any
+developer should be able to recognize where the virtue of these points
+lies and every point should seem non-controversial nor
+profound. Still, I found it useful to state exactly what I believe.</p>
+<h2 id="meaning-of-believe">Meaning of believe</h2>
+<p>It is often however the case that we as developers forget to practice
+the things we hold to be true. Having the right values is great but
+ultimately useless if you don&rsquo;t live them out in your day-to-day
+live. Therefore I think it is necessary to not only state what you
+believe in but also to s have something actionable that puts your
+beliefs and ideals in the real world.</p>
+<p>For me, <em>practice</em> is the way I live up to the aforementioned core
+values. Practicing means a very specific thing and it goes as follows:</p>
+<ul>
+<li>
+<p><strong>
+<span style=" color: #e34b4b;">
+  Picking a task that is slightly above my
+  current skill level
+</span>
+
+</strong> &ndash; so that I can learn something
+from the whole endeavour</p>
+</li>
+<li>
+<p><strong>
+<span style=" color: #e34b4b;">
+  Solving the task under the constraints of my
+  core values
+</span>
+
+</strong> &ndash; so that I can actually put my ideals
+in the real world</p>
+</li>
+<li>
+<p><strong>
+<span style=" color: #e34b4b;">
+  Relfecting on what went well and what did
+  not
+</span>
+
+</strong> &ndash; so that I have more knowledge for the future</p>
+</li>
+<li>
+<p><strong>
+<span style=" color: #e34b4b;">
+  Adjusting my ideas and expectations for the
+  future
+</span>
+
+</strong> &ndash; so that I can now make more educated
+guesses for any future tasks\projects</p>
+</li>
+<li>
+<p><strong>
+<span style=" color: #e34b4b;">
+  Repeat
+</span>
+
+</strong> &ndash; so that I
+constantly learn something new, develop my skillset and knowladge
+base, live out my values and having actual real things that I can
+point to when I have to show that my beliefs work in the real world
+and are not merely &ldquo;theories&rdquo; about how software development should
+be done.</p>
+</li>
+<li>
+<p>&hellip; &ndash; ???</p>
+</li>
+<li>
+
+<span style=" color: #e34b4b;">
+   Profit 
+</span>
+
+
+</li>
+</ul>
+</section>
+
+  
+  
+
+
+  
+  
+  <div id="disqus_thread"></div>
+
+<script>
+
+ function readCookie(name)
+ {
+   var nameEQ = name + "=";
+   var ca = document.cookie.split(';');
+   for(var i=0;i < ca.length;i++) {
+     var c = ca[i];
+     while (c.charAt(0)==' ') c = c.substring(1,c.length);
+     if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+   }
+   return null;
+ }
+
+ (function() {
+   let cookieValue = readCookie('consent-settings');
+   if (cookieValue)
+   {
+     var consentValue = cookieValue.toString();
+     if (consentValue[1] === "1")
+     {	    
+       const disqusShortname = 'palikar-github-io';
+       const script = document.createElement('script');
+       script.src = 'https://' + disqusShortname + '.disqus.com/embed.js';
+       script.setAttribute('data-timestamp', + new Date());
+       document.head.appendChild(script);
+     }
+   }
+ })();
+ 
+</script>
+
+  
+</article>
+
+
+    </main>
+
+    <footer class="opaco mx-auto flex h-[5rem] max-w-3xl items-center px-8 text-[0.9em] opacity-60">
+  <div class="mr-auto">
+    &copy; 2023
+    <a class="link" href="">Stanislav Arnaudov</a>
+  </div>
+  <a class="link mx-6" href="#cookies" onclick="document.getElementById('consent-notice').style.display = 'block'; ">Cookie Policy</a>
+  <a class="link mx-6" href="https://gohugo.io/" rel="noopener" target="_blank">Powered by Hugo</a>
+  Theme: 
+  <a class="link" href="https://github.com/nanxiaobei/hugo-paper" rel="noopener" target="_blank" >Paper 6</a>
+</footer>
+
+
+    <style>
+    #consent-notice {padding: 1rem 1rem; display: none; text-align: center; position: fixed; bottom: 0; width: calc(100% - 2rem); background: #222; color: white;}
+    #consent-notice span {margin-right: 1rem;}
+    #consent-notice button {cursor: pointer; display: inline-block; width: auto;}
+    #consent-notice span a {color: white; text-decoration: underline; text-decoration-color: rgba(255,255,255,0.5);}
+    #consent-notice button.btn {margin-left: 0.5rem;}
+    #consent-notice button.btn.manage-consent {background: rgba(255,255,255,0.1); font-weight: normal;}
+    
+    #consent-overlay {position: fixed; left: 0; top: 0; width: 100%; height: 100vh; display: none; background: rgba(0,0,0,0.75); z-index: 999999; overflow: auto; cursor: pointer;}
+    #consent-overlay.active {display: flex;}
+    #consent-overlay > div {background: white; width: 100%; max-width: 30rem; padding: 1.75rem; margin: auto; cursor: initial;}
+    #consent-overlay > div > div {display: flex; align-items: flex-start; margin-bottom: 1rem;}
+    #consent-overlay > div > div:last-child {margin: 0;}
+    #consent-overlay h3 {padding-top: 0;}
+    #consent-overlay input {margin-top: 0.3rem;}
+    #consent-overlay label {display: block; color: black; }
+    #consent-overlay .btn {margin-right: 0.5rem;}
+    #consent-overlay button.btn.save-consent {background: rgba(0,0,0,0.6); font-weight: normal;}
+
+    @media (max-width: 767px) {
+        #consent-overlay > div {padding: 1.75rem 1rem;}
+        #consent-notice span {display: block; padding-top: 3px; margin-bottom: 1.5rem;}
+        #consent-notice button.btn {position: relative; bottom: 4px;}
+    }
+</style>
+
+<div id="consent-notice">
+  <span>We would like to use <a class="manage-consent" href="#manage-consent">third party code</a> to improve the functionality of this website.</span>
+  <span><a class="link mx-6" href="/cookies" onclick="document.getElementById('consent-notice').style.display = 'block'; ">More Information</a></span>
+  <button class="btn manage-consent">Manage preferences</button>
+  <button class="btn deny-consent">Deny</button>
+  <button class="btn approve-consent">Allow</button>
+</div>
+
+<div id="consent-overlay">
+    <div>
+        
+            <div>
+                <input type="checkbox" id="item0" value="1" name="item0"  />
+                <label for="item0">
+                  <h3>Google Anaytics (functional)</h3>
+		  <p>This code gives us insight into the number of people that visit our website, where they are from and what they are clicking on.</p>
+                </label>
+            </div>
+        
+            <div>
+                <input type="checkbox" id="item1" value="1" name="item1"  />
+                <label for="item1">
+                  <h3>Disqus Comment service</h3>
+		  <p>The code allows to use the Disqus service for comments on the posts</p>
+                </label>
+            </div>
+        
+        <div>
+            <button id="save-consent" class="btn save-consent" data-consentvalue="00">Save preferences</button>
+            <button class="btn approve-consent">Allow all</button>
+        </div>
+    </div>
+</div>
+<script>
+
+    const scripts = [];
+    scripts[ 0 ] = "/js/ga.js";
+    scripts[ 1 ] = "/js/disqus.js";
+
+    function createCookie(name,value,days) {
+        var expires = "";
+        if (days) {
+            var date = new Date();
+            date.setTime(date.getTime() + (days*24*60*60*1000));
+            expires = "; expires=" + date.toUTCString();
+        }
+        document.cookie = name + "=" + value + expires + "; path=/";
+    }
+    function readCookie(name) {
+        var nameEQ = name + "=";
+        var ca = document.cookie.split(';');
+        for(var i=0;i < ca.length;i++) {
+            var c = ca[i];
+            while (c.charAt(0)==' ') c = c.substring(1,c.length);
+            if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+        }
+        return null;
+    }
+    function eraseCookie(name) {
+        createCookie(name,"",-1);
+    }
+    function denyAllConsentScripts() {
+        var consentValue = "";
+        scripts.forEach(function(){
+            consentValue = consentValue + "0";
+        });
+        acceptSomeConsentScripts(consentValue);
+    }
+    function acceptAllConsentScripts() {
+        var consentValue = "";
+        scripts.forEach(function(){
+            consentValue = consentValue + "1";
+        });
+        acceptSomeConsentScripts(consentValue);
+    }
+    function acceptSomeConsentScripts(consentValue) {
+        setConsentInputs(consentValue);
+        createCookie('consent-settings',consentValue,31);
+        document.getElementById('consent-notice').style.display = 'none';
+        document.getElementById('consent-overlay').classList.remove('active');
+        loadConsentScripts(consentValue);
+    }
+    function loadConsentScripts(consentValue) {
+        scripts.forEach(function(value,key){
+            
+            if(consentValue[key]=="1") {
+                var s = document.createElement('script');
+                s.type = 'text/javascript';
+                s.src = value;
+                document.body.appendChild(s);
+            }
+        });
+    }
+    function setConsentInputs(consentValue) {
+        var elements = document.querySelectorAll('#consent-overlay input:not([disabled])');
+        elements.forEach(function(el,index) {
+            if(consentValue[index]=="1") el.checked = true;
+            else el.checked = false;
+        });
+    }
+    function setConsentValue() {
+        var elements = document.querySelectorAll('#consent-overlay input:not([disabled])');
+        var consentValue = "";
+        elements.forEach(function(el) {
+            if(el.checked) consentValue = consentValue + "1";
+            else consentValue = consentValue + "0";
+        });
+        document.getElementById("save-consent").dataset.consentvalue = consentValue;
+    }
+ 
+    var elements = document.querySelectorAll('#consent-overlay input:not([disabled])');
+    elements.forEach(function(el) {
+        el.checked = false;
+    });
+
+    if(readCookie('consent-settings')) {
+        var consentValue = readCookie('consent-settings').toString();
+        setConsentInputs(consentValue);
+        loadConsentScripts(consentValue);
+    } else {
+      document.getElementById('consent-notice').style.display = 'block';
+    }
+ var elements = document.querySelectorAll('.manage-consent');
+    elements.forEach(function(el) {
+        el.addEventListener("click",function() {
+            document.getElementById('consent-overlay').classList.toggle('active');
+        });
+    });
+    var elements = document.querySelectorAll('.deny-consent');
+    elements.forEach(function(el) {
+        el.addEventListener("click",function() {
+            denyAllConsentScripts();
+        });
+    });
+    var elements = document.querySelectorAll('.approve-consent');
+    elements.forEach(function(el) {
+        el.addEventListener("click",function() {
+          acceptAllConsentScripts();
+        });
+    });
+    document.getElementById("save-consent").addEventListener("click",function() {
+        setConsentValue();
+        acceptSomeConsentScripts(this.dataset.consentvalue);
+    });
+    document.getElementById("consent-overlay").addEventListener("click",function(e) {
+        if (!document.querySelector("#consent-overlay > div").contains(e.target)){
+            this.classList.toggle('active');
+        }
+    });
+</script>
+
+
+    
+
+    
+
+
+  </body>
+</html>

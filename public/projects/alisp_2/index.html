@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<html
+  class="not-ready text-sm lg:text-base"
+  style="--bg: #faf6f1"
+  lang="en-us">
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, shrink-to-fit=no"
+  />
+
+  
+  <title>Alisp [PART 2] - Stanislav Arnaudov</title>
+
+  
+  <meta name="theme-color" />
+  
+  <meta name="description" content="Abstract In this post, I want to give a little more details on how Alisp can build from sources. ALisp is an interpreted language I&rsquo;ve developed in C&#43;&#43;. Over the last half a year, the project has become quite big (currently around 24K LOC) and thus the build process is so trivial as in the beginning. In the process of development, I&rsquo;ve added numerous options for how the code can be compiled and all of those can be confusing at times." />
+  <meta
+    name="author"
+    content="Stanislav Arnaudov"
+  />
+  
+
+  
+  
+  
+  
+  
+  
+  <link rel="preload stylesheet" as="style" href="/main.min.css" />
+
+  
+  <script
+    defer
+    src="highlight.min.js"
+    onload="hljs.initHighlightingOnLoad();"
+  ></script>
+  
+
+  
+   
+  <link rel="preload" as="image" href="theme.png" />
+
+  
+  
+  
+  <link rel="preload" as="image" href="https://www.gravatar.com/avatar/6f49be4b1398e1936dd765ef2df3a6f2?s=160&amp;d=identicon" />
+  
+  
+
+  
+  <link rel="preload" as="image" href="github.svg" />
+  
+  <link rel="preload" as="image" href="linkedin.svg" />
+  
+  <link rel="preload" as="image" href="facebook.svg" />
+  
+
+  
+  <link rel="icon" href="favicon.ico" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+
+  
+  <meta name="generator" content="Hugo 0.110.0">
+
+  
+  
+
+  
+  
+  
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-158773896-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+  
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-158773896-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+  
+  
+  
+  <meta property="og:title" content="Alisp [PART 2]" />
+<meta property="og:description" content="Building Alisp from source" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/projects/alisp_2/" /><meta property="article:section" content="projects" />
+
+<meta property="article:modified_time" content="2023-02-09T23:51:41+02:00" />
+
+  
+  <meta itemprop="name" content="Alisp [PART 2]">
+<meta itemprop="description" content="Building Alisp from source">
+<meta itemprop="dateModified" content="2023-02-09T23:51:41+02:00" />
+<meta itemprop="wordCount" content="1867">
+<meta itemprop="keywords" content="" />
+  
+  <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Alisp [PART 2]"/>
+<meta name="twitter:description" content="Building Alisp from source"/>
+
+  
+  
+</head>
+
+  <body class="text-black duration-200 ease-out dark:text-white">
+    <header class="mx-auto flex h-[5rem] max-w-3xl px-8 lg:justify-center">
+  <div class="relative z-50 mr-auto flex items-center">
+
+    <img alt="" src='/logos/SA.png' width="48" height="48"/>
+    <a class="-translate-x-[1px] -translate-y-0.5 text-3xl font-bold ml-6" href="">
+      Stanislav Arnaudov
+    </a>
+
+    <a class="btn-dark ml-6 h-6 w-6 shrink-0 cursor-pointer [background:url(./theme.png)_left_center/_auto_theme('spacing.6')_no-repeat] [transition:_background-position_0.4s_steps(5)] dark:[background-position:right]">
+    </a>
+  </div>
+
+  <a
+    class="btn-menu relative z-50 -mr-8 flex h-[5rem] w-[5rem] shrink-0 cursor-pointer flex-col items-center justify-center gap-2.5 lg:hidden"
+  ></a>
+
+  
+  <script>
+    
+    const htmlClass = document.documentElement.classList;
+    setTimeout(() => {
+      htmlClass.remove('not-ready');
+    }, 10);
+
+    
+    const btnMenu = document.querySelector('.btn-menu');
+    btnMenu.addEventListener('click', () => {
+      htmlClass.toggle('open');
+    });
+
+    
+    const metaTheme = document.querySelector('meta[name="theme-color"]');
+    const lightBg = `"#faf6f1"`.replace(/"/g, '');
+    const setDark = (isDark) => {
+      metaTheme.setAttribute('content', isDark ? '#000' : lightBg);
+      htmlClass[isDark ? 'add' : 'remove']('dark');
+      localStorage.setItem('dark', isDark);
+    };
+
+    
+    const darkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+    if (htmlClass.contains('dark')) {
+      setDark(true);
+    } else {
+      const darkVal = localStorage.getItem('dark');
+      setDark(darkVal ? darkVal === 'true' : darkScheme.matches);
+    }
+
+    
+    darkScheme.addEventListener('change', (event) => {
+      setDark(event.matches);
+    });
+
+    
+    const btnDark = document.querySelector('.btn-dark');
+    btnDark.addEventListener('click', () => {
+      setDark(localStorage.getItem('dark') !== 'true');
+    });
+  </script>
+
+  <div
+    class="nav-wrapper fixed inset-x-0 top-full z-40 flex h-full select-none flex-col justify-center pb-16 duration-200 dark:bg-black lg:static lg:h-auto lg:flex-row lg:!bg-transparent lg:pb-0 lg:transition-none"
+  >
+    
+    
+    <nav class="lg:ml-12 lg:flex lg:flex-row lg:items-center lg:space-x-6">
+      
+      <a
+        class="block text-center text-2xl leading-[5rem] lg:text-base lg:font-normal"
+        href="/"
+        >Home</a
+      >
+      
+      <a
+        class="block text-center text-2xl leading-[5rem] lg:text-base lg:font-normal"
+        href="/about/"
+        >About</a
+      >
+      
+      <a
+        class="block text-center text-2xl leading-[5rem] lg:text-base lg:font-normal"
+        href="/projects"
+        >Projects</a
+      >
+      
+      <a
+        class="block text-center text-2xl leading-[5rem] lg:text-base lg:font-normal"
+        href="/posts/"
+        >Posts</a
+      >
+      
+      <a
+        class="block text-center text-2xl leading-[5rem] lg:text-base lg:font-normal"
+        href="/contact/"
+        >Contact</a
+      >
+      
+    </nav>
+    
+
+    
+    <nav
+      class="mt-12 flex justify-center space-x-10 dark:invert lg:mt-0 lg:ml-12 lg:items-center lg:space-x-6"
+    >
+      
+      <a
+        class="h-8 w-8 [background:var(--url)_center_center/cover_no-repeat] lg:h-6 lg:w-6"
+        style="--url: url(./github.svg)"
+        href=" https://github.com/palikar "
+        target="_blank"
+      ></a>
+      
+      <a
+        class="h-8 w-8 [background:var(--url)_center_center/cover_no-repeat] lg:h-6 lg:w-6"
+        style="--url: url(./linkedin.svg)"
+        href=" https://linkedin.com/in/stanislav-arnaudov-37b475164 "
+        target="_blank"
+      ></a>
+      
+      <a
+        class="h-8 w-8 [background:var(--url)_center_center/cover_no-repeat] lg:h-6 lg:w-6"
+        style="--url: url(./facebook.svg)"
+        href=" https://facebook.com/stanislav.ts "
+        target="_blank"
+      ></a>
+      
+    </nav>
+    
+  </div>
+</header>
+
+
+    <main class="prose prose-neutral relative mx-auto min-h-[calc(100%-10rem)] max-w-3xl px-4 pt-20 pb-32 dark:prose-invert">
+      
+
+<article>
+  <header class="mb-20">
+
+    <h1 class="!my-0 pb-2.5">Alisp [PART 2]</h1>
+
+    
+    <div class="text-sm opacity-60">
+      
+      
+      <span class="mx-1">&middot;</span>
+      <span>Stanislav Arnaudov</span>
+      <span class="mx-1">&middot;</span>
+      <span>8 minute read</span>
+      <span class="mx-1">&middot;</span>
+      <span>1867 words</span>
+      
+    </div>
+    
+  </header>
+
+  <section><figure><img src="/ox-hugo/alisp.png"/>
+</figure>
+
+<h2 id="abstract">Abstract</h2>
+<p>In this post, I want to give a little more details on how <a href="https://github.com/palikar/alisp">Alisp</a> can build from sources. ALisp is an interpreted language I&rsquo;ve developed in C++. Over the last half a year, the project has become quite big (currently around 24K LOC) and thus the build process is so trivial as in the beginning. In the process of development, I&rsquo;ve added numerous options for how the code can be compiled and all of those can be confusing at times. Depending on the purpose of the build and what you want to do with it, different options have to enabled and here I want to give a brief overview of the options and the reasoning behind them.</p>
+<h2 id="prerequisites">Prerequisites</h2>
+<p>Alisp is written in C++ (17) and uses <a href="https://cmake.org/">CMake</a> as its build generator. The project is tested and it compiles with</p>
+<ul>
+<li>gcc 8,9</li>
+<li>clang 9</li>
+</ul>
+<p>Currently, only Linux builds are tested and I can&rsquo;t guarantee that everything will work on Windows (hopefully supports comes soon). The code requires features of C++17 so it may not be compatible with older compilers.</p>
+<br />
+<p>On Debian based systems, for minimal builds the package <a href="https://packages.debian.org/sid/build-essential">build-essential</a> should be enough:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>sudo apt-get install build-essential
+</span></span></code></pre></div><br />
+<p>For more advanced builds, you&rsquo;ll need more things:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>sudo apt-get install valgrind gcov doxygen
+</span></span></code></pre></div><p><a href="https://www.doxygen.nl/">Doxygen</a> is used to generate the documentation for the source, <a href="https://www.valgrind.org/">valgrind</a> performs some run-time checks and <a href="https://gcc.gnu.org/onlinedocs/gcc/Gcov.html">gcov</a>.</p>
+<br />
+<p>Optionally, the build setup can take advantage of <a href="https://ccache.dev/">ccache</a> if you have on your system. This is a compiler cache that can reduce compilation times. For Debian systems, to install ccach, you can run:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>sudo apt-get install ccache
+</span></span></code></pre></div><br />
+<p>The code itself should not have any external dependencies. The project&rsquo;s repository contains everything needed for building all executables and libraries of the language form source. Alisp does, however, uses third party C++ libraries and those are:</p>
+<ul>
+<li><a href="https://github.com/ChaiScript/ChaiScript/">Catch2</a> - used for testing</li>
+<li><a href="https://github.com/muellan/clipp">Clipp</a> - used for command line arguments parsing</li>
+<li><a href="https://www.google.com/search?q=c%2B%2B+rang&amp;ie=utf-8&amp;oe=utf-8&amp;client=firefox-b-e">Rang</a> - used for printing in colors on the terminal</li>
+<li><a href="https://github.com/leethomason/tinyxml2">TinyXML2</a> - used for parsing xml documents</li>
+<li><a href="https://github.com/arun11299/cpp-subprocess">Subprocess</a> - used for spawning child processes</li>
+<li><a href="https://github.com/nbsdx/SimpleJSON">SimpleJSON</a> - used for parsing json documents.</li>
+<li><a href="//fmt.dev/latest/index.html">Fmt</a> - used for formatting strings</li>
+</ul>
+<h2 id="building">Building</h2>
+<p>Once you have everything you need, you can proceed to the actual build process. The way I usually do this is to create a build folder in the source directory and build the project there. The build commands are standard for any CMake project.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sh" data-lang="sh"><span style="display:flex;"><span>git clone https://github.com/palikar/alisp
+</span></span><span style="display:flex;"><span>cd alisp
+</span></span><span style="display:flex;"><span>mkdir build <span style="color:#f92672">&amp;&amp;</span> cd build
+</span></span><span style="display:flex;"><span>cmake .. &lt;options&gt;
+</span></span><span style="display:flex;"><span>make &lt;targets&gt;
+</span></span></code></pre></div><p>Optionally, after cloning you can checkout the project to any of the <a href="https://github.com/palikar/alisp/releases">current stable version</a>.</p>
+<p><code>&lt;options&gt;</code> and <code>&lt;targets&gt;</code> are, of course, placeholder and will be discussed in the next section.</p>
+<h2 id="options">Options</h2>
+<p>As shown, options are given when executing the CMake command. The format is <code>-D&lt;OPTION&gt;=&lt;VALUE&gt;</code>. For example, <code>DOPTION_1=TRUE</code> sets the option <code>OPTION_1</code> to <code>TRUE</code>.</p>
+<br />
+<p>First, we&rsquo;ll go over the project-specific options. Those have been declared in the <a href="https://github.com/palikar/alisp/blob/master/CMakeLists.txt">CMakeList.txt</a> file with the <a href="https://cmake.org/cmake/help/v3.13/command/option.html">option</a> function of CMake. Next, I&rsquo;ll also mention a couple of other general CMake options that are commonly used.</p>
+<h3 id="project-specific-options">Project-specific options</h3>
+<ul>
+<li>
+<p><code>LIBCPP</code> - when compiling with clang, this option allows you to use llvm&rsquo;s implementation of the C++ standard library <a href="https://libcxx.llvm.org/%20">libc++</a>. In certain situations, libc++ can improve the performance of a program and reduce the compilation time. For the majority of the development of Alisp, however, I&rsquo;ve used GNU&rsquo;s standard library <a href="https://gcc.gnu.org/onlinedocs/libstdc++/">libstdc++</a> and I haven&rsquo;t got any problems with it. If the <code>LIBCPP</code> option is set to <code>TRUE</code> (default <code>FALSE</code>), libc++ will be used.</p>
+</li>
+<li>
+<p><code>ENABLE_COVERAGE</code> - if set to <code>TRUE</code> (default <code>FALSE</code>), the project will be compiled with coverage flags (<code>--coverage -O0 -g</code>) and special make targets will be created that allows you to run coverage of the code and generate nice HTML pages with the results.</p>
+</li>
+<li>
+<p><code>ENABLE_ASAN</code> - if set to <code>TRUE</code> (default <code>FALSE</code>), the project will be compiled with address sanitizer flags (<code>-fsanitize=address</code>). When an executable is built with address sanitizer, running it will execute the program while checking for any memory issues (buffer overflows, invalid reads/ writes, etc.) More information on address sanitizers <a href="https://github.com/google/sanitizers/wiki/AddressSanitizer">here</a>.</p>
+</li>
+</ul>
+<!--listend-->
+<ul>
+<li>
+<p><code>BUILD_SHARED_LIBS</code> - if set to <code>TRUE</code> (default <code>FALSE</code>), all of the libraries will be built as shared libraries. This usually reduces the recompilation time but may cause some overhead on startup. By now, I use Alisp almost exclusively in shared libraries mode.</p>
+</li>
+<li>
+<p><code>ENABLE_TESTING</code> - if set to <code>TRUE</code> (default <code>FALSE</code>), all of the tests for the project will be compiled and build. Also, several make targets will be created for running the added tests.</p>
+</li>
+<li>
+<p><code>ENABLE_CLANG_TIDY</code> - if set to <code>TRUE</code> (default <code>FALSE</code>), <a href="https://clang.llvm.org/extra/clang-tidy/">clang-tidy</a> will be run over the source code during compilation. Clang-tidy is a code linter and static analyzer and can report on some common problems with the code.</p>
+</li>
+<li>
+<p><code>ENABLE_CPPCHECK</code> - if set to <code>TRUE</code> (default <code>FALSE</code>), <a href="http://cppcheck.sourceforge.net/">cppcheck</a> will be run over the source code during compilation. Cppcheck is a static analysis tool for C/C++ code that detects bugs and focuses on detecting undefined behavior and dangerous coding constructs.</p>
+</li>
+<li>
+<p><code>ENABLE_LTO</code> - if set to <code>TRUE</code> (default <code>FALSE</code>), the project is compiled with <a href="https://gcc.gnu.org/wiki/LinkTimeOptimization">link time optimizations</a> enabled.</p>
+</li>
+<li>
+<p><code>BUILD_DOC</code> - if set to <code>TRUE</code> (default <code>FALSE</code>), a special make target is created that will generate documentation of the source code with Doxygen.</p>
+</li>
+<li>
+<p><code>FORCE_COLORED_OUTPUT</code> - if set to <code>TRUE</code> (default <code>TRUE</code>), the output of the compilation will use coloring. This is handy when compiling and looking at the output on the screen. It could be annoying when the output of the compilation is dumped into a file.</p>
+</li>
+<li>
+<p><code>ELF_HASHING</code> - if set to <code>TRUE</code> (default <code>FALSE</code>), the default hashing algorithm that Alisp uses internally will be the <a href="https://en.wikipedia.org/wiki/PJW%5Fhash%5Ffunction">PJW hash function</a>. By default, Alisp uses the <a href="https://en.wikipedia.org/wiki/Fowler%E2%80%93Noll%E2%80%93Vo%5Fhash%5Ffunction">Fowler–Noll–Vo function</a> for hashing strings.</p>
+</li>
+<li>
+<p><code>JENKINS_HASHING</code> - if set to <code>TRUE</code> (default <code>FALSE</code>), the default hashing algorithm that Alisp uses internally will be the <a href="https://en.wikipedia.org/wiki/Jenkins%5Fhash%5Ffunction">Jenkins hash function</a>. If this option is <code>TRUE</code>, <code>ELF_HASHING</code> should be set to <code>FALSE</code>.</p>
+</li>
+<li>
+<p><code>DEBUG_LOGGING</code> - if set to <code>TRUE</code> (default <code>FALSE</code>), the project will be compiled with support for enabling lots of logging. The interpreter will have an extra CLI flag (<code>-DL</code>) that will print lots of debugging information during execution.</p>
+</li>
+<li>
+<p><code>BUILD_EXAMPLES</code> - if set to <code>TRUE</code> (default <code>FALSE</code>), the example scripts in the <code>scripts</code> folder will be copied in the build directory. Also, an extra make target will be created (<code>test_examples</code>) that will execute all of the examples and verify they execute without errors.</p>
+</li>
+<li>
+<p><code>VALGRIND_CHECKS</code> - if set to <code>TRUE</code> (default <code>FALSE</code>), an extra make target (<code>valgrind_checks</code>) will be created that executes the language tests while checking the execution with various valgrind tools. This includes checking for memory leaks, running the tests with <a href="https://valgrind.org/docs/manual/ms-manual.html">massif</a>, <a href="https://valgrind.org/docs/manual/mc-manual.html">memcheck</a> and <a href="https://valgrind.org/docs/manual/cl-manual.html">callgrind</a>.</p>
+</li>
+<li>
+<p><code>RUN_PERFORMANCE_TESTS</code> - if set to <code>TRUE</code> (default <code>FALSE</code>), the scripts in the <code>performance_tests</code> will be copied in the build directory and an extra make target will be created (<code>timing_check</code>). The target will execute the copied scripts and will create a file <code>timing_checks.txt</code> with their execution time. The scripts are designed in such a way to load the interpreter and test its performance.</p>
+</li>
+<li>
+<p><code>DISABLE_DYN_MODULES</code> - if set to <code>TRUE</code> (default <code>FALSE</code>), the dynamic Alisp modules will not be compiled. Those are modules that are not loaded in each interpreter executable but are loaded dynamically at run time. Disabling the compilation of those can be handy when you don&rsquo;t want to compile the entirety of the project but just the core interpreter.</p>
+</li>
+<li>
+<p><code>DISABLE_DEFAULT_MODULES</code> - if set to <code>TRUE</code> (default <code>FALSE</code>), the builtin Alisp modules will not be compiled and linked to the interpreter. The point of this is again to reduce the compilation time if you don&rsquo;t need these modules.</p>
+</li>
+<li>
+<p><code>ENABLE_STACK_TRACE</code> - if set to <code>TRUE</code> (default <code>TRUE</code>), the interpreter will keep track of each function call and will print out a stacktrace in case of an error in the execution. Disabling this option can potentially increase performance.</p>
+</li>
+<li>
+<p><code>ENABLE_LINE_TRACE</code> - if set to <code>TRUE</code> (default <code>TRUE</code>), the interpreter will keep track of the line number where a list-form object was defined in a file. This makes the stracktrace more understandable but also requires a tiny bit more memory. The line numbers will be saved as object properties (<code>--line--</code>) of list-forms that appear in the source code of an Alisp script.</p>
+</li>
+<li>
+<p><code>ENABLE_OBJECT_DOC</code> - if set to <code>TRUE</code> (default <code>TRUE</code>), the interpreter will keep the documentation for symbols. If this option is disabled, the given in the source code documentation for the symbols will be left out and won&rsquo;t be part of the symbols. The documentation for a symbol is saved in the <code>--doc--</code> property.</p>
+</li>
+<li>
+<p><code>DISABLE_RUN_TIME_CHECKS</code> - if set to <code>TRUE</code> (default <code>FALSE</code>), a lot of run-time checks (among which arity checks by the function calling and type checks) will be removed from the code. This can potentially increase performance but will make the interpreter extremely unstable. Segmentation faults are to be expected if this option is enabled. It is, however, guarantee that a valid program in Alisp will run correctly if these checks are disabled.</p>
+</li>
+<li>
+<p><code>TIME_CHECK_SAMPLES</code> - this is an integer value (default 10) that signifies how many times the performance test scripts should be run to get a stable average value.</p>
+</li>
+<li>
+<p><code>ENABLE_MTEL</code> - if set to <code>TRUE</code> (default <code>FALSE</code>), the project will be built with a multi-threaded event loop. Usually, the event loops run on a single thread that does all of the asynchronous dispatching. With this option, multiple threads will be used to handle asynchronous events and callbacks.</p>
+</li>
+</ul>
+<h3 id="general-options-to-keep-in-mind">General Options To Keep in Mind</h3>
+<ul>
+<li>
+<p><code>CMAKE_INSTALL_PREFIX</code> - this is a path indicating where the compiled libraries and executable should be installed (copied to when everything is built) through <code>make install</code>. On Linux systems, this is usually <code>/usr</code> but I often change this to some local <code>usr</code> directory. Executable will be put in <code>CMAKE_INSTALL_PREFIX/bin</code>, libraries in <code>CMAKE_INSTALL_PREFIX/lib</code> and header files in <code>CMAKE_INSTALL_PREFIX/include/alisp</code>.</p>
+</li>
+<li>
+<p><code>CMAKE_BUILD_TYPE</code> - string variable indicating the type of build that is to be built. It can be &ldquo;Debug&rdquo;, &ldquo;Release&rdquo;, &ldquo;RelWithDebInfo&rdquo; or &ldquo;MinSizeRel&rdquo;. In most cases, I use either &ldquo;Debug&rdquo; (debug information is compiled in) or &ldquo;Release&rdquo; (the compilation is optimized fully and there is no debug information).</p>
+</li>
+</ul>
+<h2 id="make-targets-overview">Make Targets overview</h2>
+<p>With the options being enplaned now, here I&rsquo;ll give a brief overview of all possible make targets. Those can be run after Cmake has executed, build files are ready and we can proceed to compilation and testing.</p>
+<ul>
+<li>
+<p><code>all</code> - compile the project</p>
+</li>
+<li>
+<p><code>test</code> - run all of the tests. The project has to be built with <code>-DENABLE_TESTING=TRUE</code></p>
+</li>
+<li>
+<p><code>alisp_coverage_html</code> - execute the tests, gather coverage information, and generate a web site with the results. The project has to be built with <code>-DENABLE_COVERAGE=TRUE</code></p>
+</li>
+<li>
+<p><code>alisp_coverage_xml</code> - execute the tests, gather coverage information, and generate a web site with the results. The project has to be built with <code>-DENABLE_COVERAGE=TRUE</code></p>
+</li>
+<li>
+<p><code>doc</code> - build the documentation of the source code</p>
+</li>
+<li>
+<p><code>install</code> - copy the compiled executable, libraries, and public headers at the appropriate places.</p>
+</li>
+<li>
+<p><code>package</code> - package the project files with <a href="https://cmake.org/cmake/help/latest/module/CPack.html">CPack</a>. This will generate <a href="https://en.wikipedia.org/wiki/Deb%5F(file%5Fformat)">.deb</a> and .tar.gz files.</p>
+</li>
+<li>
+<p><code>test_examples</code> - execute all of the examples in the <code>scripts</code> directory. The project has to be built with <code>-DBUILD_EXAMPLES=TRUE</code></p>
+</li>
+<li>
+<p><code>valgrind_checks</code> - execute <code>./bin/alisp_language_test</code> with valgrind for all of the defined valgrind checks. The project has to be built with <code>-DVALGRIND_CHECKS=TRUE</code></p>
+</li>
+<li>
+<p><code>timing_check</code> - execute the scripts that test the performance of the interpreter. The project has to be built with <code>-DRUN_PERFORMANCE_TESTS=TRUE</code></p>
+</li>
+</ul>
+</section>
+
+  
+  
+
+
+  
+  
+  <div id="disqus_thread"></div>
+
+<script>
+
+ function readCookie(name)
+ {
+   var nameEQ = name + "=";
+   var ca = document.cookie.split(';');
+   for(var i=0;i < ca.length;i++) {
+     var c = ca[i];
+     while (c.charAt(0)==' ') c = c.substring(1,c.length);
+     if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+   }
+   return null;
+ }
+
+ (function() {
+   let cookieValue = readCookie('consent-settings');
+   if (cookieValue)
+   {
+     var consentValue = cookieValue.toString();
+     if (consentValue[1] === "1")
+     {	    
+       const disqusShortname = 'palikar-github-io';
+       const script = document.createElement('script');
+       script.src = 'https://' + disqusShortname + '.disqus.com/embed.js';
+       script.setAttribute('data-timestamp', + new Date());
+       document.head.appendChild(script);
+     }
+   }
+ })();
+ 
+</script>
+
+  
+</article>
+
+
+    </main>
+
+    <footer class="opaco mx-auto flex h-[5rem] max-w-3xl items-center px-8 text-[0.9em] opacity-60">
+  <div class="mr-auto">
+    &copy; 2023
+    <a class="link" href="">Stanislav Arnaudov</a>
+  </div>
+  <a class="link mx-6" href="#cookies" onclick="document.getElementById('consent-notice').style.display = 'block'; ">Cookie Policy</a>
+  <a class="link mx-6" href="https://gohugo.io/" rel="noopener" target="_blank">Powered by Hugo</a>
+  Theme: 
+  <a class="link" href="https://github.com/nanxiaobei/hugo-paper" rel="noopener" target="_blank" >Paper 6</a>
+</footer>
+
+
+    <style>
+    #consent-notice {padding: 1rem 1rem; display: none; text-align: center; position: fixed; bottom: 0; width: calc(100% - 2rem); background: #222; color: white;}
+    #consent-notice span {margin-right: 1rem;}
+    #consent-notice button {cursor: pointer; display: inline-block; width: auto;}
+    #consent-notice span a {color: white; text-decoration: underline; text-decoration-color: rgba(255,255,255,0.5);}
+    #consent-notice button.btn {margin-left: 0.5rem;}
+    #consent-notice button.btn.manage-consent {background: rgba(255,255,255,0.1); font-weight: normal;}
+    
+    #consent-overlay {position: fixed; left: 0; top: 0; width: 100%; height: 100vh; display: none; background: rgba(0,0,0,0.75); z-index: 999999; overflow: auto; cursor: pointer;}
+    #consent-overlay.active {display: flex;}
+    #consent-overlay > div {background: white; width: 100%; max-width: 30rem; padding: 1.75rem; margin: auto; cursor: initial;}
+    #consent-overlay > div > div {display: flex; align-items: flex-start; margin-bottom: 1rem;}
+    #consent-overlay > div > div:last-child {margin: 0;}
+    #consent-overlay h3 {padding-top: 0;}
+    #consent-overlay input {margin-top: 0.3rem;}
+    #consent-overlay label {display: block; color: black; }
+    #consent-overlay .btn {margin-right: 0.5rem;}
+    #consent-overlay button.btn.save-consent {background: rgba(0,0,0,0.6); font-weight: normal;}
+
+    @media (max-width: 767px) {
+        #consent-overlay > div {padding: 1.75rem 1rem;}
+        #consent-notice span {display: block; padding-top: 3px; margin-bottom: 1.5rem;}
+        #consent-notice button.btn {position: relative; bottom: 4px;}
+    }
+</style>
+
+<div id="consent-notice">
+  <span>We would like to use <a class="manage-consent" href="#manage-consent">third party code</a> to improve the functionality of this website.</span>
+  <span><a class="link mx-6" href="/cookies" onclick="document.getElementById('consent-notice').style.display = 'block'; ">More Information</a></span>
+  <button class="btn manage-consent">Manage preferences</button>
+  <button class="btn deny-consent">Deny</button>
+  <button class="btn approve-consent">Allow</button>
+</div>
+
+<div id="consent-overlay">
+    <div>
+        
+            <div>
+                <input type="checkbox" id="item0" value="1" name="item0"  />
+                <label for="item0">
+                  <h3>Google Anaytics (functional)</h3>
+		  <p>This code gives us insight into the number of people that visit our website, where they are from and what they are clicking on.</p>
+                </label>
+            </div>
+        
+            <div>
+                <input type="checkbox" id="item1" value="1" name="item1"  />
+                <label for="item1">
+                  <h3>Disqus Comment service</h3>
+		  <p>The code allows to use the Disqus service for comments on the posts</p>
+                </label>
+            </div>
+        
+        <div>
+            <button id="save-consent" class="btn save-consent" data-consentvalue="00">Save preferences</button>
+            <button class="btn approve-consent">Allow all</button>
+        </div>
+    </div>
+</div>
+<script>
+
+    const scripts = [];
+    scripts[ 0 ] = "/js/ga.js";
+    scripts[ 1 ] = "/js/disqus.js";
+
+    function createCookie(name,value,days) {
+        var expires = "";
+        if (days) {
+            var date = new Date();
+            date.setTime(date.getTime() + (days*24*60*60*1000));
+            expires = "; expires=" + date.toUTCString();
+        }
+        document.cookie = name + "=" + value + expires + "; path=/";
+    }
+    function readCookie(name) {
+        var nameEQ = name + "=";
+        var ca = document.cookie.split(';');
+        for(var i=0;i < ca.length;i++) {
+            var c = ca[i];
+            while (c.charAt(0)==' ') c = c.substring(1,c.length);
+            if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+        }
+        return null;
+    }
+    function eraseCookie(name) {
+        createCookie(name,"",-1);
+    }
+    function denyAllConsentScripts() {
+        var consentValue = "";
+        scripts.forEach(function(){
+            consentValue = consentValue + "0";
+        });
+        acceptSomeConsentScripts(consentValue);
+    }
+    function acceptAllConsentScripts() {
+        var consentValue = "";
+        scripts.forEach(function(){
+            consentValue = consentValue + "1";
+        });
+        acceptSomeConsentScripts(consentValue);
+    }
+    function acceptSomeConsentScripts(consentValue) {
+        setConsentInputs(consentValue);
+        createCookie('consent-settings',consentValue,31);
+        document.getElementById('consent-notice').style.display = 'none';
+        document.getElementById('consent-overlay').classList.remove('active');
+        loadConsentScripts(consentValue);
+    }
+    function loadConsentScripts(consentValue) {
+        scripts.forEach(function(value,key){
+            
+            if(consentValue[key]=="1") {
+                var s = document.createElement('script');
+                s.type = 'text/javascript';
+                s.src = value;
+                document.body.appendChild(s);
+            }
+        });
+    }
+    function setConsentInputs(consentValue) {
+        var elements = document.querySelectorAll('#consent-overlay input:not([disabled])');
+        elements.forEach(function(el,index) {
+            if(consentValue[index]=="1") el.checked = true;
+            else el.checked = false;
+        });
+    }
+    function setConsentValue() {
+        var elements = document.querySelectorAll('#consent-overlay input:not([disabled])');
+        var consentValue = "";
+        elements.forEach(function(el) {
+            if(el.checked) consentValue = consentValue + "1";
+            else consentValue = consentValue + "0";
+        });
+        document.getElementById("save-consent").dataset.consentvalue = consentValue;
+    }
+ 
+    var elements = document.querySelectorAll('#consent-overlay input:not([disabled])');
+    elements.forEach(function(el) {
+        el.checked = false;
+    });
+
+    if(readCookie('consent-settings')) {
+        var consentValue = readCookie('consent-settings').toString();
+        setConsentInputs(consentValue);
+        loadConsentScripts(consentValue);
+    } else {
+      document.getElementById('consent-notice').style.display = 'block';
+    }
+ var elements = document.querySelectorAll('.manage-consent');
+    elements.forEach(function(el) {
+        el.addEventListener("click",function() {
+            document.getElementById('consent-overlay').classList.toggle('active');
+        });
+    });
+    var elements = document.querySelectorAll('.deny-consent');
+    elements.forEach(function(el) {
+        el.addEventListener("click",function() {
+            denyAllConsentScripts();
+        });
+    });
+    var elements = document.querySelectorAll('.approve-consent');
+    elements.forEach(function(el) {
+        el.addEventListener("click",function() {
+          acceptAllConsentScripts();
+        });
+    });
+    document.getElementById("save-consent").addEventListener("click",function() {
+        setConsentValue();
+        acceptSomeConsentScripts(this.dataset.consentvalue);
+    });
+    document.getElementById("consent-overlay").addEventListener("click",function(e) {
+        if (!document.querySelector("#consent-overlay > div").contains(e.target)){
+            this.classList.toggle('active');
+        }
+    });
+</script>
+
+
+    
+
+    
+
+
+  </body>
+</html>

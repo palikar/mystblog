@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<html
+  class="not-ready text-sm lg:text-base"
+  style="--bg: #faf6f1"
+  lang="en-us">
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, shrink-to-fit=no"
+  />
+
+  
+  <title>DirectXer - Stanislav Arnaudov</title>
+
+  
+  <meta name="theme-color" />
+  
+  <meta name="description" content="Abstract DirectXer started as a way for me learn DirectX11. Up until some point, I was familiar only with OpenGL and I wanted to learn THE mainstream API for graphics programming. DirectXer was the a project where I was experimenting and figuring things out about doing real-time rendering.
+Over time, however, DirectXer evolved into my primary &ldquo;code base&rdquo; where I was doing everything, again in an experimental fashion. I was doing things like figuring out what memory management solution works best, how to do 3D and 2D rendering on the GPU, how to load my assets quicky, what is a good approach to doing UI in video games, and much more." />
+  <meta
+    name="author"
+    content="Stanislav Arnaudov"
+  />
+  
+
+  
+  
+  
+  
+  
+  
+  <link rel="preload stylesheet" as="style" href="/main.min.css" />
+
+  
+  <script
+    defer
+    src="highlight.min.js"
+    onload="hljs.initHighlightingOnLoad();"
+  ></script>
+  
+
+  
+   
+  <link rel="preload" as="image" href="theme.png" />
+
+  
+  
+  
+  <link rel="preload" as="image" href="https://www.gravatar.com/avatar/6f49be4b1398e1936dd765ef2df3a6f2?s=160&amp;d=identicon" />
+  
+  
+
+  
+  <link rel="preload" as="image" href="github.svg" />
+  
+  <link rel="preload" as="image" href="linkedin.svg" />
+  
+  <link rel="preload" as="image" href="facebook.svg" />
+  
+
+  
+  <link rel="icon" href="favicon.ico" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+
+  
+  <meta name="generator" content="Hugo 0.110.0">
+
+  
+  
+
+  
+  
+  
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-158773896-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+  
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-158773896-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+  
+  
+  
+  <meta property="og:title" content="DirectXer" />
+<meta property="og:description" content="Playground for game engine ideas and experiments" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/projects/directxer/" /><meta property="article:section" content="projects" />
+<meta property="article:published_time" content="2022-12-25T00:00:00+00:00" />
+<meta property="article:modified_time" content="2023-02-12T19:15:50+02:00" />
+
+  
+  <meta itemprop="name" content="DirectXer">
+<meta itemprop="description" content="Playground for game engine ideas and experiments"><meta itemprop="datePublished" content="2022-12-25T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2023-02-12T19:15:50+02:00" />
+<meta itemprop="wordCount" content="1297">
+<meta itemprop="keywords" content="" />
+  
+  <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="DirectXer"/>
+<meta name="twitter:description" content="Playground for game engine ideas and experiments"/>
+
+  
+  
+</head>
+
+  <body class="text-black duration-200 ease-out dark:text-white">
+    <header class="mx-auto flex h-[5rem] max-w-3xl px-8 lg:justify-center">
+  <div class="relative z-50 mr-auto flex items-center">
+
+    <img alt="" src='/logos/SA.png' width="48" height="48"/>
+    <a class="-translate-x-[1px] -translate-y-0.5 text-3xl font-bold ml-6" href="">
+      Stanislav Arnaudov
+    </a>
+
+    <a class="btn-dark ml-6 h-6 w-6 shrink-0 cursor-pointer [background:url(./theme.png)_left_center/_auto_theme('spacing.6')_no-repeat] [transition:_background-position_0.4s_steps(5)] dark:[background-position:right]">
+    </a>
+  </div>
+
+  <a
+    class="btn-menu relative z-50 -mr-8 flex h-[5rem] w-[5rem] shrink-0 cursor-pointer flex-col items-center justify-center gap-2.5 lg:hidden"
+  ></a>
+
+  
+  <script>
+    
+    const htmlClass = document.documentElement.classList;
+    setTimeout(() => {
+      htmlClass.remove('not-ready');
+    }, 10);
+
+    
+    const btnMenu = document.querySelector('.btn-menu');
+    btnMenu.addEventListener('click', () => {
+      htmlClass.toggle('open');
+    });
+
+    
+    const metaTheme = document.querySelector('meta[name="theme-color"]');
+    const lightBg = `"#faf6f1"`.replace(/"/g, '');
+    const setDark = (isDark) => {
+      metaTheme.setAttribute('content', isDark ? '#000' : lightBg);
+      htmlClass[isDark ? 'add' : 'remove']('dark');
+      localStorage.setItem('dark', isDark);
+    };
+
+    
+    const darkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+    if (htmlClass.contains('dark')) {
+      setDark(true);
+    } else {
+      const darkVal = localStorage.getItem('dark');
+      setDark(darkVal ? darkVal === 'true' : darkScheme.matches);
+    }
+
+    
+    darkScheme.addEventListener('change', (event) => {
+      setDark(event.matches);
+    });
+
+    
+    const btnDark = document.querySelector('.btn-dark');
+    btnDark.addEventListener('click', () => {
+      setDark(localStorage.getItem('dark') !== 'true');
+    });
+  </script>
+
+  <div
+    class="nav-wrapper fixed inset-x-0 top-full z-40 flex h-full select-none flex-col justify-center pb-16 duration-200 dark:bg-black lg:static lg:h-auto lg:flex-row lg:!bg-transparent lg:pb-0 lg:transition-none"
+  >
+    
+    
+    <nav class="lg:ml-12 lg:flex lg:flex-row lg:items-center lg:space-x-6">
+      
+      <a
+        class="block text-center text-2xl leading-[5rem] lg:text-base lg:font-normal"
+        href="/"
+        >Home</a
+      >
+      
+      <a
+        class="block text-center text-2xl leading-[5rem] lg:text-base lg:font-normal"
+        href="/about/"
+        >About</a
+      >
+      
+      <a
+        class="block text-center text-2xl leading-[5rem] lg:text-base lg:font-normal"
+        href="/projects"
+        >Projects</a
+      >
+      
+      <a
+        class="block text-center text-2xl leading-[5rem] lg:text-base lg:font-normal"
+        href="/posts/"
+        >Posts</a
+      >
+      
+      <a
+        class="block text-center text-2xl leading-[5rem] lg:text-base lg:font-normal"
+        href="/contact/"
+        >Contact</a
+      >
+      
+    </nav>
+    
+
+    
+    <nav
+      class="mt-12 flex justify-center space-x-10 dark:invert lg:mt-0 lg:ml-12 lg:items-center lg:space-x-6"
+    >
+      
+      <a
+        class="h-8 w-8 [background:var(--url)_center_center/cover_no-repeat] lg:h-6 lg:w-6"
+        style="--url: url(./github.svg)"
+        href=" https://github.com/palikar "
+        target="_blank"
+      ></a>
+      
+      <a
+        class="h-8 w-8 [background:var(--url)_center_center/cover_no-repeat] lg:h-6 lg:w-6"
+        style="--url: url(./linkedin.svg)"
+        href=" https://linkedin.com/in/stanislav-arnaudov-37b475164 "
+        target="_blank"
+      ></a>
+      
+      <a
+        class="h-8 w-8 [background:var(--url)_center_center/cover_no-repeat] lg:h-6 lg:w-6"
+        style="--url: url(./facebook.svg)"
+        href=" https://facebook.com/stanislav.ts "
+        target="_blank"
+      ></a>
+      
+    </nav>
+    
+  </div>
+</header>
+
+
+    <main class="prose prose-neutral relative mx-auto min-h-[calc(100%-10rem)] max-w-3xl px-4 pt-20 pb-32 dark:prose-invert">
+      
+
+<article>
+  <header class="mb-20">
+
+    <h1 class="!my-0 pb-2.5">DirectXer</h1>
+
+    
+    <div class="text-sm opacity-60">
+      
+      <time>Dec 25, 2022</time>
+      
+      
+      <span class="mx-1">&middot;</span>
+      <span>Stanislav Arnaudov</span>
+      <span class="mx-1">&middot;</span>
+      <span>6 minute read</span>
+      <span class="mx-1">&middot;</span>
+      <span>1297 words</span>
+      
+    </div>
+    
+  </header>
+
+  <section><h2 id="abstract">Abstract</h2>
+<p><a href="https://github.com/palikar/DirectXer">DirectXer</a> started as a way for
+me
+learn
+<a href="https://learn.microsoft.com/en-us/windows/win32/direct3d11/atoc-dx-graphics-direct3d-11">DirectX11</a>. Up
+until some point, I was familiar only with OpenGL and I wanted to
+learn THE mainstream API for graphics programming. DirectXer was the a
+project where I was experimenting and figuring things out about doing
+real-time rendering.</p>
+<p>Over time, however, DirectXer evolved into my primary &ldquo;code base&rdquo;
+where I was doing everything, again in an experimental fashion. I was
+doing things like figuring out what memory management solution works
+best, how to do 3D and 2D rendering on the GPU, how to load my assets
+quicky, what is a good approach to doing UI in video games, and much
+more.</p>
+<p>Right now, DirectXer is again more like a platform or like a suit of
+functionality where I am still figuring things out about the game
+development in general.</p>
+<h2 id="principles">Principles</h2>
+<p>Almost for the entirety of the development of DirectXer, I have been
+trying to follow my core principles
+from
+<a href="/posts/software_philosophy/">my software philosophy article</a>. For
+this project I&rsquo;ve left every &ldquo;modern&rdquo; practice I&rsquo;ve been taught in my
+university and through watching CppCon talks and started exploring and
+seeing what works well for me. In this sense, I am much more following
+the approach
+of <a href="https://handmadehero.org/">Casey Muratori in Handmade Hero</a></p>
+<p>With that, the guiding principles for almost everything in DirectXer
+are:</p>
+<ul>
+<li>Simplicity</li>
+<li>Performance</li>
+<li>Stability</li>
+<li>Doing less in code while still solving the actual problem</li>
+<li>Making and figuring out architecture questions yourself rather than
+following dogma</li>
+<li>Minimal reliance on Third Party Libraries</li>
+</ul>
+<h2 id="notable-applications">Notable applications</h2>
+<p>Part of DirectXer are:</p>
+<ul>
+<li>
+<p><a href="/projects/missioncontrol/">Mission Control</a> &ndash; my custom buidl
+system type of application. At some point, I got frustrated with
+MSBuild and Visual Studio 2022 so much that I decided to quit them
+and for a week I ended up writing <em>Mission Control</em> in my spare
+time. Currently, the project is quite mature and can compile sample
+games, tools, and that-party libraries that I use. It&rsquo;s written in C
+styled C++ has no dependencies and is compiled with a simple BAT
+script by directly calling <code>cl.exe</code> (Microsoft&rsquo;s C++ compiler)</p>
+<figure><img src="/img/mission_control_demo.png" width="1024px"/>
+	</figure>
+
+</li>
+<li>
+<p><a href="/projects/cibot/">CIBot</a>Bot &ndash; At my workplace, almost
+everyone has always been frustrated with our CI build system
+(it&rsquo;s <a href="https://buildbot.net/">BuildBot</a> btw). The CI has been doing
+its job mostly fine but at some moments, the introduced complexity
+was taking its toll. At one point I started asking myself &ldquo;Why is
+this so hard? I just need my CI that runs some commands on the
+console. Why can&rsquo;t I have just this?&rdquo;. Then, predictably, I started
+working on a CI solution for my personal projects and after a week
+or two of spare time developing, I had my CIBot &ndash; a simple
+application that can connect to Mission Control (started in daemon
+mod) and execute commands/build through it.</p>
+<figure><img src="/img/cibot_demo.png" width="1024px"/>
+	</figure>
+
+</li>
+<li>
+<p><a href="/projects/assetbuilder/">AssetBuilder</a> &ndash; as I am primarily
+focused on game programming, I want my assets to be loaded as
+quickly as possible, without doing any extra work that I don&rsquo;t have
+to do. Hence, all the assets (images, models, animations, textures,
+etc.) are packed in a custom file format from which the game runtime
+can quickly load everything necessary. <em>AssetBuilder</em> is the
+application that processes and packs the needed assets in this
+optimized file.</p>
+<figure><img src="/img/asset_builder_demo.png" width="1024px"/>
+  </figure>
+
+</li>
+<li>
+<p><strong>SceneChecker</strong> &ndash; as I do a lot of rendering-related things, it&rsquo;s
+often really important to know if I&rsquo;ve accidentally broken something
+while programming and suddenly things don&rsquo;t visually look the way
+they should. At my workplace, we also have similar concerns and
+there we have several systems that run certain scenes and compare
+the rendered output against a reference one. <em>SceneChecker</em> is my
+attempt to have such a system. Currently, the application can run
+2D/3D scenes, save outputs as a reference and then run the same
+scenes to verify the visual output. The whole program is designed to
+be as performant as possible so the tests can be run in a matter of
+seconds. The tool also can generate an HTML page summarizing the
+results of the visual tests.</p>
+<figure><img src="/img/scene_checker_demo.png" width="1024px"/>
+  </figure>
+
+</li>
+<li>
+<p><strong>PerfChecker</strong> &ndash; this is the tool that helps me track the
+performance of the example 2D and 3D scenes that I
+have. <em>PerfChecker</em> is very similar to SceneChecker but its only job
+is to create reports of the telemetry data gathered during the
+running of the scenes.</p>
+<figure><img src="/img/perf_checker_demo.png" width="1024px"/>
+  </figure>
+
+</li>
+</ul>
+<h2 id="notable-achievements">Notable achievements</h2>
+<p>Here is a list of some random stuff that I&rsquo;ve implemented in DirectXer
+and that I am proud of. By no means this is an exhaustive list but I
+don&rsquo;t want to get into every small implementation detail I&rsquo;ve dealt
+with in the past two years. The major things are:</p>
+<ul>
+<li>
+<p>PBR Rendering &ndash; I wanted to learn and see how every modern game
+does its PBR (Physically based rendering) materials so I spend some
+time figuring this aspect out. My current implementation of PBR
+rendering also includes IBL (Image based lighting) for getting
+ambient diffuse and specular reflections.</p>
+</li>
+<li>
+<p><strong>Shadow mapping</strong> &ndash; I&rsquo;ve always wanted to implement shadow mapping and
+at some point, I got to it. Now my 3D scenes can be rendered with up
+to 4 shadow maps for different parts of the view frustum</p>
+<figure><img src="/img/shadows_demo.gif" width="1024px"/>
+  </figure>
+
+</li>
+<li>
+<p><strong>Bloom filter</strong> &ndash; no modern game can be complete without the nice
+glowing effects that the bloom filter provides so I decided to see
+if I can implement it for myself. My implementation is fully done
+with compute shaders and it&rsquo;s the
+&ldquo;Standard&rdquo;
+<a href="http://www.iryoku.com/next-generation-post-processing-in-call-of-duty-advanced-warfare">state of the art one</a>.</p>
+<figure><img src="/img/bloom_demo.png" width="1024px"/>
+  </figure>
+
+</li>
+<li>
+<p><strong>Water rendering</strong> &ndash; probably not exactly what you would expect for
+water rendering but I really like the low poly style water from
+the <a href="https://www.youtube.com/watch?v=5yhDb9dzJ58">ThimMatrix</a>. I
+remember being in high school watching this low poly water tutorial
+and now I finally felt confident to pretty much do it myself&hellip; so I
+did it.</p>
+<figure><img src="/img/water_scene_demo.gif" width="1024px"/>
+  </figure>
+
+</li>
+<li>
+<p><strong>Mesh Skinning and Animations</strong> &ndash; obviously animations are a big part
+of any game so I couldn&rsquo;t have this. My current system does bone
+transformation calculations and the mesh skinning entirely in
+compute shaders.</p>
+<figure><img src="/img/animation_demo.gif" width="1024px"/>
+  </figure>
+
+</li>
+<li>
+<p><em><em>BUI</em> and UI Rendering</em> &ndash; at my day job at Coherent Labs, we are
+developing a game UI library that can render HTML/CSS/JS in a
+performance-oriented way suitable for games. Based on that, I have
+some experience with the Web standard, the problems with it, and the
+parts that make performance optimizations hard. This is why for
+several months I spent time developing my own custom UI rendering
+solution &ndash; <em>BUI</em> (Beter UI, yes, not very imaginative). It&rsquo;s a
+custom HTML/CSS-like syntax that allows you to place elements on the
+screen and lay them out. It&rsquo;s nothing special but I don&rsquo;t think I
+need something special to make a good enough UI so it does the job.</p>
+</li>
+<li>
+<p><strong>ImGui integrations</strong> &ndash; not exactly a selling point but I do use ImGui
+extensively for debugging/editor stuff and I wanted to mention
+it. Also, the UI of CIBot is entirely ImGui.</p>
+</li>
+<li>
+<p><strong>2D Rendering API</strong> &ndash; I&rsquo;ve talked about 3D Rendering but the 2D
+rendering in DirectXer is also something I&rsquo;ve spent a large time
+on. Currently, my 2D renderer is quite capable and can draw simple
+shapes, images, supports transformations, can draw text, and can
+apply simple effects such as blur, saturation, and brightness.</p>
+</li>
+<li>
+<p><strong>Fast Unit Builds</strong> &ndash; every application in DirectXer is compiled in
+three to four <code>.cpp</code> files. I don&rsquo;t use incremental builds and the
+whole application I am working on is compiled every time I make a
+change to some file. Build times generally vary in the range of ~2-5
+seconds while sometimes they go as low as 1.8 seconds. This is in
+stark contrast when working on large code bases with Visual Studio
+where MSBuild needs around 5 seconds to only start compiling the
+changed files. I thought that compiling everything every single time
+will be annoying but this hasn&rsquo;t really been the case as 2-3 seconds
+of build time do not get in my way when programming.</p>
+</li>
+</ul>
+</section>
+
+  
+  
+
+
+  
+  
+  <div id="disqus_thread"></div>
+
+<script>
+
+ function readCookie(name)
+ {
+   var nameEQ = name + "=";
+   var ca = document.cookie.split(';');
+   for(var i=0;i < ca.length;i++) {
+     var c = ca[i];
+     while (c.charAt(0)==' ') c = c.substring(1,c.length);
+     if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+   }
+   return null;
+ }
+
+ (function() {
+   let cookieValue = readCookie('consent-settings');
+   if (cookieValue)
+   {
+     var consentValue = cookieValue.toString();
+     if (consentValue[1] === "1")
+     {	    
+       const disqusShortname = 'palikar-github-io';
+       const script = document.createElement('script');
+       script.src = 'https://' + disqusShortname + '.disqus.com/embed.js';
+       script.setAttribute('data-timestamp', + new Date());
+       document.head.appendChild(script);
+     }
+   }
+ })();
+ 
+</script>
+
+  
+</article>
+
+
+    </main>
+
+    <footer class="opaco mx-auto flex h-[5rem] max-w-3xl items-center px-8 text-[0.9em] opacity-60">
+  <div class="mr-auto">
+    &copy; 2023
+    <a class="link" href="">Stanislav Arnaudov</a>
+  </div>
+  <a class="link mx-6" href="#cookies" onclick="document.getElementById('consent-notice').style.display = 'block'; ">Cookie Policy</a>
+  <a class="link mx-6" href="https://gohugo.io/" rel="noopener" target="_blank">Powered by Hugo</a>
+  Theme: 
+  <a class="link" href="https://github.com/nanxiaobei/hugo-paper" rel="noopener" target="_blank" >Paper 6</a>
+</footer>
+
+
+    <style>
+    #consent-notice {padding: 1rem 1rem; display: none; text-align: center; position: fixed; bottom: 0; width: calc(100% - 2rem); background: #222; color: white;}
+    #consent-notice span {margin-right: 1rem;}
+    #consent-notice button {cursor: pointer; display: inline-block; width: auto;}
+    #consent-notice span a {color: white; text-decoration: underline; text-decoration-color: rgba(255,255,255,0.5);}
+    #consent-notice button.btn {margin-left: 0.5rem;}
+    #consent-notice button.btn.manage-consent {background: rgba(255,255,255,0.1); font-weight: normal;}
+    
+    #consent-overlay {position: fixed; left: 0; top: 0; width: 100%; height: 100vh; display: none; background: rgba(0,0,0,0.75); z-index: 999999; overflow: auto; cursor: pointer;}
+    #consent-overlay.active {display: flex;}
+    #consent-overlay > div {background: white; width: 100%; max-width: 30rem; padding: 1.75rem; margin: auto; cursor: initial;}
+    #consent-overlay > div > div {display: flex; align-items: flex-start; margin-bottom: 1rem;}
+    #consent-overlay > div > div:last-child {margin: 0;}
+    #consent-overlay h3 {padding-top: 0;}
+    #consent-overlay input {margin-top: 0.3rem;}
+    #consent-overlay label {display: block; color: black; }
+    #consent-overlay .btn {margin-right: 0.5rem;}
+    #consent-overlay button.btn.save-consent {background: rgba(0,0,0,0.6); font-weight: normal;}
+
+    @media (max-width: 767px) {
+        #consent-overlay > div {padding: 1.75rem 1rem;}
+        #consent-notice span {display: block; padding-top: 3px; margin-bottom: 1.5rem;}
+        #consent-notice button.btn {position: relative; bottom: 4px;}
+    }
+</style>
+
+<div id="consent-notice">
+  <span>We would like to use <a class="manage-consent" href="#manage-consent">third party code</a> to improve the functionality of this website.</span>
+  <span><a class="link mx-6" href="/cookies" onclick="document.getElementById('consent-notice').style.display = 'block'; ">More Information</a></span>
+  <button class="btn manage-consent">Manage preferences</button>
+  <button class="btn deny-consent">Deny</button>
+  <button class="btn approve-consent">Allow</button>
+</div>
+
+<div id="consent-overlay">
+    <div>
+        
+            <div>
+                <input type="checkbox" id="item0" value="1" name="item0"  />
+                <label for="item0">
+                  <h3>Google Anaytics (functional)</h3>
+		  <p>This code gives us insight into the number of people that visit our website, where they are from and what they are clicking on.</p>
+                </label>
+            </div>
+        
+            <div>
+                <input type="checkbox" id="item1" value="1" name="item1"  />
+                <label for="item1">
+                  <h3>Disqus Comment service</h3>
+		  <p>The code allows to use the Disqus service for comments on the posts</p>
+                </label>
+            </div>
+        
+        <div>
+            <button id="save-consent" class="btn save-consent" data-consentvalue="00">Save preferences</button>
+            <button class="btn approve-consent">Allow all</button>
+        </div>
+    </div>
+</div>
+<script>
+
+    const scripts = [];
+    scripts[ 0 ] = "/js/ga.js";
+    scripts[ 1 ] = "/js/disqus.js";
+
+    function createCookie(name,value,days) {
+        var expires = "";
+        if (days) {
+            var date = new Date();
+            date.setTime(date.getTime() + (days*24*60*60*1000));
+            expires = "; expires=" + date.toUTCString();
+        }
+        document.cookie = name + "=" + value + expires + "; path=/";
+    }
+    function readCookie(name) {
+        var nameEQ = name + "=";
+        var ca = document.cookie.split(';');
+        for(var i=0;i < ca.length;i++) {
+            var c = ca[i];
+            while (c.charAt(0)==' ') c = c.substring(1,c.length);
+            if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+        }
+        return null;
+    }
+    function eraseCookie(name) {
+        createCookie(name,"",-1);
+    }
+    function denyAllConsentScripts() {
+        var consentValue = "";
+        scripts.forEach(function(){
+            consentValue = consentValue + "0";
+        });
+        acceptSomeConsentScripts(consentValue);
+    }
+    function acceptAllConsentScripts() {
+        var consentValue = "";
+        scripts.forEach(function(){
+            consentValue = consentValue + "1";
+        });
+        acceptSomeConsentScripts(consentValue);
+    }
+    function acceptSomeConsentScripts(consentValue) {
+        setConsentInputs(consentValue);
+        createCookie('consent-settings',consentValue,31);
+        document.getElementById('consent-notice').style.display = 'none';
+        document.getElementById('consent-overlay').classList.remove('active');
+        loadConsentScripts(consentValue);
+    }
+    function loadConsentScripts(consentValue) {
+        scripts.forEach(function(value,key){
+            
+            if(consentValue[key]=="1") {
+                var s = document.createElement('script');
+                s.type = 'text/javascript';
+                s.src = value;
+                document.body.appendChild(s);
+            }
+        });
+    }
+    function setConsentInputs(consentValue) {
+        var elements = document.querySelectorAll('#consent-overlay input:not([disabled])');
+        elements.forEach(function(el,index) {
+            if(consentValue[index]=="1") el.checked = true;
+            else el.checked = false;
+        });
+    }
+    function setConsentValue() {
+        var elements = document.querySelectorAll('#consent-overlay input:not([disabled])');
+        var consentValue = "";
+        elements.forEach(function(el) {
+            if(el.checked) consentValue = consentValue + "1";
+            else consentValue = consentValue + "0";
+        });
+        document.getElementById("save-consent").dataset.consentvalue = consentValue;
+    }
+ 
+    var elements = document.querySelectorAll('#consent-overlay input:not([disabled])');
+    elements.forEach(function(el) {
+        el.checked = false;
+    });
+
+    if(readCookie('consent-settings')) {
+        var consentValue = readCookie('consent-settings').toString();
+        setConsentInputs(consentValue);
+        loadConsentScripts(consentValue);
+    } else {
+      document.getElementById('consent-notice').style.display = 'block';
+    }
+ var elements = document.querySelectorAll('.manage-consent');
+    elements.forEach(function(el) {
+        el.addEventListener("click",function() {
+            document.getElementById('consent-overlay').classList.toggle('active');
+        });
+    });
+    var elements = document.querySelectorAll('.deny-consent');
+    elements.forEach(function(el) {
+        el.addEventListener("click",function() {
+            denyAllConsentScripts();
+        });
+    });
+    var elements = document.querySelectorAll('.approve-consent');
+    elements.forEach(function(el) {
+        el.addEventListener("click",function() {
+          acceptAllConsentScripts();
+        });
+    });
+    document.getElementById("save-consent").addEventListener("click",function() {
+        setConsentValue();
+        acceptSomeConsentScripts(this.dataset.consentvalue);
+    });
+    document.getElementById("consent-overlay").addEventListener("click",function(e) {
+        if (!document.querySelector("#consent-overlay > div").contains(e.target)){
+            this.classList.toggle('active');
+        }
+    });
+</script>
+
+
+    
+
+    
+
+
+  </body>
+</html>

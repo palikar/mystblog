@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Stanislav Arnaudov</title>
+    <link>/</link>
+    <description>Recent content on Stanislav Arnaudov</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Watching and reading list of greatness</title>
+      <link>/posts/watching_list/</link>
+      <pubDate>Thu, 10 Feb 2022 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/watching_list/</guid>
+      <description>Abstract A collection of talks, lectures, and reads that have affected me greatly in my professional life.
+The list Extreme SIMD: Optimized Collision Detection in Titanfall &amp;ndash; the best demonstration I&amp;rsquo;ve seen of how thinking about the hardware of a computer can work wonders when developing a novel algorithm scheme.
+Practicl creativity in Game design &amp;ndash; the talk is packed with useful practical tips that can be applied to any creative endeavor, not only game design.</description>
+    </item>
+    
+    <item>
+      <title>Watching and reading list of greatness</title>
+      <link>/reading_list/</link>
+      <pubDate>Thu, 10 Feb 2022 00:00:00 +0000</pubDate>
+      
+      <guid>/reading_list/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>About</title>
+      <link>/about/</link>
+      <pubDate>Fri, 15 Jun 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/about/</guid>
+      <description>Formal CV A PDF of my real resume.
+My assigned character I was born a human and I&amp;rsquo;m supposed to live on the planet till my body gives up and it&amp;rsquo;s no longer suitable for sustaining the social construct that one would call &amp;ldquo;life&amp;rdquo;&amp;hellip; or at least I am said so. I reserve my right to have speculations about this whole &amp;ldquo;dying&amp;rdquo;-thing. I popped into existence in the almost ex-soviet republic of Bulgaria where I&amp;rsquo;ve spent a good portion of my development into a fully-fledged and normally functioning carbon unit.</description>
+    </item>
+    
+    <item>
+      <title>Contact</title>
+      <link>/contact/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/contact/</guid>
+      <description>Contatct me at:
+stanislav_ts@abv.bg stanislav.arn@gmail.com LinkedIn </description>
+    </item>
+    
+    <item>
+      <title>More C Less &#43;&#43;</title>
+      <link>/posts/more_c_less_plus_plus/</link>
+      <pubDate>Fri, 30 Dec 2022 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/more_c_less_plus_plus/</guid>
+      <description>Abstract Recently I have moved in the direction of being a &amp;ldquo;C++ bad&amp;rdquo; person. I have learned C++ through watching CppCon talks so it&amp;rsquo;s not like I don&amp;rsquo;t understand the language. There was even a time when I fully bought into its philosophy. This time has passed. In recent years I&amp;rsquo;ve experimented with just how little I can use C++ and still be able to write performant, good, and easy-to-understand code.</description>
+    </item>
+    
+    <item>
+      <title>AssetBuilder</title>
+      <link>/projects/assetbuilder/</link>
+      <pubDate>Wed, 28 Dec 2022 00:00:00 +0000</pubDate>
+      
+      <guid>/projects/assetbuilder/</guid>
+      <description>Abstract AssetBuilder is my solution for quickly loading assets in some applications in DirectXer. There is a lot that needs to happen for an image to be turned into a texture on the GPU. Most of this work can be done offline and there are no reasons why it should not be done offline. AssetBuilder turns an asset definition file in JSON format into a packed asset bundle file in a custom binary format suitable for fast loading.</description>
+    </item>
+    
+    <item>
+      <title>CIBot</title>
+      <link>/projects/cibot/</link>
+      <pubDate>Tue, 27 Dec 2022 00:00:00 +0000</pubDate>
+      
+      <guid>/projects/cibot/</guid>
+      <description>Abstract As mentioned in DirectXer, CIBot is my Continuous Integration and automation solution. I mainly developed CIBot because I didn&amp;rsquo;t want to deal with some other CI systems like Jenkins, GitHub actions, or whatever is popular right now. I wanted to have a system that is optimized for me, does not waste my time, has the features I need, and nothing more.
+In the spirit of DirectXer, I decided to create this myself.</description>
+    </item>
+    
+    <item>
+      <title>Mission Control</title>
+      <link>/projects/missioncontrol/</link>
+      <pubDate>Mon, 26 Dec 2022 00:00:00 +0000</pubDate>
+      
+      <guid>/projects/missioncontrol/</guid>
+      <description>.## Abstract {#abstract}
+Mission Control is the product of my frustration with MSBuild and Visual Studio. Everything happens super slow in Visual Studio, if I want to make something happen, I always end up battling MSBuild configurations in the UI, things are not obvious, and all of this eats my time without giving me any deeper knowledge of&amp;hellip; anything really.
+This led to me spending a week or two developing and fleshing out Mission Control &amp;ndash; tool written in C-styled C++ that uses nothing but Win32 libraries to do everything that it needs to.</description>
+    </item>
+    
+    <item>
+      <title>DirectXer</title>
+      <link>/projects/directxer/</link>
+      <pubDate>Sun, 25 Dec 2022 00:00:00 +0000</pubDate>
+      
+      <guid>/projects/directxer/</guid>
+      <description>Abstract DirectXer started as a way for me learn DirectX11. Up until some point, I was familiar only with OpenGL and I wanted to learn THE mainstream API for graphics programming. DirectXer was the a project where I was experimenting and figuring things out about doing real-time rendering.
+Over time, however, DirectXer evolved into my primary &amp;ldquo;code base&amp;rdquo; where I was doing everything, again in an experimental fashion. I was doing things like figuring out what memory management solution works best, how to do 3D and 2D rendering on the GPU, how to load my assets quicky, what is a good approach to doing UI in video games, and much more.</description>
+    </item>
+    
+    <item>
+      <title>Software development philosophy</title>
+      <link>/posts/software_philosophy/</link>
+      <pubDate>Sun, 25 Dec 2022 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/software_philosophy/</guid>
+      <description>In the last couple of years, I&amp;rsquo;ve had a major shift in the way I view the whole process of &amp;ldquo;software development&amp;rdquo;. In this post, I want to share my current views and clearly state what I (currently) believe about programming, what my priorities are, and what I am thinking about when starting a new software project.
+My shift in perspective Several factors made me reconsider what I believe bout software development.</description>
+    </item>
+    
+    <item>
+      <title>Alisp</title>
+      <link>/projects/alisp/</link>
+      <pubDate>Thu, 20 Feb 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/projects/alisp/</guid>
+      <description>Abstract It&amp;rsquo;s has been a long standing idea of mine to just sit down and write a language. Not a complicated one, but also not completely useless one. Alisp is the crystallization of this idea into something concrete. It is a interpreted language based on Emacs-Lisp (elisp). I&amp;rsquo;ve borrowed a lot concepts from there and syntax-wise, Alisp closely follows elisp. By now the core runtime of the language is pretty feature complete and it is possible to run simple to moderately complicated programs.</description>
+    </item>
+    
+    <item>
+      <title>Generic Execution Around Pointer</title>
+      <link>/posts/generic_execution_around_pointer/</link>
+      <pubDate>Thu, 05 Dec 2019 00:12:08 +0100</pubDate>
+      
+      <guid>/posts/generic_execution_around_pointer/</guid>
+      <description>Abstract I recently found out what the Execute-Around_Pointer idiom in C++ is. What it does is track access to a specific object. For example, when you want to observe how certain properties of an object change on each method call, you would employ the use of this idiom. Think of it like wrapping each method call for an object with additional function calls. This, for empale, is ugly code:
+std::vector&amp;lt;int&amp;gt; vec{1,2,3,4}; std::cout &amp;lt;&amp;lt; std::size(vec) vec.</description>
+    </item>
+    
+    <item>
+      <title>Code Manager</title>
+      <link>/projects/code_manager/</link>
+      <pubDate>Sat, 16 Nov 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/projects/code_manager/</guid>
+      <description>Abstract This is my personal tool now for managing my GitHub repositories, some system software that I use and pretty much everything that can be downloaded, compiled locally and then installed on a Debian based Linux system. Through this utility one can quickly download and install random things from all over the internet. I&amp;rsquo;ve always wanted some small program that would allow me to quickly bring my GitHub repositories on my local machine so I end it up writing this in my spare time.</description>
+    </item>
+    
+    <item>
+      <title>Compile-Time Graph</title>
+      <link>/projects/ctgraph/</link>
+      <pubDate>Sat, 16 Nov 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/projects/ctgraph/</guid>
+      <description>Abstract CTGraph is a small C++17 project that implements a graph structure that can be used entirely at compile time. It started as just an experiment. I wanted to see just how much computation I can perform at compile time. I was heavily inspired by part of cpp_box. In there Jason Turner has managed to implement a compile-time finite state machine. I thought that Graphs are not too far off of a finite state machine so I decided to give the idea a try.</description>
+    </item>
+    
+    <item>
+      <title>Multidimensional Array size deduction in C&#43;&#43;</title>
+      <link>/posts/array_dim_deduction/</link>
+      <pubDate>Thu, 31 Oct 2019 00:00:00 +0100</pubDate>
+      
+      <guid>/posts/array_dim_deduction/</guid>
+      <description>Abstract Recently I encountered a small particularity of the C++ standard that I&amp;rsquo;ve known about previously but didn&amp;rsquo;t really care about up this point. The whole thing has to do with template type parameters. It turns out that C++ can&amp;rsquo;t deduce the type of a braced initializer. This has some funny consequences when you are designing a function that can take &amp;ldquo;everything&amp;rdquo; including arrays and you want to be able to call the function as function({1,3,4,5}).</description>
+    </item>
+    
+    <item>
+      <title>Train-Validation-Test split in PyTorch</title>
+      <link>/posts/pytorch_datasplit/</link>
+      <pubDate>Sun, 20 Oct 2019 00:00:00 +0200</pubDate>
+      
+      <guid>/posts/pytorch_datasplit/</guid>
+      <description>Abstract PyTorch is great! It offers tons of utilities that make every ML project a little bit less daunting. It&amp;rsquo;s easy to have your DNN-model up and running in almost no time. At the same time, the framework is still relatively unopinionated and lets you decide on the exact structure of your project. I&amp;rsquo;ve been playing around with PyTorch recently and the one thing I&amp;rsquo;ve been missing so far is to be able to create a train-validation-test split of my data in an &amp;ldquo;out of the box&amp;rdquo; manner.</description>
+    </item>
+    
+    <item>
+      <title>ABV Emails Retrieval</title>
+      <link>/posts/abv_mails/</link>
+      <pubDate>Sat, 11 May 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/abv_mails/</guid>
+      <description>Abstract So for several years now, I&amp;rsquo;ve been fed up with the email provider that I&amp;rsquo;ve been using. I choose it - or there it was chosen for me by my dad - in my most early internet days. Because of its early inception, the email has accumulated an enormous amount of emails over the years. Currently, I have around 7000 emails. Yes, the majority of them are useless spam but I really don&amp;rsquo;t want to go over all of them and clean them up.</description>
+    </item>
+    
+    <item>
+      <title>Compile time pipeline in C&#43;&#43;</title>
+      <link>/posts/compile_time_pipeline/</link>
+      <pubDate>Wed, 10 Apr 2019 00:00:00 +0200</pubDate>
+      
+      <guid>/posts/compile_time_pipeline/</guid>
+      <description>Abstract Recently I&amp;rsquo;ve been looking into the code of ChaiScript &amp;ndash; a scripting language written by Jason Turner that integrates seamlessly with C++. It&amp;rsquo;s a great project and you can learn a ton on parsing, general scripting language design and overall C++ from it. In its code, I&amp;rsquo;ve found several gems and idioms that I didn&amp;rsquo;t know before. Here I want to very briefly present a certain pattern that particularly caught my eye.</description>
+    </item>
+    
+    <item>
+      <title>The optimal CMake project structure.</title>
+      <link>/posts/cmake_structure/</link>
+      <pubDate>Wed, 10 Apr 2019 00:00:00 +0200</pubDate>
+      
+      <guid>/posts/cmake_structure/</guid>
+      <description>Abstract I am sure that every C++ programmer has at one point struggled with CMake. There have been multiple times where when I have to start work on some C++ project, I&amp;rsquo;ve to spend a good couple of hours in thinking how should my project structure look like. It&amp;rsquo;s just such a huge hassle to think about all of your CMakeList.txt files and possible libraries and different modules and&amp;hellip; the things that may go wrong with your build system.</description>
+    </item>
+    
+    <item>
+      <title>C&#43;&#43; things to think about while programming</title>
+      <link>/posts/cpp_tips/</link>
+      <pubDate>Fri, 27 Jul 2018 00:00:00 +0200</pubDate>
+      
+      <guid>/posts/cpp_tips/</guid>
+      <description>Abstract C++ is hard! C++ is even harder when you want to write good code. There are a lot of things to think about when you write code and if you don&amp;rsquo;t think about them, you are probably going to mess things up. Recently I&amp;rsquo;ve found that one good book (see references) that gives 42 (hehe!) concrete tips on how to be a better c++ programmer. This is my summary of sorts about the contents of said book.</description>
+    </item>
+    
+    <item>
+      <title>Notes on learning Numpy</title>
+      <link>/posts/numpy_notes/</link>
+      <pubDate>Fri, 20 Jul 2018 00:00:00 +0200</pubDate>
+      
+      <guid>/posts/numpy_notes/</guid>
+      <description>My notes while reading this. More or less copy paste. Take with a grain of salt&amp;hellip;or sugar.
+Abstract NumPy is a Python package. It stands for &amp;lsquo;Numerical Python&amp;rsquo;. It is a library consisting of multidimensional array classes and a collection of routines for processing of an array. From the officials:
+NumPy is the fundamental package for scientific computing with Python. It contains among other things:
+a powerful N-dimensional array object sophisticated (broadcasting) functions tools for integrating C/C++ and Fortran code useful linear algebra, Fourier transform, and random number capabilities Besides its obvious scientific uses, NumPy can also be used as an efficient multi-dimensional container of generic data.</description>
+    </item>
+    
+    <item>
+      <title>Notes on learning Pandas</title>
+      <link>/posts/pandas_notes/</link>
+      <pubDate>Fri, 13 Jul 2018 00:00:00 +0200</pubDate>
+      
+      <guid>/posts/pandas_notes/</guid>
+      <description>For transparency&amp;rsquo;s sake - those are my notes while learning about pandas from this tutorial. At times this here is just copy-paste from it, at others, it&amp;rsquo;s my own thoughts and explanations. This is meant to be a condensed version of the tutorial more or less just for me. If you found it useful though, well, good for you, I guess.
+Abstract Basic pandas is a Python package providing fast, flexible, and expressive data structures designed to make working with &amp;ldquo;relational Heterogeneous data&amp;rdquo; or &amp;ldquo;labeled&amp;rdquo; data both easy and intuitive.</description>
+    </item>
+    
+    <item>
+      <title>C&#43;&#43; Template Specialization</title>
+      <link>/posts/cpp_template_specialization/</link>
+      <pubDate>Fri, 06 Jul 2018 00:00:00 +0200</pubDate>
+      
+      <guid>/posts/cpp_template_specialization/</guid>
+      <description>Abstract C++ is awesome! I am starting strong here but it really is. When experienced (and crazy) enough one can implement everything and the at the same can do it incredibly efficient at run time (cuz who cares how much work does the compiler do for us). I can rant about how c++ is the best and all of its great features but for this post I will constraint myself to one particular part of C++ - template meta-programming!</description>
+    </item>
+    
+    <item>
+      <title>Emacs windows resizing</title>
+      <link>/posts/emacs_framer/</link>
+      <pubDate>Fri, 29 Jun 2018 00:00:00 +0200</pubDate>
+      
+      <guid>/posts/emacs_framer/</guid>
+      <description>Abstract Recently I&amp;rsquo;ve been introduced to the concept of a tiling windows manager. One key feature that caught my attention is how you can quickly resize the different windows and create the desired windows configuration with just a few executions of some keybindings. That got me to wonder how it would cool if I also have that in Emacs. I googled something like &amp;ldquo;resize emacs windows&amp;rdquo; but didn&amp;rsquo;t really (I didn&amp;rsquo;t want really) find a package that can do that.</description>
+    </item>
+    
+    <item>
+      <title>Github commits&#39; emails change</title>
+      <link>/posts/github_history_repair/</link>
+      <pubDate>Fri, 22 Jun 2018 00:00:00 +0200</pubDate>
+      
+      <guid>/posts/github_history_repair/</guid>
+      <description>Abstract You know that Contributions panel on your Github profile page. Let&amp;rsquo;s face it, developers these days take much pride when they can show their consistent work and progress of their own/forked repositories&amp;hellip; even when some of their commits are nothing more than an implementation of a single function. Or of course, it may be just me with that pride 😒. Said panel is a clear indication to your future employee or members of your &amp;ldquo;coding community&amp;rdquo; that you are pretty much a big deal with a good work ethic.</description>
+    </item>
+    
+    <item>
+      <title>Alisp [PART 2]</title>
+      <link>/projects/alisp_2/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/projects/alisp_2/</guid>
+      <description>Abstract In this post, I want to give a little more details on how Alisp can build from sources. ALisp is an interpreted language I&amp;rsquo;ve developed in C++. Over the last half a year, the project has become quite big (currently around 24K LOC) and thus the build process is so trivial as in the beginning. In the process of development, I&amp;rsquo;ve added numerous options for how the code can be compiled and all of those can be confusing at times.</description>
+    </item>
+    
+    <item>
+      <title>Stanislav Arnaudov</title>
+      <link>/cookies/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/cookies/</guid>
+      <description>Cookie policy Tip
+Please read this cookie policy (“cookie policy”, &amp;ldquo;policy&amp;rdquo;) carefully before using the stanislavts.xyz websiteq (“website”, &amp;ldquo;service&amp;rdquo;) operated by Stanislav Arnaudov (&amp;ldquo;us&amp;rdquo;, &amp;lsquo;we&amp;quot;, &amp;ldquo;our&amp;rdquo;).
+What are cookies? Cookies are simple text files that are stored on your computer or mobile device by a website’s server. Each cookie is unique to your web browser. It will contain some anonymous information such as a unique identifier, website’s domain name, and some digits and numbers.</description>
+    </item>
+    
+  </channel>
+</rss>

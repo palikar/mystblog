@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<html
+  class="not-ready text-sm lg:text-base"
+  style="--bg: #faf6f1"
+  lang="en-us">
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, shrink-to-fit=no"
+  />
+
+  
+  <title>Train-Validation-Test split in PyTorch - Stanislav Arnaudov</title>
+
+  
+  <meta name="theme-color" />
+  
+  <meta name="description" content="Abstract PyTorch is great! It offers tons of utilities that make every ML project a little bit less daunting. It&rsquo;s easy to have your DNN-model up and running in almost no time. At the same time, the framework is still relatively unopinionated and lets you decide on the exact structure of your project. I&rsquo;ve been playing around with PyTorch recently and the one thing I&rsquo;ve been missing so far is to be able to create a train-validation-test split of my data in an &ldquo;out of the box&rdquo; manner." />
+  <meta
+    name="author"
+    content="[Stanislav Arnaudov]"
+  />
+  
+
+  
+  
+  
+  
+  
+  
+  <link rel="preload stylesheet" as="style" href="/main.min.css" />
+
+  
+  <script
+    defer
+    src="highlight.min.js"
+    onload="hljs.initHighlightingOnLoad();"
+  ></script>
+  
+
+  
+   
+  <link rel="preload" as="image" href="theme.png" />
+
+  
+  
+  
+  <link rel="preload" as="image" href="https://www.gravatar.com/avatar/6f49be4b1398e1936dd765ef2df3a6f2?s=160&amp;d=identicon" />
+  
+  
+
+  
+  <link rel="preload" as="image" href="github.svg" />
+  
+  <link rel="preload" as="image" href="linkedin.svg" />
+  
+  <link rel="preload" as="image" href="facebook.svg" />
+  
+
+  
+  <link rel="icon" href="favicon.ico" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+
+  
+  <meta name="generator" content="Hugo 0.110.0">
+
+  
+  
+
+  
+  
+  
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-158773896-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+  
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-158773896-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+  
+  
+  
+  <meta property="og:title" content="Train-Validation-Test split in PyTorch" />
+<meta property="og:description" content="A short utility class for loading data into pytorch project" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/posts/pytorch_datasplit/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2019-10-20T00:00:00+02:00" />
+<meta property="article:modified_time" content="2023-02-09T23:51:41+02:00" />
+
+  
+  <meta itemprop="name" content="Train-Validation-Test split in PyTorch">
+<meta itemprop="description" content="A short utility class for loading data into pytorch project"><meta itemprop="datePublished" content="2019-10-20T00:00:00+02:00" />
+<meta itemprop="dateModified" content="2023-02-09T23:51:41+02:00" />
+<meta itemprop="wordCount" content="576">
+<meta itemprop="keywords" content="machine-learning,python," />
+  
+  <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Train-Validation-Test split in PyTorch"/>
+<meta name="twitter:description" content="A short utility class for loading data into pytorch project"/>
+
+  
+  
+</head>
+
+  <body class="text-black duration-200 ease-out dark:text-white">
+    <header class="mx-auto flex h-[5rem] max-w-3xl px-8 lg:justify-center">
+  <div class="relative z-50 mr-auto flex items-center">
+
+    <img alt="" src='/logos/SA.png' width="48" height="48"/>
+    <a class="-translate-x-[1px] -translate-y-0.5 text-3xl font-bold ml-6" href="">
+      Stanislav Arnaudov
+    </a>
+
+    <a class="btn-dark ml-6 h-6 w-6 shrink-0 cursor-pointer [background:url(./theme.png)_left_center/_auto_theme('spacing.6')_no-repeat] [transition:_background-position_0.4s_steps(5)] dark:[background-position:right]">
+    </a>
+  </div>
+
+  <a
+    class="btn-menu relative z-50 -mr-8 flex h-[5rem] w-[5rem] shrink-0 cursor-pointer flex-col items-center justify-center gap-2.5 lg:hidden"
+  ></a>
+
+  
+  <script>
+    
+    const htmlClass = document.documentElement.classList;
+    setTimeout(() => {
+      htmlClass.remove('not-ready');
+    }, 10);
+
+    
+    const btnMenu = document.querySelector('.btn-menu');
+    btnMenu.addEventListener('click', () => {
+      htmlClass.toggle('open');
+    });
+
+    
+    const metaTheme = document.querySelector('meta[name="theme-color"]');
+    const lightBg = `"#faf6f1"`.replace(/"/g, '');
+    const setDark = (isDark) => {
+      metaTheme.setAttribute('content', isDark ? '#000' : lightBg);
+      htmlClass[isDark ? 'add' : 'remove']('dark');
+      localStorage.setItem('dark', isDark);
+    };
+
+    
+    const darkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+    if (htmlClass.contains('dark')) {
+      setDark(true);
+    } else {
+      const darkVal = localStorage.getItem('dark');
+      setDark(darkVal ? darkVal === 'true' : darkScheme.matches);
+    }
+
+    
+    darkScheme.addEventListener('change', (event) => {
+      setDark(event.matches);
+    });
+
+    
+    const btnDark = document.querySelector('.btn-dark');
+    btnDark.addEventListener('click', () => {
+      setDark(localStorage.getItem('dark') !== 'true');
+    });
+  </script>
+
+  <div
+    class="nav-wrapper fixed inset-x-0 top-full z-40 flex h-full select-none flex-col justify-center pb-16 duration-200 dark:bg-black lg:static lg:h-auto lg:flex-row lg:!bg-transparent lg:pb-0 lg:transition-none"
+  >
+    
+    
+    <nav class="lg:ml-12 lg:flex lg:flex-row lg:items-center lg:space-x-6">
+      
+      <a
+        class="block text-center text-2xl leading-[5rem] lg:text-base lg:font-normal"
+        href="/"
+        >Home</a
+      >
+      
+      <a
+        class="block text-center text-2xl leading-[5rem] lg:text-base lg:font-normal"
+        href="/about/"
+        >About</a
+      >
+      
+      <a
+        class="block text-center text-2xl leading-[5rem] lg:text-base lg:font-normal"
+        href="/projects"
+        >Projects</a
+      >
+      
+      <a
+        class="block text-center text-2xl leading-[5rem] lg:text-base lg:font-normal"
+        href="/posts/"
+        >Posts</a
+      >
+      
+      <a
+        class="block text-center text-2xl leading-[5rem] lg:text-base lg:font-normal"
+        href="/contact/"
+        >Contact</a
+      >
+      
+    </nav>
+    
+
+    
+    <nav
+      class="mt-12 flex justify-center space-x-10 dark:invert lg:mt-0 lg:ml-12 lg:items-center lg:space-x-6"
+    >
+      
+      <a
+        class="h-8 w-8 [background:var(--url)_center_center/cover_no-repeat] lg:h-6 lg:w-6"
+        style="--url: url(./github.svg)"
+        href=" https://github.com/palikar "
+        target="_blank"
+      ></a>
+      
+      <a
+        class="h-8 w-8 [background:var(--url)_center_center/cover_no-repeat] lg:h-6 lg:w-6"
+        style="--url: url(./linkedin.svg)"
+        href=" https://linkedin.com/in/stanislav-arnaudov-37b475164 "
+        target="_blank"
+      ></a>
+      
+      <a
+        class="h-8 w-8 [background:var(--url)_center_center/cover_no-repeat] lg:h-6 lg:w-6"
+        style="--url: url(./facebook.svg)"
+        href=" https://facebook.com/stanislav.ts "
+        target="_blank"
+      ></a>
+      
+    </nav>
+    
+  </div>
+</header>
+
+
+    <main class="prose prose-neutral relative mx-auto min-h-[calc(100%-10rem)] max-w-3xl px-4 pt-20 pb-32 dark:prose-invert">
+      
+
+<article>
+  <header class="mb-20">
+
+    <h1 class="!my-0 pb-2.5">Train-Validation-Test split in PyTorch</h1>
+
+    
+    <div class="text-sm opacity-60">
+      
+      <time>Oct 20, 2019</time>
+      
+      
+      <span class="mx-1">&middot;</span>
+      <span>[Stanislav Arnaudov]</span>
+      <span class="mx-1">&middot;</span>
+      <span>3 minute read</span>
+      <span class="mx-1">&middot;</span>
+      <span>576 words</span>
+      
+    </div>
+    
+  </header>
+
+  <section><h2 id="abstract">Abstract</h2>
+<p><a href="https://pytorch.org/">PyTorch</a> is great! It offers tons of utilities that make every ML project a little bit less daunting. It&rsquo;s easy to have your DNN-model up and running in almost no time. At the same time, the framework is still relatively unopinionated and lets you decide on the exact structure of your project. I&rsquo;ve been playing around with PyTorch recently and the one thing I&rsquo;ve been missing so far is to be able to create a train-validation-test split of my data in an &ldquo;out of the box&rdquo; manner. It&rsquo;s not that it is impossible but it requires some boilerplate code. In this post, I present a small utility class for doing exactly this.</p>
+<h2 id="the-datasplit-class">The <em>DataSplit</em> class</h2>
+<p>The data loading process in PyTorch involves defining a dataset class that inherits from <a href="https://pytorch.org/docs/stable/data.html#torch.utils.data.Dataset">data.Dataset</a>. The class defines only what the data point at a given index is and how much data points there are. PyTorch can then handle a good portion of the other data loading tasks &ndash; for example batching.</p>
+<br />
+<p>My utility class <em>DataSplit</em> presupposes that a dataset exists. It takes a dataset as an argument during initialization as well as the ration of the train to test data (<code>test_train_split</code>) and the ration of validation to train data (<code>val_train_split</code>). The data can also be optionally shuffled through the use of the <code>shuffle</code> argument (it defaults to false). With the default parameters, the test set will be 20% of the whole data, the training set will be 70% and the validation 10%. To note is that <code>val_train_split</code> gives the fraction of the training data to be used as a validation set. The split is performed by first splitting the data according to the <code>test_train_split</code> fraction and then splitting the train data according to <code>val_train_split</code>.</p>
+<br />
+<p>The full source code of the class is in the following snippet.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> logging
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> functools <span style="color:#f92672">import</span> lru_cache
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> torch
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> torch.utils.data <span style="color:#f92672">import</span> DataLoader
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> torch.utils.data <span style="color:#f92672">import</span> Dataset
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> torch.utils.data.sampler <span style="color:#f92672">import</span> SubsetRandomSampler
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> numpy <span style="color:#66d9ef">as</span> np
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">DataSplit</span>:
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> __init__(self, dataset, test_train_split<span style="color:#f92672">=</span><span style="color:#ae81ff">0.8</span>, val_train_split<span style="color:#f92672">=</span><span style="color:#ae81ff">0.1</span>, shuffle<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>):
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>dataset <span style="color:#f92672">=</span> dataset
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        dataset_size <span style="color:#f92672">=</span> len(dataset)
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>indices <span style="color:#f92672">=</span> list(range(dataset_size))
+</span></span><span style="display:flex;"><span>        test_split <span style="color:#f92672">=</span> int(np<span style="color:#f92672">.</span>floor(test_train_split <span style="color:#f92672">*</span> dataset_size))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> shuffle:
+</span></span><span style="display:flex;"><span>            np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>shuffle(self<span style="color:#f92672">.</span>indices)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        train_indices, self<span style="color:#f92672">.</span>test_indices <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>indices[:test_split], self<span style="color:#f92672">.</span>indices[test_split:]
+</span></span><span style="display:flex;"><span>        train_size <span style="color:#f92672">=</span> len(train_indices)
+</span></span><span style="display:flex;"><span>        validation_split <span style="color:#f92672">=</span> int(np<span style="color:#f92672">.</span>floor((<span style="color:#ae81ff">1</span> <span style="color:#f92672">-</span> val_train_split) <span style="color:#f92672">*</span> train_size))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>train_indices, self<span style="color:#f92672">.</span>val_indices <span style="color:#f92672">=</span> train_indices[ : validation_split], train_indices[validation_split:]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>train_sampler <span style="color:#f92672">=</span> SubsetRandomSampler(self<span style="color:#f92672">.</span>train_indices)
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>val_sampler <span style="color:#f92672">=</span> SubsetRandomSampler(self<span style="color:#f92672">.</span>val_indices)
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>test_sampler <span style="color:#f92672">=</span> SubsetRandomSampler(self<span style="color:#f92672">.</span>test_indices)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_train_split_point</span>(self):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> len(self<span style="color:#f92672">.</span>train_sampler) <span style="color:#f92672">+</span> len(self<span style="color:#f92672">.</span>val_indices)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_validation_split_point</span>(self):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> len(self<span style="color:#f92672">.</span>train_sampler)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@lru_cache</span>(maxsize<span style="color:#f92672">=</span><span style="color:#ae81ff">4</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_split</span>(self, batch_size<span style="color:#f92672">=</span><span style="color:#ae81ff">50</span>, num_workers<span style="color:#f92672">=</span><span style="color:#ae81ff">4</span>):
+</span></span><span style="display:flex;"><span>        logging<span style="color:#f92672">.</span>debug(<span style="color:#e6db74">&#39;Initializing train-validation-test dataloaders&#39;</span>)
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>train_loader <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>get_train_loader(batch_size<span style="color:#f92672">=</span>batch_size, num_workers<span style="color:#f92672">=</span>num_workers)
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>val_loader <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>get_validation_loader(batch_size<span style="color:#f92672">=</span>batch_size, num_workers<span style="color:#f92672">=</span>num_workers)
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>test_loader <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>get_test_loader(batch_size<span style="color:#f92672">=</span>batch_size, num_workers<span style="color:#f92672">=</span>num_workers)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> self<span style="color:#f92672">.</span>train_loader, self<span style="color:#f92672">.</span>val_loader, self<span style="color:#f92672">.</span>test_loader
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@lru_cache</span>(maxsize<span style="color:#f92672">=</span><span style="color:#ae81ff">4</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_train_loader</span>(self, batch_size<span style="color:#f92672">=</span><span style="color:#ae81ff">50</span>, num_workers<span style="color:#f92672">=</span><span style="color:#ae81ff">4</span>):
+</span></span><span style="display:flex;"><span>        logging<span style="color:#f92672">.</span>debug(<span style="color:#e6db74">&#39;Initializing train dataloader&#39;</span>)
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>train_loader <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>utils<span style="color:#f92672">.</span>data<span style="color:#f92672">.</span>DataLoader(self<span style="color:#f92672">.</span>dataset, batch_size<span style="color:#f92672">=</span>batch_size, sampler<span style="color:#f92672">=</span>self<span style="color:#f92672">.</span>train_sampler, shuffle<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>, num_workers<span style="color:#f92672">=</span>num_workers)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> self<span style="color:#f92672">.</span>train_loader
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@lru_cache</span>(maxsize<span style="color:#f92672">=</span><span style="color:#ae81ff">4</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_validation_loader</span>(self, batch_size<span style="color:#f92672">=</span><span style="color:#ae81ff">50</span>, num_workers<span style="color:#f92672">=</span><span style="color:#ae81ff">4</span>):
+</span></span><span style="display:flex;"><span>        logging<span style="color:#f92672">.</span>debug(<span style="color:#e6db74">&#39;Initializing validation dataloader&#39;</span>)
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>val_loader <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>utils<span style="color:#f92672">.</span>data<span style="color:#f92672">.</span>DataLoader(self<span style="color:#f92672">.</span>dataset, batch_size<span style="color:#f92672">=</span>batch_size, sampler<span style="color:#f92672">=</span>self<span style="color:#f92672">.</span>val_sampler, shuffle<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>, num_workers<span style="color:#f92672">=</span>num_workers)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> self<span style="color:#f92672">.</span>val_loader
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@lru_cache</span>(maxsize<span style="color:#f92672">=</span><span style="color:#ae81ff">4</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_test_loader</span>(self, batch_size<span style="color:#f92672">=</span><span style="color:#ae81ff">50</span>, num_workers<span style="color:#f92672">=</span><span style="color:#ae81ff">4</span>):
+</span></span><span style="display:flex;"><span>        logging<span style="color:#f92672">.</span>debug(<span style="color:#e6db74">&#39;Initializing test dataloader&#39;</span>)
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>test_loader <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>utils<span style="color:#f92672">.</span>data<span style="color:#f92672">.</span>DataLoader(self<span style="color:#f92672">.</span>dataset, batch_size<span style="color:#f92672">=</span>batch_size, sampler<span style="color:#f92672">=</span>self<span style="color:#f92672">.</span>test_sampler, shuffle<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>, num_workers<span style="color:#f92672">=</span>num_workers)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> self<span style="color:#f92672">.</span>test_loader
+</span></span></code></pre></div><p>After an instance of the class is created, the <code>get_split</code> method can be used to get a tuple of three <a href="https://pytorch.org/docs/stable/data.html#torch.utils.data.DataLoader">data.DataLoader</a> objects &ndash; one for the train, validation, and test sets. The method has a couple of keyword arguments for the batch size(<code>batch_size</code>) and the number of threads to be used while loading the data (<code>num_workers</code>). Both arguments are passed to the created <em>DataLoader</em> object.</p>
+<br />
+<p>A possible use case is:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">PlainDataSet</span>(Dataset):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> __init__(self):
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>arr <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([<span style="color:#ae81ff">1.0</span>]<span style="color:#f92672">*</span><span style="color:#ae81ff">1000</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> __getitem__(self, index):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> np<span style="color:#f92672">.</span>array([self<span style="color:#f92672">.</span>arr[index]])
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> __len__(self):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> len(self<span style="color:#f92672">.</span>arr)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>dataset <span style="color:#f92672">=</span> PlainDataSet()
+</span></span><span style="display:flex;"><span>split <span style="color:#f92672">=</span> DataSplit(dataset, shuffle<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>)
+</span></span><span style="display:flex;"><span>train_loader, val_loader, test_loader <span style="color:#f92672">=</span> split<span style="color:#f92672">.</span>get_split(batch_size<span style="color:#f92672">=</span><span style="color:#ae81ff">75</span>, num_workers<span style="color:#f92672">=</span><span style="color:#ae81ff">8</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> iteration, batch <span style="color:#f92672">in</span> enumerate(train_loader,<span style="color:#ae81ff">1</span>):
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#39;</span><span style="color:#e6db74">{}</span><span style="color:#e6db74"> : </span><span style="color:#e6db74">{}</span><span style="color:#e6db74">&#39;</span><span style="color:#f92672">.</span>format(iteration, str(batch<span style="color:#f92672">.</span>size())))
+</span></span></code></pre></div></section>
+
+  
+  
+
+
+  
+  
+  <div id="disqus_thread"></div>
+
+<script>
+
+ function readCookie(name)
+ {
+   var nameEQ = name + "=";
+   var ca = document.cookie.split(';');
+   for(var i=0;i < ca.length;i++) {
+     var c = ca[i];
+     while (c.charAt(0)==' ') c = c.substring(1,c.length);
+     if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+   }
+   return null;
+ }
+
+ (function() {
+   let cookieValue = readCookie('consent-settings');
+   if (cookieValue)
+   {
+     var consentValue = cookieValue.toString();
+     if (consentValue[1] === "1")
+     {	    
+       const disqusShortname = 'palikar-github-io';
+       const script = document.createElement('script');
+       script.src = 'https://' + disqusShortname + '.disqus.com/embed.js';
+       script.setAttribute('data-timestamp', + new Date());
+       document.head.appendChild(script);
+     }
+   }
+ })();
+ 
+</script>
+
+  
+</article>
+
+
+    </main>
+
+    <footer class="opaco mx-auto flex h-[5rem] max-w-3xl items-center px-8 text-[0.9em] opacity-60">
+  <div class="mr-auto">
+    &copy; 2023
+    <a class="link" href="">Stanislav Arnaudov</a>
+  </div>
+  <a class="link mx-6" href="#cookies" onclick="document.getElementById('consent-notice').style.display = 'block'; ">Cookie Policy</a>
+  <a class="link mx-6" href="https://gohugo.io/" rel="noopener" target="_blank">Powered by Hugo</a>
+  Theme: 
+  <a class="link" href="https://github.com/nanxiaobei/hugo-paper" rel="noopener" target="_blank" >Paper 6</a>
+</footer>
+
+
+    <style>
+    #consent-notice {padding: 1rem 1rem; display: none; text-align: center; position: fixed; bottom: 0; width: calc(100% - 2rem); background: #222; color: white;}
+    #consent-notice span {margin-right: 1rem;}
+    #consent-notice button {cursor: pointer; display: inline-block; width: auto;}
+    #consent-notice span a {color: white; text-decoration: underline; text-decoration-color: rgba(255,255,255,0.5);}
+    #consent-notice button.btn {margin-left: 0.5rem;}
+    #consent-notice button.btn.manage-consent {background: rgba(255,255,255,0.1); font-weight: normal;}
+    
+    #consent-overlay {position: fixed; left: 0; top: 0; width: 100%; height: 100vh; display: none; background: rgba(0,0,0,0.75); z-index: 999999; overflow: auto; cursor: pointer;}
+    #consent-overlay.active {display: flex;}
+    #consent-overlay > div {background: white; width: 100%; max-width: 30rem; padding: 1.75rem; margin: auto; cursor: initial;}
+    #consent-overlay > div > div {display: flex; align-items: flex-start; margin-bottom: 1rem;}
+    #consent-overlay > div > div:last-child {margin: 0;}
+    #consent-overlay h3 {padding-top: 0;}
+    #consent-overlay input {margin-top: 0.3rem;}
+    #consent-overlay label {display: block; color: black; }
+    #consent-overlay .btn {margin-right: 0.5rem;}
+    #consent-overlay button.btn.save-consent {background: rgba(0,0,0,0.6); font-weight: normal;}
+
+    @media (max-width: 767px) {
+        #consent-overlay > div {padding: 1.75rem 1rem;}
+        #consent-notice span {display: block; padding-top: 3px; margin-bottom: 1.5rem;}
+        #consent-notice button.btn {position: relative; bottom: 4px;}
+    }
+</style>
+
+<div id="consent-notice">
+  <span>We would like to use <a class="manage-consent" href="#manage-consent">third party code</a> to improve the functionality of this website.</span>
+  <span><a class="link mx-6" href="/cookies" onclick="document.getElementById('consent-notice').style.display = 'block'; ">More Information</a></span>
+  <button class="btn manage-consent">Manage preferences</button>
+  <button class="btn deny-consent">Deny</button>
+  <button class="btn approve-consent">Allow</button>
+</div>
+
+<div id="consent-overlay">
+    <div>
+        
+            <div>
+                <input type="checkbox" id="item0" value="1" name="item0"  />
+                <label for="item0">
+                  <h3>Google Anaytics (functional)</h3>
+		  <p>This code gives us insight into the number of people that visit our website, where they are from and what they are clicking on.</p>
+                </label>
+            </div>
+        
+            <div>
+                <input type="checkbox" id="item1" value="1" name="item1"  />
+                <label for="item1">
+                  <h3>Disqus Comment service</h3>
+		  <p>The code allows to use the Disqus service for comments on the posts</p>
+                </label>
+            </div>
+        
+        <div>
+            <button id="save-consent" class="btn save-consent" data-consentvalue="00">Save preferences</button>
+            <button class="btn approve-consent">Allow all</button>
+        </div>
+    </div>
+</div>
+<script>
+
+    const scripts = [];
+    scripts[ 0 ] = "/js/ga.js";
+    scripts[ 1 ] = "/js/disqus.js";
+
+    function createCookie(name,value,days) {
+        var expires = "";
+        if (days) {
+            var date = new Date();
+            date.setTime(date.getTime() + (days*24*60*60*1000));
+            expires = "; expires=" + date.toUTCString();
+        }
+        document.cookie = name + "=" + value + expires + "; path=/";
+    }
+    function readCookie(name) {
+        var nameEQ = name + "=";
+        var ca = document.cookie.split(';');
+        for(var i=0;i < ca.length;i++) {
+            var c = ca[i];
+            while (c.charAt(0)==' ') c = c.substring(1,c.length);
+            if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+        }
+        return null;
+    }
+    function eraseCookie(name) {
+        createCookie(name,"",-1);
+    }
+    function denyAllConsentScripts() {
+        var consentValue = "";
+        scripts.forEach(function(){
+            consentValue = consentValue + "0";
+        });
+        acceptSomeConsentScripts(consentValue);
+    }
+    function acceptAllConsentScripts() {
+        var consentValue = "";
+        scripts.forEach(function(){
+            consentValue = consentValue + "1";
+        });
+        acceptSomeConsentScripts(consentValue);
+    }
+    function acceptSomeConsentScripts(consentValue) {
+        setConsentInputs(consentValue);
+        createCookie('consent-settings',consentValue,31);
+        document.getElementById('consent-notice').style.display = 'none';
+        document.getElementById('consent-overlay').classList.remove('active');
+        loadConsentScripts(consentValue);
+    }
+    function loadConsentScripts(consentValue) {
+        scripts.forEach(function(value,key){
+            
+            if(consentValue[key]=="1") {
+                var s = document.createElement('script');
+                s.type = 'text/javascript';
+                s.src = value;
+                document.body.appendChild(s);
+            }
+        });
+    }
+    function setConsentInputs(consentValue) {
+        var elements = document.querySelectorAll('#consent-overlay input:not([disabled])');
+        elements.forEach(function(el,index) {
+            if(consentValue[index]=="1") el.checked = true;
+            else el.checked = false;
+        });
+    }
+    function setConsentValue() {
+        var elements = document.querySelectorAll('#consent-overlay input:not([disabled])');
+        var consentValue = "";
+        elements.forEach(function(el) {
+            if(el.checked) consentValue = consentValue + "1";
+            else consentValue = consentValue + "0";
+        });
+        document.getElementById("save-consent").dataset.consentvalue = consentValue;
+    }
+ 
+    var elements = document.querySelectorAll('#consent-overlay input:not([disabled])');
+    elements.forEach(function(el) {
+        el.checked = false;
+    });
+
+    if(readCookie('consent-settings')) {
+        var consentValue = readCookie('consent-settings').toString();
+        setConsentInputs(consentValue);
+        loadConsentScripts(consentValue);
+    } else {
+      document.getElementById('consent-notice').style.display = 'block';
+    }
+ var elements = document.querySelectorAll('.manage-consent');
+    elements.forEach(function(el) {
+        el.addEventListener("click",function() {
+            document.getElementById('consent-overlay').classList.toggle('active');
+        });
+    });
+    var elements = document.querySelectorAll('.deny-consent');
+    elements.forEach(function(el) {
+        el.addEventListener("click",function() {
+            denyAllConsentScripts();
+        });
+    });
+    var elements = document.querySelectorAll('.approve-consent');
+    elements.forEach(function(el) {
+        el.addEventListener("click",function() {
+          acceptAllConsentScripts();
+        });
+    });
+    document.getElementById("save-consent").addEventListener("click",function() {
+        setConsentValue();
+        acceptSomeConsentScripts(this.dataset.consentvalue);
+    });
+    document.getElementById("consent-overlay").addEventListener("click",function(e) {
+        if (!document.querySelector("#consent-overlay > div").contains(e.target)){
+            this.classList.toggle('active');
+        }
+    });
+</script>
+
+
+    
+
+    
+
+
+  </body>
+</html>

@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<html
+  class="not-ready text-sm lg:text-base"
+  style="--bg: #faf6f1"
+  lang="en-us">
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, shrink-to-fit=no"
+  />
+
+  
+  <title>AssetBuilder - Stanislav Arnaudov</title>
+
+  
+  <meta name="theme-color" />
+  
+  <meta name="description" content="Abstract AssetBuilder is my solution for quickly loading assets in some applications in DirectXer. There is a lot that needs to happen for an image to be turned into a texture on the GPU. Most of this work can be done offline and there are no reasons why it should not be done offline. AssetBuilder turns an asset definition file in JSON format into a packed asset bundle file in a custom binary format suitable for fast loading." />
+  <meta
+    name="author"
+    content="Stanislav Arnaudov"
+  />
+  
+
+  
+  
+  
+  
+  
+  
+  <link rel="preload stylesheet" as="style" href="/main.min.css" />
+
+  
+  <script
+    defer
+    src="highlight.min.js"
+    onload="hljs.initHighlightingOnLoad();"
+  ></script>
+  
+
+  
+   
+  <link rel="preload" as="image" href="theme.png" />
+
+  
+  
+  
+  <link rel="preload" as="image" href="https://www.gravatar.com/avatar/6f49be4b1398e1936dd765ef2df3a6f2?s=160&amp;d=identicon" />
+  
+  
+
+  
+  <link rel="preload" as="image" href="github.svg" />
+  
+  <link rel="preload" as="image" href="linkedin.svg" />
+  
+  <link rel="preload" as="image" href="facebook.svg" />
+  
+
+  
+  <link rel="icon" href="favicon.ico" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+
+  
+  <meta name="generator" content="Hugo 0.110.0">
+
+  
+  
+
+  
+  
+  
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-158773896-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+  
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-158773896-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+  
+  
+  
+  <meta property="og:title" content="AssetBuilder" />
+<meta property="og:description" content="A tool for packing game assets -- images, sounds, models, etc. -- in a binary format" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/projects/assetbuilder/" /><meta property="article:section" content="projects" />
+<meta property="article:published_time" content="2022-12-28T00:00:00+00:00" />
+<meta property="article:modified_time" content="2023-02-12T22:30:08+02:00" />
+
+  
+  <meta itemprop="name" content="AssetBuilder">
+<meta itemprop="description" content="A tool for packing game assets -- images, sounds, models, etc. -- in a binary format"><meta itemprop="datePublished" content="2022-12-28T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2023-02-12T22:30:08+02:00" />
+<meta itemprop="wordCount" content="675">
+<meta itemprop="keywords" content="" />
+  
+  <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="AssetBuilder"/>
+<meta name="twitter:description" content="A tool for packing game assets -- images, sounds, models, etc. -- in a binary format"/>
+
+  
+  
+</head>
+
+  <body class="text-black duration-200 ease-out dark:text-white">
+    <header class="mx-auto flex h-[5rem] max-w-3xl px-8 lg:justify-center">
+  <div class="relative z-50 mr-auto flex items-center">
+
+    <img alt="" src='/logos/SA.png' width="48" height="48"/>
+    <a class="-translate-x-[1px] -translate-y-0.5 text-3xl font-bold ml-6" href="">
+      Stanislav Arnaudov
+    </a>
+
+    <a class="btn-dark ml-6 h-6 w-6 shrink-0 cursor-pointer [background:url(./theme.png)_left_center/_auto_theme('spacing.6')_no-repeat] [transition:_background-position_0.4s_steps(5)] dark:[background-position:right]">
+    </a>
+  </div>
+
+  <a
+    class="btn-menu relative z-50 -mr-8 flex h-[5rem] w-[5rem] shrink-0 cursor-pointer flex-col items-center justify-center gap-2.5 lg:hidden"
+  ></a>
+
+  
+  <script>
+    
+    const htmlClass = document.documentElement.classList;
+    setTimeout(() => {
+      htmlClass.remove('not-ready');
+    }, 10);
+
+    
+    const btnMenu = document.querySelector('.btn-menu');
+    btnMenu.addEventListener('click', () => {
+      htmlClass.toggle('open');
+    });
+
+    
+    const metaTheme = document.querySelector('meta[name="theme-color"]');
+    const lightBg = `"#faf6f1"`.replace(/"/g, '');
+    const setDark = (isDark) => {
+      metaTheme.setAttribute('content', isDark ? '#000' : lightBg);
+      htmlClass[isDark ? 'add' : 'remove']('dark');
+      localStorage.setItem('dark', isDark);
+    };
+
+    
+    const darkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+    if (htmlClass.contains('dark')) {
+      setDark(true);
+    } else {
+      const darkVal = localStorage.getItem('dark');
+      setDark(darkVal ? darkVal === 'true' : darkScheme.matches);
+    }
+
+    
+    darkScheme.addEventListener('change', (event) => {
+      setDark(event.matches);
+    });
+
+    
+    const btnDark = document.querySelector('.btn-dark');
+    btnDark.addEventListener('click', () => {
+      setDark(localStorage.getItem('dark') !== 'true');
+    });
+  </script>
+
+  <div
+    class="nav-wrapper fixed inset-x-0 top-full z-40 flex h-full select-none flex-col justify-center pb-16 duration-200 dark:bg-black lg:static lg:h-auto lg:flex-row lg:!bg-transparent lg:pb-0 lg:transition-none"
+  >
+    
+    
+    <nav class="lg:ml-12 lg:flex lg:flex-row lg:items-center lg:space-x-6">
+      
+      <a
+        class="block text-center text-2xl leading-[5rem] lg:text-base lg:font-normal"
+        href="/"
+        >Home</a
+      >
+      
+      <a
+        class="block text-center text-2xl leading-[5rem] lg:text-base lg:font-normal"
+        href="/about/"
+        >About</a
+      >
+      
+      <a
+        class="block text-center text-2xl leading-[5rem] lg:text-base lg:font-normal"
+        href="/projects"
+        >Projects</a
+      >
+      
+      <a
+        class="block text-center text-2xl leading-[5rem] lg:text-base lg:font-normal"
+        href="/posts/"
+        >Posts</a
+      >
+      
+      <a
+        class="block text-center text-2xl leading-[5rem] lg:text-base lg:font-normal"
+        href="/contact/"
+        >Contact</a
+      >
+      
+    </nav>
+    
+
+    
+    <nav
+      class="mt-12 flex justify-center space-x-10 dark:invert lg:mt-0 lg:ml-12 lg:items-center lg:space-x-6"
+    >
+      
+      <a
+        class="h-8 w-8 [background:var(--url)_center_center/cover_no-repeat] lg:h-6 lg:w-6"
+        style="--url: url(./github.svg)"
+        href=" https://github.com/palikar "
+        target="_blank"
+      ></a>
+      
+      <a
+        class="h-8 w-8 [background:var(--url)_center_center/cover_no-repeat] lg:h-6 lg:w-6"
+        style="--url: url(./linkedin.svg)"
+        href=" https://linkedin.com/in/stanislav-arnaudov-37b475164 "
+        target="_blank"
+      ></a>
+      
+      <a
+        class="h-8 w-8 [background:var(--url)_center_center/cover_no-repeat] lg:h-6 lg:w-6"
+        style="--url: url(./facebook.svg)"
+        href=" https://facebook.com/stanislav.ts "
+        target="_blank"
+      ></a>
+      
+    </nav>
+    
+  </div>
+</header>
+
+
+    <main class="prose prose-neutral relative mx-auto min-h-[calc(100%-10rem)] max-w-3xl px-4 pt-20 pb-32 dark:prose-invert">
+      
+
+<article>
+  <header class="mb-20">
+
+    <h1 class="!my-0 pb-2.5">AssetBuilder</h1>
+
+    
+    <div class="text-sm opacity-60">
+      
+      <time>Dec 28, 2022</time>
+      
+      
+      <span class="mx-1">&middot;</span>
+      <span>Stanislav Arnaudov</span>
+      <span class="mx-1">&middot;</span>
+      <span>3 minute read</span>
+      <span class="mx-1">&middot;</span>
+      <span>675 words</span>
+      
+    </div>
+    
+  </header>
+
+  <section><h2 id="abstract">Abstract</h2>
+<p>AssetBuilder is my solution for quickly loading assets in some
+applications in DirectXer. There is a lot that needs to happen for an
+image to be turned into a texture on the GPU. Most of this work can be
+done offline and there are no reasons why it should not be done
+offline. AssetBuilder turns an asset definition file in JSON format
+into a packed asset bundle file in a custom binary format suitable for
+fast loading.</p>
+<p>The runtime asset loading logic can accept this binary file, read its entire
+contents into memory with one read and then load every resource
+necessary as quickly as possible. Having all the assets that a game
+(or a level of a game) needs in one binary blob makes loading
+performance incredibly high. Currently, the system can load about 230
+MBs worth of assets in under a second.</p>
+<p>In this article, I&rsquo;ll go over the assets that AssetBuilder can
+currently pack in a binary file.</p>
+<h2 id="principles">Principles</h2>
+<p>The core principles I follow and how they apply to AssetBuilder:</p>
+<ul>
+<li>Performance &ndash; I don&rsquo;t want to wait for assets to get packed</li>
+<li>Usability &ndash; define assets in a JSON file and let AssetBuilder do
+its job - nothing more, nothing less.</li>
+</ul>
+<h2 id="notable-achievements">Notable achievements</h2>
+<ul>
+<li>
+<p><strong>JSON for asset file definition</strong> &ndash; as said before, AssetBuilder
+uses a JSON file for defining what assets are to be packed. The JSON
+file contains information about every asset and how exactly it
+should be packed into the binary file. Some assets also have defined
+Id for them which can be used in the C++ code to refer to them.</p>
+<figure><img src="/img/asset_builder_1.png" width="1024px"/>
+  </figure>
+
+</li>
+<li>
+<p><strong>Packing images in atlases</strong> &ndash; AssetBuilder can pack image assets
+in texture atlases to optimize the GPU memory usage by having
+a small number of big textures instead of lots of small
+ones. AssetBuilder can do this automatically and
+uses
+<a href="https://github.com/nothings/stb/blob/master/stb_rect_pack.h">stb_rect_pack</a> under
+the hood to generate packed atlases with images.</p>
+</li>
+<li>
+<p><strong>Loadable assets</strong> &ndash; currently AssetBuilder can pack the following
+asset types:</p>
+<ul>
+<li><strong>Texture</strong> &ndash; simple GPU texture. Textures can optionally be encoded in the BC6 format through a compute shader (this happens really fast and it hardly costs packing time)</li>
+<li><strong>Vertex Buffer,</strong> &ndash; GPU vertex buffer</li>
+<li><strong>Index Buffer</strong> &ndash; GPU index buffer</li>
+<li><strong>Constant Buffer,</strong> - GPU constant buffer</li>
+<li><strong>Image</strong> &ndash; an image that can be loaded with a specific size</li>
+<li><strong>Legacy Font,</strong> &ndash; font rendered through FreeType</li>
+<li><strong>Font</strong> &ndash; SDF font rendered through FreeType</li>
+<li><strong>MSDF Font</strong> &ndash; MSDF font rendered
+through
+<a href="https://github.com/Chlumsky/msdf-atlas-gen">msdf-atlas-gen</a></li>
+<li><strong>Wav</strong> &ndash; a WAV audio file</li>
+<li><strong>Skybox</strong> &ndash; six images that will be loaded as a cube texture</li>
+<li><strong>Skybox HDR</strong> &ndash; an HDR image that will be converted to a cube
+texture and then packed</li>
+<li><strong>Mesh</strong> &ndash; a mesh loaded from an OBJ file that will be packed as
+vertex and index buffers</li>
+<li><strong>Packed Meshes</strong> &ndash; a bunch of meshes from a folder that will be
+packed as a single index and vertex buffers</li>
+<li><strong>FBX Mesh</strong> &ndash; a mesh loaded from an FBX file that will be packed as
+vertex and index buffers</li>
+<li><strong>Animated Mesh</strong> &ndash; a mesh that with animations that will be
+packed as vertex and index buffers and skinning data</li>
+<li>**Animation ** &ndash; skinning data for a mesh</li>
+<li><strong>Material</strong> &ndash; PBR or Phong material definition that will be packed as a constant buffer</li>
+<li><strong>BuiCollection</strong> &ndash; a collection of BUI documents (my UI solution) that will be
+serialized and their resources packed</li>
+<li><strong>PBREnv</strong> &ndash; maps for image-based lightning that will be packed
+as diffuse irradiance and specular reflectance cube textures. These
+maps will be generated at the time of packing from a single HDR
+image through the use of compute shaders.</li>
+</ul>
+</li>
+<li>
+<p><strong>Header generation with assets names and Ids</strong> &ndash; AssetBuilder also
+generates a C++ header file with every packed asset&rsquo;s id exposed as
+<code>#define</code> together with several useful arrays with the names of
+different asset types. This makes working with the assets inside of
+C++ code extremely easy. Also, it gives an easy way for creating ImGui
+widgets that can select a particular array based on name and associate
+this name with asset id.</p>
+</li>
+</ul>
+</section>
+
+  
+  
+
+
+  
+  
+  <div id="disqus_thread"></div>
+
+<script>
+
+ function readCookie(name)
+ {
+   var nameEQ = name + "=";
+   var ca = document.cookie.split(';');
+   for(var i=0;i < ca.length;i++) {
+     var c = ca[i];
+     while (c.charAt(0)==' ') c = c.substring(1,c.length);
+     if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+   }
+   return null;
+ }
+
+ (function() {
+   let cookieValue = readCookie('consent-settings');
+   if (cookieValue)
+   {
+     var consentValue = cookieValue.toString();
+     if (consentValue[1] === "1")
+     {	    
+       const disqusShortname = 'palikar-github-io';
+       const script = document.createElement('script');
+       script.src = 'https://' + disqusShortname + '.disqus.com/embed.js';
+       script.setAttribute('data-timestamp', + new Date());
+       document.head.appendChild(script);
+     }
+   }
+ })();
+ 
+</script>
+
+  
+</article>
+
+
+    </main>
+
+    <footer class="opaco mx-auto flex h-[5rem] max-w-3xl items-center px-8 text-[0.9em] opacity-60">
+  <div class="mr-auto">
+    &copy; 2023
+    <a class="link" href="">Stanislav Arnaudov</a>
+  </div>
+  <a class="link mx-6" href="#cookies" onclick="document.getElementById('consent-notice').style.display = 'block'; ">Cookie Policy</a>
+  <a class="link mx-6" href="https://gohugo.io/" rel="noopener" target="_blank">Powered by Hugo</a>
+  Theme: 
+  <a class="link" href="https://github.com/nanxiaobei/hugo-paper" rel="noopener" target="_blank" >Paper 6</a>
+</footer>
+
+
+    <style>
+    #consent-notice {padding: 1rem 1rem; display: none; text-align: center; position: fixed; bottom: 0; width: calc(100% - 2rem); background: #222; color: white;}
+    #consent-notice span {margin-right: 1rem;}
+    #consent-notice button {cursor: pointer; display: inline-block; width: auto;}
+    #consent-notice span a {color: white; text-decoration: underline; text-decoration-color: rgba(255,255,255,0.5);}
+    #consent-notice button.btn {margin-left: 0.5rem;}
+    #consent-notice button.btn.manage-consent {background: rgba(255,255,255,0.1); font-weight: normal;}
+    
+    #consent-overlay {position: fixed; left: 0; top: 0; width: 100%; height: 100vh; display: none; background: rgba(0,0,0,0.75); z-index: 999999; overflow: auto; cursor: pointer;}
+    #consent-overlay.active {display: flex;}
+    #consent-overlay > div {background: white; width: 100%; max-width: 30rem; padding: 1.75rem; margin: auto; cursor: initial;}
+    #consent-overlay > div > div {display: flex; align-items: flex-start; margin-bottom: 1rem;}
+    #consent-overlay > div > div:last-child {margin: 0;}
+    #consent-overlay h3 {padding-top: 0;}
+    #consent-overlay input {margin-top: 0.3rem;}
+    #consent-overlay label {display: block; color: black; }
+    #consent-overlay .btn {margin-right: 0.5rem;}
+    #consent-overlay button.btn.save-consent {background: rgba(0,0,0,0.6); font-weight: normal;}
+
+    @media (max-width: 767px) {
+        #consent-overlay > div {padding: 1.75rem 1rem;}
+        #consent-notice span {display: block; padding-top: 3px; margin-bottom: 1.5rem;}
+        #consent-notice button.btn {position: relative; bottom: 4px;}
+    }
+</style>
+
+<div id="consent-notice">
+  <span>We would like to use <a class="manage-consent" href="#manage-consent">third party code</a> to improve the functionality of this website.</span>
+  <span><a class="link mx-6" href="/cookies" onclick="document.getElementById('consent-notice').style.display = 'block'; ">More Information</a></span>
+  <button class="btn manage-consent">Manage preferences</button>
+  <button class="btn deny-consent">Deny</button>
+  <button class="btn approve-consent">Allow</button>
+</div>
+
+<div id="consent-overlay">
+    <div>
+        
+            <div>
+                <input type="checkbox" id="item0" value="1" name="item0"  />
+                <label for="item0">
+                  <h3>Google Anaytics (functional)</h3>
+		  <p>This code gives us insight into the number of people that visit our website, where they are from and what they are clicking on.</p>
+                </label>
+            </div>
+        
+            <div>
+                <input type="checkbox" id="item1" value="1" name="item1"  />
+                <label for="item1">
+                  <h3>Disqus Comment service</h3>
+		  <p>The code allows to use the Disqus service for comments on the posts</p>
+                </label>
+            </div>
+        
+        <div>
+            <button id="save-consent" class="btn save-consent" data-consentvalue="00">Save preferences</button>
+            <button class="btn approve-consent">Allow all</button>
+        </div>
+    </div>
+</div>
+<script>
+
+    const scripts = [];
+    scripts[ 0 ] = "/js/ga.js";
+    scripts[ 1 ] = "/js/disqus.js";
+
+    function createCookie(name,value,days) {
+        var expires = "";
+        if (days) {
+            var date = new Date();
+            date.setTime(date.getTime() + (days*24*60*60*1000));
+            expires = "; expires=" + date.toUTCString();
+        }
+        document.cookie = name + "=" + value + expires + "; path=/";
+    }
+    function readCookie(name) {
+        var nameEQ = name + "=";
+        var ca = document.cookie.split(';');
+        for(var i=0;i < ca.length;i++) {
+            var c = ca[i];
+            while (c.charAt(0)==' ') c = c.substring(1,c.length);
+            if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+        }
+        return null;
+    }
+    function eraseCookie(name) {
+        createCookie(name,"",-1);
+    }
+    function denyAllConsentScripts() {
+        var consentValue = "";
+        scripts.forEach(function(){
+            consentValue = consentValue + "0";
+        });
+        acceptSomeConsentScripts(consentValue);
+    }
+    function acceptAllConsentScripts() {
+        var consentValue = "";
+        scripts.forEach(function(){
+            consentValue = consentValue + "1";
+        });
+        acceptSomeConsentScripts(consentValue);
+    }
+    function acceptSomeConsentScripts(consentValue) {
+        setConsentInputs(consentValue);
+        createCookie('consent-settings',consentValue,31);
+        document.getElementById('consent-notice').style.display = 'none';
+        document.getElementById('consent-overlay').classList.remove('active');
+        loadConsentScripts(consentValue);
+    }
+    function loadConsentScripts(consentValue) {
+        scripts.forEach(function(value,key){
+            
+            if(consentValue[key]=="1") {
+                var s = document.createElement('script');
+                s.type = 'text/javascript';
+                s.src = value;
+                document.body.appendChild(s);
+            }
+        });
+    }
+    function setConsentInputs(consentValue) {
+        var elements = document.querySelectorAll('#consent-overlay input:not([disabled])');
+        elements.forEach(function(el,index) {
+            if(consentValue[index]=="1") el.checked = true;
+            else el.checked = false;
+        });
+    }
+    function setConsentValue() {
+        var elements = document.querySelectorAll('#consent-overlay input:not([disabled])');
+        var consentValue = "";
+        elements.forEach(function(el) {
+            if(el.checked) consentValue = consentValue + "1";
+            else consentValue = consentValue + "0";
+        });
+        document.getElementById("save-consent").dataset.consentvalue = consentValue;
+    }
+ 
+    var elements = document.querySelectorAll('#consent-overlay input:not([disabled])');
+    elements.forEach(function(el) {
+        el.checked = false;
+    });
+
+    if(readCookie('consent-settings')) {
+        var consentValue = readCookie('consent-settings').toString();
+        setConsentInputs(consentValue);
+        loadConsentScripts(consentValue);
+    } else {
+      document.getElementById('consent-notice').style.display = 'block';
+    }
+ var elements = document.querySelectorAll('.manage-consent');
+    elements.forEach(function(el) {
+        el.addEventListener("click",function() {
+            document.getElementById('consent-overlay').classList.toggle('active');
+        });
+    });
+    var elements = document.querySelectorAll('.deny-consent');
+    elements.forEach(function(el) {
+        el.addEventListener("click",function() {
+            denyAllConsentScripts();
+        });
+    });
+    var elements = document.querySelectorAll('.approve-consent');
+    elements.forEach(function(el) {
+        el.addEventListener("click",function() {
+          acceptAllConsentScripts();
+        });
+    });
+    document.getElementById("save-consent").addEventListener("click",function() {
+        setConsentValue();
+        acceptSomeConsentScripts(this.dataset.consentvalue);
+    });
+    document.getElementById("consent-overlay").addEventListener("click",function(e) {
+        if (!document.querySelector("#consent-overlay > div").contains(e.target)){
+            this.classList.toggle('active');
+        }
+    });
+</script>
+
+
+    
+
+    
+
+
+  </body>
+</html>
