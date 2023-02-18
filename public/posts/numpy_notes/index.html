@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<html
+  class="not-ready text-sm lg:text-base"
+  style="--bg: #faf6f1"
+  lang="en-us">
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, shrink-to-fit=no"
+  />
+
+  
+  <title>Notes on learning Numpy - Stanislav Arnaudov</title>
+
+  
+  <meta name="theme-color" />
+  
+  <meta name="description" content="My notes while reading this. More or less copy paste. Take with a grain of salt&hellip;or sugar.
+Abstract NumPy is a Python package. It stands for &lsquo;Numerical Python&rsquo;. It is a library consisting of multidimensional array classes and a collection of routines for processing of an array. From the officials:
+NumPy is the fundamental package for scientific computing with Python. It contains among other things:
+a powerful N-dimensional array object sophisticated (broadcasting) functions tools for integrating C/C&#43;&#43; and Fortran code useful linear algebra, Fourier transform, and random number capabilities Besides its obvious scientific uses, NumPy can also be used as an efficient multi-dimensional container of generic data." />
+  <meta
+    name="author"
+    content="[Stanislav Arnaudov]"
+  />
+  
+
+  
+  
+  
+  
+  
+  
+  <link rel="preload stylesheet" as="style" href="/main.min.css" />
+
+  
+  <script
+    defer
+    src="highlight.min.js"
+    onload="hljs.initHighlightingOnLoad();"
+  ></script>
+  
+
+  
+   
+  <link rel="preload" as="image" href="theme.png" />
+
+  
+  
+  
+  <link rel="preload" as="image" href="https://www.gravatar.com/avatar/6f49be4b1398e1936dd765ef2df3a6f2?s=160&amp;d=identicon" />
+  
+  
+
+  
+  <link rel="preload" as="image" href="github.svg" />
+  
+  <link rel="preload" as="image" href="linkedin.svg" />
+  
+  <link rel="preload" as="image" href="facebook.svg" />
+  
+
+  
+  <link rel="icon" href="favicon.ico" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+
+  
+  <meta name="generator" content="Hugo 0.110.0">
+
+  
+  
+
+  
+  
+  
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-158773896-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+  
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-158773896-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+  
+  
+  
+  <meta property="og:title" content="Notes on learning Numpy" />
+<meta property="og:description" content="My notes on numpy when I started looking into the library" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/posts/numpy_notes/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2018-07-20T00:00:00+02:00" />
+<meta property="article:modified_time" content="2023-02-09T23:51:41+02:00" />
+
+  
+  <meta itemprop="name" content="Notes on learning Numpy">
+<meta itemprop="description" content="My notes on numpy when I started looking into the library"><meta itemprop="datePublished" content="2018-07-20T00:00:00+02:00" />
+<meta itemprop="dateModified" content="2023-02-09T23:51:41+02:00" />
+<meta itemprop="wordCount" content="1623">
+<meta itemprop="keywords" content="" />
+  
+  <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Notes on learning Numpy"/>
+<meta name="twitter:description" content="My notes on numpy when I started looking into the library"/>
+
+  
+  
+</head>
+
+  <body class="text-black duration-200 ease-out dark:text-white">
+    <header class="mx-auto flex h-[5rem] max-w-3xl px-8 lg:justify-center">
+  <div class="relative z-50 mr-auto flex items-center">
+
+    <img alt="" src='/logos/SA.png' width="48" height="48"/>
+    <a class="-translate-x-[1px] -translate-y-0.5 text-3xl font-bold ml-6" href="">
+      Stanislav Arnaudov
+    </a>
+
+    <a class="btn-dark ml-6 h-6 w-6 shrink-0 cursor-pointer [background:url(./theme.png)_left_center/_auto_theme('spacing.6')_no-repeat] [transition:_background-position_0.4s_steps(5)] dark:[background-position:right]">
+    </a>
+  </div>
+
+  <a
+    class="btn-menu relative z-50 -mr-8 flex h-[5rem] w-[5rem] shrink-0 cursor-pointer flex-col items-center justify-center gap-2.5 lg:hidden"
+  ></a>
+
+  
+  <script>
+    
+    const htmlClass = document.documentElement.classList;
+    setTimeout(() => {
+      htmlClass.remove('not-ready');
+    }, 10);
+
+    
+    const btnMenu = document.querySelector('.btn-menu');
+    btnMenu.addEventListener('click', () => {
+      htmlClass.toggle('open');
+    });
+
+    
+    const metaTheme = document.querySelector('meta[name="theme-color"]');
+    const lightBg = `"#faf6f1"`.replace(/"/g, '');
+    const setDark = (isDark) => {
+      metaTheme.setAttribute('content', isDark ? '#000' : lightBg);
+      htmlClass[isDark ? 'add' : 'remove']('dark');
+      localStorage.setItem('dark', isDark);
+    };
+
+    
+    const darkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+    if (htmlClass.contains('dark')) {
+      setDark(true);
+    } else {
+      const darkVal = localStorage.getItem('dark');
+      setDark(darkVal ? darkVal === 'true' : darkScheme.matches);
+    }
+
+    
+    darkScheme.addEventListener('change', (event) => {
+      setDark(event.matches);
+    });
+
+    
+    const btnDark = document.querySelector('.btn-dark');
+    btnDark.addEventListener('click', () => {
+      setDark(localStorage.getItem('dark') !== 'true');
+    });
+  </script>
+
+  <div
+    class="nav-wrapper fixed inset-x-0 top-full z-40 flex h-full select-none flex-col justify-center pb-16 duration-200 dark:bg-black lg:static lg:h-auto lg:flex-row lg:!bg-transparent lg:pb-0 lg:transition-none"
+  >
+    
+    
+    <nav class="lg:ml-12 lg:flex lg:flex-row lg:items-center lg:space-x-6">
+      
+      <a
+        class="block text-center text-2xl leading-[5rem] lg:text-base lg:font-normal"
+        href="/"
+        >Home</a
+      >
+      
+      <a
+        class="block text-center text-2xl leading-[5rem] lg:text-base lg:font-normal"
+        href="/about/"
+        >About</a
+      >
+      
+      <a
+        class="block text-center text-2xl leading-[5rem] lg:text-base lg:font-normal"
+        href="/projects"
+        >Projects</a
+      >
+      
+      <a
+        class="block text-center text-2xl leading-[5rem] lg:text-base lg:font-normal"
+        href="/posts/"
+        >Posts</a
+      >
+      
+      <a
+        class="block text-center text-2xl leading-[5rem] lg:text-base lg:font-normal"
+        href="/contact/"
+        >Contact</a
+      >
+      
+    </nav>
+    
+
+    
+    <nav
+      class="mt-12 flex justify-center space-x-10 dark:invert lg:mt-0 lg:ml-12 lg:items-center lg:space-x-6"
+    >
+      
+      <a
+        class="h-8 w-8 [background:var(--url)_center_center/cover_no-repeat] lg:h-6 lg:w-6"
+        style="--url: url(./github.svg)"
+        href=" https://github.com/palikar "
+        target="_blank"
+      ></a>
+      
+      <a
+        class="h-8 w-8 [background:var(--url)_center_center/cover_no-repeat] lg:h-6 lg:w-6"
+        style="--url: url(./linkedin.svg)"
+        href=" https://linkedin.com/in/stanislav-arnaudov-37b475164 "
+        target="_blank"
+      ></a>
+      
+      <a
+        class="h-8 w-8 [background:var(--url)_center_center/cover_no-repeat] lg:h-6 lg:w-6"
+        style="--url: url(./facebook.svg)"
+        href=" https://facebook.com/stanislav.ts "
+        target="_blank"
+      ></a>
+      
+    </nav>
+    
+  </div>
+</header>
+
+
+    <main class="prose prose-neutral relative mx-auto min-h-[calc(100%-10rem)] max-w-3xl px-4 pt-20 pb-32 dark:prose-invert">
+      
+
+<article>
+  <header class="mb-20">
+
+    <h1 class="!my-0 pb-2.5">Notes on learning Numpy</h1>
+
+    
+    <div class="text-sm opacity-60">
+      
+      <time>Jul 20, 2018</time>
+      
+      
+      <span class="mx-1">&middot;</span>
+      <span>[Stanislav Arnaudov]</span>
+      <span class="mx-1">&middot;</span>
+      <span>7 minute read</span>
+      <span class="mx-1">&middot;</span>
+      <span>1623 words</span>
+      
+    </div>
+    
+  </header>
+
+  <section><div class="NOTES">
+  <div></div>
+<p>My notes while reading <a href="https://www.tutorialspoint.com/numpy/index.htm">this</a>. More or less copy paste. Take with a grain of salt&hellip;or sugar.</p>
+</div>
+<h2 id="abstract">Abstract</h2>
+<p>NumPy is a Python package. It stands for &lsquo;Numerical Python&rsquo;. It is a library consisting of multidimensional array classes and a collection of routines for processing of an array. <br /> From the officials:</p>
+<blockquote>
+<p>NumPy is the fundamental package for scientific computing with Python. It contains among other things:</p>
+<ul>
+<li>a powerful N-dimensional array object</li>
+<li>sophisticated (broadcasting) functions</li>
+<li>tools for integrating C/C++ and Fortran code</li>
+<li>useful linear algebra, Fourier transform, and random number capabilities</li>
+</ul>
+<p>Besides its obvious scientific uses, NumPy can also be used as an efficient multi-dimensional container of generic data. Arbitrary data-types can be defined. This allows NumPy to seamlessly and speedily integrate with a wide variety of databases.</p>
+</blockquote>
+<p>In layman&rsquo;s terms (according to me) - better python-arrays with native C-code under the hood so that everything is blazingly fast. Easy array generation, generation of ranges, intervals and distributions of random numbers in some interval. Conveniently iterating over ranges and the generated arrays. <em>Numpy</em> also provides some basic/advanced statistical functions. Linear Algebra is also something that is already built-in.</p>
+<p>Installation:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>pip3 install numpy
+</span></span></code></pre></div><h2 id="ndarray">Ndarray</h2>
+<p>The most important object defined in <em>NumPy</em> is an N-dimensional array type called <em>ndarray</em>. This is the main workhorse of the package. It describes the collection of items of the same type. Items in the collection can be accessed using a zero-based index. It&rsquo;s much better than the standard python arrays and lists. Basic construction:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>numpy<span style="color:#f92672">.</span>array(object, dtype <span style="color:#f92672">=</span> <span style="color:#66d9ef">None</span>, copy <span style="color:#f92672">=</span> <span style="color:#66d9ef">True</span>, order <span style="color:#f92672">=</span> <span style="color:#66d9ef">None</span>, subok <span style="color:#f92672">=</span> <span style="color:#66d9ef">False</span>, ndmin <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>)
+</span></span></code></pre></div><ul>
+<li><code>object</code> - Any object exposing the array interface method returns an array, or any (nested) sequence.</li>
+<li><code>dtype</code> - the desired data type of array, optional</li>
+<li><code>copy</code> - Optional. By default (true), the object is copied</li>
+<li><code>order</code> - C (row-major) or F (column-major) or A (any) (default)</li>
+<li><code>subok</code> - By default, the returned array forced to be a base class array. If true, sub-classes passed through</li>
+<li><code>ndmin</code> - Specifies minimum dimensions of the resultant array</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> numpy <span style="color:#66d9ef">as</span> np
+</span></span><span style="display:flex;"><span>a <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">3</span>,<span style="color:#ae81ff">4</span>])
+</span></span><span style="display:flex;"><span>print(a)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>a <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([[<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>], [<span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">4</span>]])
+</span></span><span style="display:flex;"><span>print(a)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>a <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">3</span>,<span style="color:#ae81ff">4</span>], dtype<span style="color:#f92672">=</span>complex)
+</span></span><span style="display:flex;"><span>print(a)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>[1 2 3 4]
+</span></span><span style="display:flex;"><span>[[1 2]
+</span></span><span style="display:flex;"><span> [3 4]]
+</span></span><span style="display:flex;"><span>[1.+0.j 2.+0.j 3.+0.j 4.+0.j]
+</span></span></code></pre></div><h2 id="data-types">Data Types</h2>
+<p>There are a lot of possible data types that are supported by <em>numpy</em>. Some of the scalar types include:</p>
+<ul>
+<li>bool_, int_, intc, intp, int8, int16, int32, uint8, uint16, uint32</li>
+<li>float_, float16, float32, flaot64</li>
+<li>complex, complex64, complex128</li>
+</ul>
+<p><br /> <br /> The types can be encapsulated in <em>Data Type Object</em>.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>numpy<span style="color:#f92672">.</span>dtype(object, align, copy)
+</span></span></code></pre></div><ul>
+<li><strong>Object</strong> − To be converted to data type object</li>
+<li><strong>Align</strong> − If true, adds padding to the field to make it similar to C-struct</li>
+<li><strong>Copy</strong> − Makes a new copy of dtype object. If false, the result is a reference to builtin data type object</li>
+</ul>
+<p><br /> <br /> The object can be later used when a given function or a constructor takes <em>dtype</em> argument. Those objects can also create struct-like types for structured data. Think of it like defining a custom struct in C++ and then creating a vector with elements of this struct.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> numpy <span style="color:#66d9ef">as</span> np
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>dt <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>dtype([(<span style="color:#e6db74">&#39;age&#39;</span>,np<span style="color:#f92672">.</span>int8),(<span style="color:#e6db74">&#39;time&#39;</span>, np<span style="color:#f92672">.</span>int32)])
+</span></span><span style="display:flex;"><span>a <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([(<span style="color:#ae81ff">10</span>,<span style="color:#ae81ff">30</span>),(<span style="color:#ae81ff">20</span>,<span style="color:#ae81ff">30</span>),(<span style="color:#ae81ff">30</span>,<span style="color:#ae81ff">30</span>)], dtype <span style="color:#f92672">=</span> dt)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>print(a)
+</span></span><span style="display:flex;"><span>print(a[<span style="color:#e6db74">&#39;age&#39;</span>])
+</span></span><span style="display:flex;"><span>print(a[<span style="color:#e6db74">&#39;time&#39;</span>])
+</span></span></code></pre></div><p>Which yields:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>[(10, 30) (20, 30) (30, 30)]
+</span></span><span style="display:flex;"><span>[10 20 30]
+</span></span><span style="display:flex;"><span>[30 30 30]
+</span></span></code></pre></div><p><br /> <br /> This way we can define a map-like structure that contains a bunch of different arrays, each addressable with a key. The following code defines a &lsquo;human&rsquo; data type with <em>string</em> field <em>name</em>, <em>int</em> field age, and <em>float</em> field social class.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> numpy <span style="color:#66d9ef">as</span> np
+</span></span><span style="display:flex;"><span>human <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>dtype([(<span style="color:#e6db74">&#39;name&#39;</span>, <span style="color:#e6db74">&#39;S20&#39;</span>), (<span style="color:#e6db74">&#39;age&#39;</span>, <span style="color:#e6db74">&#39;i1&#39;</span>), (<span style="color:#e6db74">&#39;social_class&#39;</span>, <span style="color:#e6db74">&#39;f4&#39;</span>)])
+</span></span><span style="display:flex;"><span>print(human)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>a <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([(<span style="color:#e6db74">&#39;Lenin&#39;</span>, <span style="color:#ae81ff">45</span>, <span style="color:#ae81ff">100</span>),(<span style="color:#e6db74">&#39;John&#39;</span>, <span style="color:#ae81ff">19</span>, <span style="color:#ae81ff">3.5</span>)], dtype <span style="color:#f92672">=</span> human)
+</span></span><span style="display:flex;"><span>print(a)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>[(&#39;name&#39;, &#39;S20&#39;), (&#39;age&#39;, &#39;i1&#39;), (&#39;social_class&#39;, &#39;&lt;f4&#39;)]
+</span></span><span style="display:flex;"><span>[(b&#39;Lenin&#39;, 45, 100. ) (b&#39;John&#39;, 19,   3.5)]
+</span></span></code></pre></div><p>This shows another important point. Each time can be specified with a single character.</p>
+<ul>
+<li><code>'b'</code> − boolean</li>
+<li><code>'i'</code> − (signed) integer</li>
+<li><code>'u'</code> − unsigned integer</li>
+<li><code>'f'</code> − floating-point</li>
+<li><code>'c'</code> − complex-floating point</li>
+<li><code>'m'</code> − time delta</li>
+<li><code>'M'</code> − DateTime</li>
+<li><code>'O'</code> − (Python) objects</li>
+<li><code>'S'</code>, &lsquo;a&rsquo; − (byte-)string</li>
+<li><code>'U'</code> − Unicode</li>
+<li><code>'V'</code> − raw data (void)</li>
+</ul>
+<h2 id="array-attributes">Array Attributes</h2>
+<p>Attributes, as the name implies, give us some information about a given object. In the case of <em>numpy</em>, the most important thing about an array is its <em>shape</em> and <em>ndim</em></p>
+<h3 id="shape-and-dimension">Shape and dimension</h3>
+<p><em>Shape</em> of an array is its layout in memory. Normally <em>numpy</em> represents the ndarray as a n-dimensional array in memory. This means that that the shapes is nothing more than a tuple that consists of each dimension&rsquo;s size. For example, the array <code>[1,2,3]</code> has shape <code>(3)</code>, the array <code>[[1,2],[1,2]]</code> has shape <code>(2,2)</code> because it consists of two array and each of them contains two elements.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> numpy <span style="color:#66d9ef">as</span> np
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>a <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">3</span>,<span style="color:#ae81ff">4</span>])
+</span></span><span style="display:flex;"><span>print(a<span style="color:#f92672">.</span>shape)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>a <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([[<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">3</span>,<span style="color:#ae81ff">4</span>],[<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">3</span>,<span style="color:#ae81ff">4</span>]])
+</span></span><span style="display:flex;"><span>print(a<span style="color:#f92672">.</span>shape)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>(4,)
+</span></span><span style="display:flex;"><span>(2, 4)
+</span></span></code></pre></div><p><br /> <br /> <em>Ndim</em> of an <em>numpy</em> array on the other hand is the number of dimensions. I. e. <code>[1,2]</code> has <em>ndim</em> equal to 1, and <code>[[1,3],[1.3]]</code> has <em>ndim</em> 2</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> numpy <span style="color:#66d9ef">as</span> np
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> numpy <span style="color:#66d9ef">as</span> np
+</span></span><span style="display:flex;"><span>a <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>arange(<span style="color:#ae81ff">24</span>)
+</span></span><span style="display:flex;"><span>print(a<span style="color:#f92672">.</span>ndim)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>a <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([[<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">3</span>,<span style="color:#ae81ff">4</span>],[<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">3</span>,<span style="color:#ae81ff">4</span>]])
+</span></span><span style="display:flex;"><span>print(a<span style="color:#f92672">.</span>ndim)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>1
+</span></span><span style="display:flex;"><span>2
+</span></span></code></pre></div><h3 id="reshaping">Reshaping</h3>
+<p>A lot of times we want to change the basic structure of and array without changing the information in it. In such cases, the <em>reshape</em> method comes to help.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> numpy <span style="color:#66d9ef">as</span> np
+</span></span><span style="display:flex;"><span>a <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>arange(<span style="color:#ae81ff">24</span>)
+</span></span><span style="display:flex;"><span>print(a<span style="color:#f92672">.</span>ndim)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># now reshape it</span>
+</span></span><span style="display:flex;"><span>b <span style="color:#f92672">=</span> a<span style="color:#f92672">.</span>reshape(<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">4</span>,<span style="color:#ae81ff">3</span>)
+</span></span><span style="display:flex;"><span>print(b)
+</span></span></code></pre></div><p>The elements stay the same and occupy the same memory location but the access to them is happening in different way.** &lsquo;Size&rsquo; of an array <code>numpy.itemsize</code> - this array attribute returns the length of each element of array in bytes.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> numpy <span style="color:#66d9ef">as</span> np
+</span></span><span style="display:flex;"><span>x <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">3</span>,<span style="color:#ae81ff">4</span>,<span style="color:#ae81ff">5</span>], dtype <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>int8)
+</span></span><span style="display:flex;"><span>print(x<span style="color:#f92672">.</span>itemsize)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>1
+</span></span></code></pre></div><h3 id="num-elements">Num elements</h3>
+<p>The attribute that everyone has been waiting for&hellip; <code>numpy.size</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> numpy <span style="color:#66d9ef">as</span> np
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>a <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>arange(<span style="color:#ae81ff">24</span>)
+</span></span><span style="display:flex;"><span>print(a<span style="color:#f92672">.</span>size)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>24
+</span></span></code></pre></div><h2 id="slicing">Slicing</h2>
+<h3 id="basic-slicing">Basic slicing</h3>
+<p>Basic slicing is an extension of Python&rsquo;s basic concept of slicing to <em>n</em> dimensions. A Python slice object is constructed by giving start, stop, and step parameters to the built-in slice function. This slice object is passed to the array to extract a part of array.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> numpy <span style="color:#66d9ef">as</span> np
+</span></span><span style="display:flex;"><span>a <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>arange(<span style="color:#ae81ff">10</span>)
+</span></span><span style="display:flex;"><span>b <span style="color:#f92672">=</span> a[<span style="color:#ae81ff">2</span>:<span style="color:#ae81ff">7</span>:<span style="color:#ae81ff">2</span>]
+</span></span><span style="display:flex;"><span>print(b)
+</span></span><span style="display:flex;"><span>print(a[<span style="color:#ae81ff">2</span>:])
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>[2 4 6]
+</span></span><span style="display:flex;"><span>[2 3 4 5 6 7 8 9]
+</span></span></code></pre></div><h3 id="advanced">Advanced</h3>
+<p>This mechanism helps in selecting any arbitrary item in an array based on its <em>Ndimensional</em> index. Each integer array represents the number of indexes into that dimension. When the index consists of as many integer arrays as the dimensions of the target ndarray, it becomes straightforward.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> numpy <span style="color:#66d9ef">as</span> np
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>x <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([[ <span style="color:#ae81ff">0</span>,  <span style="color:#ae81ff">1</span>,  <span style="color:#ae81ff">2</span>],[ <span style="color:#ae81ff">3</span>,  <span style="color:#ae81ff">4</span>,  <span style="color:#ae81ff">5</span>],[ <span style="color:#ae81ff">6</span>,  <span style="color:#ae81ff">7</span>,  <span style="color:#ae81ff">8</span>],[ <span style="color:#ae81ff">9</span>, <span style="color:#ae81ff">10</span>, <span style="color:#ae81ff">11</span>]])
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#39;Our array is:&#39;</span>)
+</span></span><span style="display:flex;"><span>print(x)
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#39;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>rows <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([[<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">0</span>],[<span style="color:#ae81ff">3</span>,<span style="color:#ae81ff">3</span>]])
+</span></span><span style="display:flex;"><span>cols <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([[<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">2</span>],[<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">2</span>]])
+</span></span><span style="display:flex;"><span>y <span style="color:#f92672">=</span> x[rows,cols]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#39;The corner elements of this array are:&#39;</span> )
+</span></span><span style="display:flex;"><span>print(y)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>Our array is:
+</span></span><span style="display:flex;"><span>[[ 0  1  2]
+</span></span><span style="display:flex;"><span> [ 3  4  5]
+</span></span><span style="display:flex;"><span> [ 6  7  8]
+</span></span><span style="display:flex;"><span> [ 9 10 11]]
+</span></span></code></pre></div><p>The corner elements of this array are:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>[[ 0  2]
+</span></span><span style="display:flex;"><span> [ 9 11]]
+</span></span></code></pre></div><h4 id="boolean-array-indexing">Boolean Array Indexing</h4>
+<p>This type of advanced indexing is used when the resultant object is meant to be the result of Boolean operations, such as comparison operators.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> numpy <span style="color:#66d9ef">as</span> np
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>x <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>arange(<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">20</span>)
+</span></span><span style="display:flex;"><span>print(x[x<span style="color:#f92672">&gt;</span><span style="color:#ae81ff">5</span>])
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>[ 6  7  8  9 10 11 12 13 14 15 16 17 18 19]
+</span></span></code></pre></div><h2 id="broadcasting">Broadcasting</h2>
+<p>This refers to the way arithmetic operations are handled. <em>Numpy</em> is intelligent enough to perform arithmetical operations on arrays element-wise as long as the shapes of the objects are &lsquo;compatible&rsquo;.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> numpy <span style="color:#66d9ef">as</span> np
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>a <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">3</span>,<span style="color:#ae81ff">4</span>])
+</span></span><span style="display:flex;"><span>b <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([<span style="color:#ae81ff">10</span>,<span style="color:#ae81ff">20</span>,<span style="color:#ae81ff">30</span>,<span style="color:#ae81ff">40</span>])
+</span></span><span style="display:flex;"><span>c <span style="color:#f92672">=</span> a <span style="color:#f92672">*</span> b
+</span></span><span style="display:flex;"><span>print(c)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>[ 10  40  90 160]
+</span></span></code></pre></div><h2 id="iterating">Iterating</h2>
+<p><code>numpy.nditer()</code> is your best friend. It returns an iterable (for loop) object that can be further used to go through an array. It can also be constructed with two arrays to go through the both of them simultaneously. The array must be <em>broadcastable</em>. Constructing an iterator that can modify the values of an array happens through a flag in the constructor.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> numpy <span style="color:#66d9ef">as</span> np
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>a <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>arange(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">60</span>, <span style="color:#ae81ff">5</span>)
+</span></span><span style="display:flex;"><span>b <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>arange(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">12</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> num <span style="color:#f92672">in</span> np<span style="color:#f92672">.</span>nditer(a):
+</span></span><span style="display:flex;"><span>    print(str(num))
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#39;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> a_num,b_num <span style="color:#f92672">in</span> np<span style="color:#f92672">.</span>nditer([a,b]):
+</span></span><span style="display:flex;"><span>    print(str(a_num) <span style="color:#f92672">+</span> <span style="color:#e6db74">&#39;+&#39;</span> <span style="color:#f92672">+</span> str(b_num))
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#39;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> num <span style="color:#f92672">in</span> np<span style="color:#f92672">.</span>nditer(a, op_flags<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#34;readwrite&#34;</span>]):
+</span></span><span style="display:flex;"><span>    num <span style="color:#f92672">+=</span> <span style="color:#ae81ff">10</span>
+</span></span><span style="display:flex;"><span>print(a)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>0
+</span></span><span style="display:flex;"><span>5
+</span></span><span style="display:flex;"><span>10
+</span></span><span style="display:flex;"><span>15
+</span></span><span style="display:flex;"><span>20
+</span></span><span style="display:flex;"><span>25
+</span></span><span style="display:flex;"><span>30
+</span></span><span style="display:flex;"><span>35
+</span></span><span style="display:flex;"><span>40
+</span></span><span style="display:flex;"><span>45
+</span></span><span style="display:flex;"><span>50
+</span></span><span style="display:flex;"><span>55
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>0+0
+</span></span><span style="display:flex;"><span>5+1
+</span></span><span style="display:flex;"><span>10+2
+</span></span><span style="display:flex;"><span>15+3
+</span></span><span style="display:flex;"><span>20+4
+</span></span><span style="display:flex;"><span>25+5
+</span></span><span style="display:flex;"><span>30+6
+</span></span><span style="display:flex;"><span>35+7
+</span></span><span style="display:flex;"><span>40+8
+</span></span><span style="display:flex;"><span>45+9
+</span></span><span style="display:flex;"><span>50+10
+</span></span><span style="display:flex;"><span>55+11
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>[10 15 20 25 30 35 40 45 50 55 60 65]
+</span></span></code></pre></div><h2 id="manipulating">Manipulating</h2>
+<h3 id="changing-shape">Changing shape</h3>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>reshape</code></td>
+<td>Change shape</td>
+</tr>
+<tr>
+<td><code>flat</code></td>
+<td>1D Iterator</td>
+</tr>
+<tr>
+<td><code>flatten</code></td>
+<td>Returns a new array</td>
+</tr>
+<tr>
+<td><code>revel</code></td>
+<td>Returns a contiguous flattened array</td>
+</tr>
+</tbody>
+</table>
+<h3 id="transpose">Transpose</h3>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>transpose</code></td>
+<td>Permutes the dimensions of an array</td>
+</tr>
+<tr>
+<td><code>ndarray.T</code></td>
+<td>Same as self.transpose()</td>
+</tr>
+<tr>
+<td><code>rollaxis</code></td>
+<td>Rolls the specified axis backwards</td>
+</tr>
+<tr>
+<td><code>swapaxes</code></td>
+<td>Interchanges the two axes of an array</td>
+</tr>
+</tbody>
+</table>
+<h3 id="joining-arrays">Joining Arrays</h3>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Desc</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>concatenate</code></td>
+<td>Joins several arrays along an existing axes</td>
+</tr>
+<tr>
+<td><code>stack</code></td>
+<td>Joins several arrays along a new axes</td>
+</tr>
+<tr>
+<td><code>hstack</code></td>
+<td>Stacks arrays in sequence horizontally</td>
+</tr>
+<tr>
+<td><code>vstack</code></td>
+<td>Stacks arrays in sequence vertically</td>
+</tr>
+</tbody>
+</table>
+<h3 id="adding-and-removing-elements">Adding and removing elements</h3>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>append</td>
+<td>Pushes new value at the end</td>
+</tr>
+<tr>
+<td>insert</td>
+<td>Inserts value along a given axis before a given index</td>
+</tr>
+<tr>
+<td>delete</td>
+<td>Return a new array with sub-arrays along an axis deleted</td>
+</tr>
+<tr>
+<td>unique</td>
+<td>Finds all unique elements in an array</td>
+</tr>
+</tbody>
+</table>
+<h2 id="i-o">I/O</h2>
+<p>There are two flavors of saving/loading a <em>ndarray</em> to/from file.</p>
+<h3 id="dot-npy-files"><em>.npy</em> files</h3>
+<p>This <em>.npy</em> file stores data, shape, <em>dtype</em> and other information required to reconstruct the <em>ndarray</em> in a disk file such that the array is correctly retrieved even if the file is on another machine with different architecture. <br /> <br /> The <em>IO</em> is simple and is done through the functions <code>numpy.save()</code> and <code>numpy.load()</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> numpy <span style="color:#66d9ef">as</span> np
+</span></span><span style="display:flex;"><span>a <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">3</span>,<span style="color:#ae81ff">4</span>,<span style="color:#ae81ff">5</span>])
+</span></span><span style="display:flex;"><span>np<span style="color:#f92672">.</span>save(<span style="color:#e6db74">&#39;outfile&#39;</span>,a)
+</span></span><span style="display:flex;"><span>b <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>load(<span style="color:#e6db74">&#39;outfile.npy&#39;</span>)
+</span></span></code></pre></div><h3 id="dot-txt-files"><em>.txt</em> files</h3>
+<p>This is just a simple, cheap and dirty way to save an array to a file &ldquo;symbolically&rdquo;. The function that come into play are <code>numpy.savetxt()</code> and <code>numpy.loadtxt()</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> numpy <span style="color:#66d9ef">as</span> np
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>a <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">3</span>,<span style="color:#ae81ff">4</span>,<span style="color:#ae81ff">5</span>])
+</span></span><span style="display:flex;"><span>np<span style="color:#f92672">.</span>savetxt(<span style="color:#e6db74">&#39;out.txt&#39;</span>,a)
+</span></span><span style="display:flex;"><span>b <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>loadtxt(<span style="color:#e6db74">&#39;out.txt&#39;</span>)
+</span></span><span style="display:flex;"><span>print(b)
+</span></span></code></pre></div></section>
+
+  
+  
+
+
+  
+  
+  <div id="disqus_thread"></div>
+
+<script>
+
+ function readCookie(name)
+ {
+   var nameEQ = name + "=";
+   var ca = document.cookie.split(';');
+   for(var i=0;i < ca.length;i++) {
+     var c = ca[i];
+     while (c.charAt(0)==' ') c = c.substring(1,c.length);
+     if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+   }
+   return null;
+ }
+
+ (function() {
+   let cookieValue = readCookie('consent-settings');
+   if (cookieValue)
+   {
+     var consentValue = cookieValue.toString();
+     if (consentValue[1] === "1")
+     {	    
+       const disqusShortname = 'palikar-github-io';
+       const script = document.createElement('script');
+       script.src = 'https://' + disqusShortname + '.disqus.com/embed.js';
+       script.setAttribute('data-timestamp', + new Date());
+       document.head.appendChild(script);
+     }
+   }
+ })();
+ 
+</script>
+
+  
+</article>
+
+
+    </main>
+
+    <footer class="opaco mx-auto flex h-[5rem] max-w-3xl items-center px-8 text-[0.9em] opacity-60">
+  <div class="mr-auto">
+    &copy; 2023
+    <a class="link" href="">Stanislav Arnaudov</a>
+  </div>
+  <a class="link mx-6" href="#cookies" onclick="document.getElementById('consent-notice').style.display = 'block'; ">Cookie Policy</a>
+  <a class="link mx-6" href="https://gohugo.io/" rel="noopener" target="_blank">Powered by Hugo</a>
+  Theme: 
+  <a class="link" href="https://github.com/nanxiaobei/hugo-paper" rel="noopener" target="_blank" >Paper 6</a>
+</footer>
+
+
+    <style>
+    #consent-notice {padding: 1rem 1rem; display: none; text-align: center; position: fixed; bottom: 0; width: calc(100% - 2rem); background: #222; color: white;}
+    #consent-notice span {margin-right: 1rem;}
+    #consent-notice button {cursor: pointer; display: inline-block; width: auto;}
+    #consent-notice span a {color: white; text-decoration: underline; text-decoration-color: rgba(255,255,255,0.5);}
+    #consent-notice button.btn {margin-left: 0.5rem;}
+    #consent-notice button.btn.manage-consent {background: rgba(255,255,255,0.1); font-weight: normal;}
+    
+    #consent-overlay {position: fixed; left: 0; top: 0; width: 100%; height: 100vh; display: none; background: rgba(0,0,0,0.75); z-index: 999999; overflow: auto; cursor: pointer;}
+    #consent-overlay.active {display: flex;}
+    #consent-overlay > div {background: white; width: 100%; max-width: 30rem; padding: 1.75rem; margin: auto; cursor: initial;}
+    #consent-overlay > div > div {display: flex; align-items: flex-start; margin-bottom: 1rem;}
+    #consent-overlay > div > div:last-child {margin: 0;}
+    #consent-overlay h3 {padding-top: 0;}
+    #consent-overlay input {margin-top: 0.3rem;}
+    #consent-overlay label {display: block; color: black; }
+    #consent-overlay .btn {margin-right: 0.5rem;}
+    #consent-overlay button.btn.save-consent {background: rgba(0,0,0,0.6); font-weight: normal;}
+
+    @media (max-width: 767px) {
+        #consent-overlay > div {padding: 1.75rem 1rem;}
+        #consent-notice span {display: block; padding-top: 3px; margin-bottom: 1.5rem;}
+        #consent-notice button.btn {position: relative; bottom: 4px;}
+    }
+</style>
+
+<div id="consent-notice">
+  <span>We would like to use <a class="manage-consent" href="#manage-consent">third party code</a> to improve the functionality of this website.</span>
+  <span><a class="link mx-6" href="/cookies" onclick="document.getElementById('consent-notice').style.display = 'block'; ">More Information</a></span>
+  <button class="btn manage-consent">Manage preferences</button>
+  <button class="btn deny-consent">Deny</button>
+  <button class="btn approve-consent">Allow</button>
+</div>
+
+<div id="consent-overlay">
+    <div>
+        
+            <div>
+                <input type="checkbox" id="item0" value="1" name="item0"  />
+                <label for="item0">
+                  <h3>Google Anaytics (functional)</h3>
+		  <p>This code gives us insight into the number of people that visit our website, where they are from and what they are clicking on.</p>
+                </label>
+            </div>
+        
+            <div>
+                <input type="checkbox" id="item1" value="1" name="item1"  />
+                <label for="item1">
+                  <h3>Disqus Comment service</h3>
+		  <p>The code allows to use the Disqus service for comments on the posts</p>
+                </label>
+            </div>
+        
+        <div>
+            <button id="save-consent" class="btn save-consent" data-consentvalue="00">Save preferences</button>
+            <button class="btn approve-consent">Allow all</button>
+        </div>
+    </div>
+</div>
+<script>
+
+    const scripts = [];
+    scripts[ 0 ] = "/js/ga.js";
+    scripts[ 1 ] = "/js/disqus.js";
+
+    function createCookie(name,value,days) {
+        var expires = "";
+        if (days) {
+            var date = new Date();
+            date.setTime(date.getTime() + (days*24*60*60*1000));
+            expires = "; expires=" + date.toUTCString();
+        }
+        document.cookie = name + "=" + value + expires + "; path=/";
+    }
+    function readCookie(name) {
+        var nameEQ = name + "=";
+        var ca = document.cookie.split(';');
+        for(var i=0;i < ca.length;i++) {
+            var c = ca[i];
+            while (c.charAt(0)==' ') c = c.substring(1,c.length);
+            if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+        }
+        return null;
+    }
+    function eraseCookie(name) {
+        createCookie(name,"",-1);
+    }
+    function denyAllConsentScripts() {
+        var consentValue = "";
+        scripts.forEach(function(){
+            consentValue = consentValue + "0";
+        });
+        acceptSomeConsentScripts(consentValue);
+    }
+    function acceptAllConsentScripts() {
+        var consentValue = "";
+        scripts.forEach(function(){
+            consentValue = consentValue + "1";
+        });
+        acceptSomeConsentScripts(consentValue);
+    }
+    function acceptSomeConsentScripts(consentValue) {
+        setConsentInputs(consentValue);
+        createCookie('consent-settings',consentValue,31);
+        document.getElementById('consent-notice').style.display = 'none';
+        document.getElementById('consent-overlay').classList.remove('active');
+        loadConsentScripts(consentValue);
+    }
+    function loadConsentScripts(consentValue) {
+        scripts.forEach(function(value,key){
+            
+            if(consentValue[key]=="1") {
+                var s = document.createElement('script');
+                s.type = 'text/javascript';
+                s.src = value;
+                document.body.appendChild(s);
+            }
+        });
+    }
+    function setConsentInputs(consentValue) {
+        var elements = document.querySelectorAll('#consent-overlay input:not([disabled])');
+        elements.forEach(function(el,index) {
+            if(consentValue[index]=="1") el.checked = true;
+            else el.checked = false;
+        });
+    }
+    function setConsentValue() {
+        var elements = document.querySelectorAll('#consent-overlay input:not([disabled])');
+        var consentValue = "";
+        elements.forEach(function(el) {
+            if(el.checked) consentValue = consentValue + "1";
+            else consentValue = consentValue + "0";
+        });
+        document.getElementById("save-consent").dataset.consentvalue = consentValue;
+    }
+ 
+    var elements = document.querySelectorAll('#consent-overlay input:not([disabled])');
+    elements.forEach(function(el) {
+        el.checked = false;
+    });
+
+    if(readCookie('consent-settings')) {
+        var consentValue = readCookie('consent-settings').toString();
+        setConsentInputs(consentValue);
+        loadConsentScripts(consentValue);
+    } else {
+      document.getElementById('consent-notice').style.display = 'block';
+    }
+ var elements = document.querySelectorAll('.manage-consent');
+    elements.forEach(function(el) {
+        el.addEventListener("click",function() {
+            document.getElementById('consent-overlay').classList.toggle('active');
+        });
+    });
+    var elements = document.querySelectorAll('.deny-consent');
+    elements.forEach(function(el) {
+        el.addEventListener("click",function() {
+            denyAllConsentScripts();
+        });
+    });
+    var elements = document.querySelectorAll('.approve-consent');
+    elements.forEach(function(el) {
+        el.addEventListener("click",function() {
+          acceptAllConsentScripts();
+        });
+    });
+    document.getElementById("save-consent").addEventListener("click",function() {
+        setConsentValue();
+        acceptSomeConsentScripts(this.dataset.consentvalue);
+    });
+    document.getElementById("consent-overlay").addEventListener("click",function(e) {
+        if (!document.querySelector("#consent-overlay > div").contains(e.target)){
+            this.classList.toggle('active');
+        }
+    });
+</script>
+
+
+    
+
+    
+
+
+  </body>
+</html>

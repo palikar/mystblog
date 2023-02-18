@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>github on Stanislav Arnaudov</title>
+    <link>/categories/github/</link>
+    <description>Recent content in github on Stanislav Arnaudov</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 22 Jun 2018 00:00:00 +0200</lastBuildDate><atom:link href="/categories/github/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Github commits&#39; emails change</title>
+      <link>/posts/github_history_repair/</link>
+      <pubDate>Fri, 22 Jun 2018 00:00:00 +0200</pubDate>
+      
+      <guid>/posts/github_history_repair/</guid>
+      <description>Abstract You know that Contributions panel on your Github profile page. Let&amp;rsquo;s face it, developers these days take much pride when they can show their consistent work and progress of their own/forked repositories&amp;hellip; even when some of their commits are nothing more than an implementation of a single function. Or of course, it may be just me with that pride 😒. Said panel is a clear indication to your future employee or members of your &amp;ldquo;coding community&amp;rdquo; that you are pretty much a big deal with a good work ethic.</description>
+    </item>
+    
+  </channel>
+</rss>

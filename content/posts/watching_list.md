@@ -37,6 +37,9 @@ in my professional life.
 * [The most important talk on programming by Jonathan Blow ](https://www.youtube.com/watch?v=dS6rCaDSwW8) --
   this a silly little rant on what to value when developing something new.
 
+* [ Object-Oriented Programming is Bad ](https://www.youtube.com/watch?v=QM1iUe6IofM) --
+  one of the first videos that told me about the harsh reality of OOP.
+
 * [CppCon 2014: Mike Acton "Data-Oriented Design and C++"](https://www.youtube.com/watch?v=rX0ItVEVjHc) --
   a soft introduction to the DoD approach to software development.
   

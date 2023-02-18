@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<html
+  class="not-ready text-sm lg:text-base"
+  style="--bg: #faf6f1"
+  lang="en-us">
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, shrink-to-fit=no"
+  />
+
+  
+  <title>More C Less &#43;&#43; - Stanislav Arnaudov</title>
+
+  
+  <meta name="theme-color" />
+  
+  <meta name="description" content="Abstract Recently I have moved in the direction of being a &ldquo;C&#43;&#43; bad&rdquo; person. I have learned C&#43;&#43; through watching CppCon talks so it&rsquo;s not like I don&rsquo;t understand the language. There was even a time when I fully bought into its philosophy. This time has passed. In recent years I&rsquo;ve experimented with just how little I can use C&#43;&#43; and still be able to write performant, good, and easy-to-understand code." />
+  <meta
+    name="author"
+    content="Stanislav Arnaudov"
+  />
+  
+
+  
+  
+  
+  
+  
+  
+  <link rel="preload stylesheet" as="style" href="/main.min.css" />
+
+  
+  <script
+    defer
+    src="highlight.min.js"
+    onload="hljs.initHighlightingOnLoad();"
+  ></script>
+  
+
+  
+   
+  <link rel="preload" as="image" href="theme.png" />
+
+  
+  
+  
+  <link rel="preload" as="image" href="https://www.gravatar.com/avatar/6f49be4b1398e1936dd765ef2df3a6f2?s=160&amp;d=identicon" />
+  
+  
+
+  
+  <link rel="preload" as="image" href="github.svg" />
+  
+  <link rel="preload" as="image" href="linkedin.svg" />
+  
+  <link rel="preload" as="image" href="facebook.svg" />
+  
+
+  
+  <link rel="icon" href="favicon.ico" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+
+  
+  <meta name="generator" content="Hugo 0.110.0">
+
+  
+  
+
+  
+  
+  
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-158773896-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+  
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-158773896-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+  
+  
+  
+  <meta property="og:title" content="More C Less &#43;&#43;" />
+<meta property="og:description" content="A meditation on trying to attempt to remedy the C&#43;&#43; madness" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/posts/more_c_less_plus_plus/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-12-30T00:00:00+00:00" />
+<meta property="article:modified_time" content="2023-02-10T02:27:18+02:00" />
+
+  
+  <meta itemprop="name" content="More C Less &#43;&#43;">
+<meta itemprop="description" content="A meditation on trying to attempt to remedy the C&#43;&#43; madness"><meta itemprop="datePublished" content="2022-12-30T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2023-02-10T02:27:18+02:00" />
+<meta itemprop="wordCount" content="1595">
+<meta itemprop="keywords" content="" />
+  
+  <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="More C Less &#43;&#43;"/>
+<meta name="twitter:description" content="A meditation on trying to attempt to remedy the C&#43;&#43; madness"/>
+
+  
+  
+</head>
+
+  <body class="text-black duration-200 ease-out dark:text-white">
+    <header class="mx-auto flex h-[5rem] max-w-3xl px-8 lg:justify-center">
+  <div class="relative z-50 mr-auto flex items-center">
+
+    <img alt="" src='/logos/SA.png' width="48" height="48"/>
+    <a class="-translate-x-[1px] -translate-y-0.5 text-3xl font-bold ml-6" href="">
+      Stanislav Arnaudov
+    </a>
+
+    <a class="btn-dark ml-6 h-6 w-6 shrink-0 cursor-pointer [background:url(./theme.png)_left_center/_auto_theme('spacing.6')_no-repeat] [transition:_background-position_0.4s_steps(5)] dark:[background-position:right]">
+    </a>
+  </div>
+
+  <a
+    class="btn-menu relative z-50 -mr-8 flex h-[5rem] w-[5rem] shrink-0 cursor-pointer flex-col items-center justify-center gap-2.5 lg:hidden"
+  ></a>
+
+  
+  <script>
+    
+    const htmlClass = document.documentElement.classList;
+    setTimeout(() => {
+      htmlClass.remove('not-ready');
+    }, 10);
+
+    
+    const btnMenu = document.querySelector('.btn-menu');
+    btnMenu.addEventListener('click', () => {
+      htmlClass.toggle('open');
+    });
+
+    
+    const metaTheme = document.querySelector('meta[name="theme-color"]');
+    const lightBg = `"#faf6f1"`.replace(/"/g, '');
+    const setDark = (isDark) => {
+      metaTheme.setAttribute('content', isDark ? '#000' : lightBg);
+      htmlClass[isDark ? 'add' : 'remove']('dark');
+      localStorage.setItem('dark', isDark);
+    };
+
+    
+    const darkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+    if (htmlClass.contains('dark')) {
+      setDark(true);
+    } else {
+      const darkVal = localStorage.getItem('dark');
+      setDark(darkVal ? darkVal === 'true' : darkScheme.matches);
+    }
+
+    
+    darkScheme.addEventListener('change', (event) => {
+      setDark(event.matches);
+    });
+
+    
+    const btnDark = document.querySelector('.btn-dark');
+    btnDark.addEventListener('click', () => {
+      setDark(localStorage.getItem('dark') !== 'true');
+    });
+  </script>
+
+  <div
+    class="nav-wrapper fixed inset-x-0 top-full z-40 flex h-full select-none flex-col justify-center pb-16 duration-200 dark:bg-black lg:static lg:h-auto lg:flex-row lg:!bg-transparent lg:pb-0 lg:transition-none"
+  >
+    
+    
+    <nav class="lg:ml-12 lg:flex lg:flex-row lg:items-center lg:space-x-6">
+      
+      <a
+        class="block text-center text-2xl leading-[5rem] lg:text-base lg:font-normal"
+        href="/"
+        >Home</a
+      >
+      
+      <a
+        class="block text-center text-2xl leading-[5rem] lg:text-base lg:font-normal"
+        href="/about/"
+        >About</a
+      >
+      
+      <a
+        class="block text-center text-2xl leading-[5rem] lg:text-base lg:font-normal"
+        href="/projects"
+        >Projects</a
+      >
+      
+      <a
+        class="block text-center text-2xl leading-[5rem] lg:text-base lg:font-normal"
+        href="/posts/"
+        >Posts</a
+      >
+      
+      <a
+        class="block text-center text-2xl leading-[5rem] lg:text-base lg:font-normal"
+        href="/contact/"
+        >Contact</a
+      >
+      
+    </nav>
+    
+
+    
+    <nav
+      class="mt-12 flex justify-center space-x-10 dark:invert lg:mt-0 lg:ml-12 lg:items-center lg:space-x-6"
+    >
+      
+      <a
+        class="h-8 w-8 [background:var(--url)_center_center/cover_no-repeat] lg:h-6 lg:w-6"
+        style="--url: url(./github.svg)"
+        href=" https://github.com/palikar "
+        target="_blank"
+      ></a>
+      
+      <a
+        class="h-8 w-8 [background:var(--url)_center_center/cover_no-repeat] lg:h-6 lg:w-6"
+        style="--url: url(./linkedin.svg)"
+        href=" https://linkedin.com/in/stanislav-arnaudov-37b475164 "
+        target="_blank"
+      ></a>
+      
+      <a
+        class="h-8 w-8 [background:var(--url)_center_center/cover_no-repeat] lg:h-6 lg:w-6"
+        style="--url: url(./facebook.svg)"
+        href=" https://facebook.com/stanislav.ts "
+        target="_blank"
+      ></a>
+      
+    </nav>
+    
+  </div>
+</header>
+
+
+    <main class="prose prose-neutral relative mx-auto min-h-[calc(100%-10rem)] max-w-3xl px-4 pt-20 pb-32 dark:prose-invert">
+      
+
+<article>
+  <header class="mb-20">
+
+    <h1 class="!my-0 pb-2.5">More C Less &#43;&#43;</h1>
+
+    
+    <div class="text-sm opacity-60">
+      
+      <time>Dec 30, 2022</time>
+      
+      
+      <span class="mx-1">&middot;</span>
+      <span>Stanislav Arnaudov</span>
+      <span class="mx-1">&middot;</span>
+      <span>7 minute read</span>
+      <span class="mx-1">&middot;</span>
+      <span>1595 words</span>
+      
+    </div>
+    
+  </header>
+
+  <section><h2 id="abstract">Abstract</h2>
+<p>Recently I have moved in the direction of being a &ldquo;C++ bad&rdquo; person. I
+have learned C++ through watching <a href="https://cppcon.org/">CppCon</a> talks
+so it&rsquo;s not like I don&rsquo;t understand the language. There was even a
+time when I fully bought into its philosophy. This time has
+passed. In recent years I&rsquo;ve experimented with just how little I can
+use C++ and still be able to write performant, good, and easy-to-understand code. I&rsquo;ve also thought about real hard about the dogmatic
+parts of C++ and whether those are necessary. These are my
+thoughts on the matter.</p>
+<h2 id="observations-bout-modern-c">Observations bout modern C++</h2>
+<ul>
+<li><strong>
+<span style=" color: #e34b4b;">
+  RAII is not that neccesary
+</span>
+
+</strong></li>
+</ul>
+<p>One of C++&rsquo;s greatest features has said to be the &ldquo;}&rdquo; (closing
+bracket). In C++, on every closing bracket, we can implicitly execute
+code thanks to some object going out of scope and its destructor being
+invoked. The pattern that emerges is</p>
+<ul>
+<li>take some resources in the constructor of an object</li>
+<li>release these resources in the destructor</li>
+<li>the semantics of the language <strong>guarantee</strong> that the destructor will
+be executed when the object goes out of scope</li>
+<li>this way you cannot forget to release the resources This is what we
+call RAII.</li>
+</ul>
+<p>In my experience from the last two years, not using extensively RAII
+has not been a problem and my code hasn&rsquo;t suffered at all. The reasons
+for this:</p>
+<ul>
+<li>If you properly set things up, there is not that much &ldquo;taking some
+resources&rdquo;. Things are usually part of bigger overarching systems
+and I rarely (if at all) need to take-release something on a scope
+granularity. This is a stark difference to modern C++ practices
+where something trivial as a string object can be allocating memory
+when create and deallocating it when destroyed at the end of the
+scope. This leads to massive amounts of implicit code being executed
+at the end of most closing braces. Code that really shouldn&rsquo;t there</li>
+<li>The implicit nature of the execution hides what is actually
+happening and allows you to forget about it. I understand that this
+is the main idea but I find it deeply unsettling that there is code
+in my programs that is being executed at the end of each scope that
+I cannot see or reason about it. It makes optimizing hard, hides
+details about your program from you, and it encourages you not to
+think about what is actually going on in a function/scope, even when
+you are looking at it.</li>
+</ul>
+<p>In my current code base, I use RAII for only two things:</p>
+<ol>
+<li>To implement a convenient <code>Defer</code> macro which lets me execute a
+given block of code at the end of the enclosing scope. So something
+like</li>
+</ol>
+<p><code>c++ MyResorucee res; Init(res); Defer { Destroy(res); } </code>
+2. To create &ldquo;time blocks&rdquo; which take performance measurements of the
+time spent in a given scope.</p>
+<p>For these two use cases, RAII is undoubtedly useful. For everything
+else that the C++ people tell you to use RAII, I think I am doing just
+fine without it.</p>
+<ul>
+<li>
+<p><strong>
+<span style=" color: #e34b4b;">
+  Move semantics are an artifact of culture,
+  not necessity 
+</span>
+
+</strong> &ndash; the current dogma goes as follows: We
+initialize resources in the constructor (like allocating memory) and
+then we dispose of them in the destructor (like deallocating
+memory). Also, when the copy constructor is invoked, we copy the
+resources (e.g. allocate them again). Move semantics (by having
+the concept of a move constructor) allows us to avoid copying in
+certain cases. In these cases, the new object can take ownership of
+the resources and we don&rsquo;t need to create them again. The current
+best practice tips are to be predominantly in situations where we
+move-construct and not copy-construct.</p>
+<p>I posit that this whole spiel is unnecessary. Here is why:</p>
+<ol>
+<li>Even before C++11 (pre-move-semantics) we had only constructors,
+copy constructors, and destructors. The basic idea of allocating in
+the constructor and deallocating in the destructor was still
+prevalent. I think this is the root problem. The idea that we
+have to use constructors and destructors like that. In my
+experience, when things are properly set up, no object has to
+&ldquo;take ownership&rdquo; of anything. &ldquo;Resources&rdquo; are usually part of
+some bigger system and individual objects do not have to burden
+themselves with such management. And yes, I have the same
+considerations for memory allocations. In this sense, I don&rsquo;t
+worry about constructors and destructors. No object releases
+resources when it dies. As a consequence, for me copy-construct =
+move-construct = memcpy.</li>
+<li>Move-constructing is essentially a memcpy with extra &ldquo;marking&rdquo;
+the old object as empty (usually setting something to
+<code>nullptr</code>). Move-constructing is there because it allows us to do
+the naive thing (memcpy) without having to worry that two objects
+can hold the same resource. The C++ people say that we should
+mostly move. So like&hellip; we should mostly do <code>memcpy</code> + marking
+empty objects. Ok, if that&rsquo;s the case, why not go all the way and
+say. We should always <code>memcpy</code>. Also, do we really need the
+marking, I don&rsquo;t think so.</li>
+<li>If (that&rsquo;s a big if) there are cases when you actually want a
+true copy of an object, we could simply have something like
+<code>MyClass::Clone</code> method. We agreed that we are mostly moving, so
+the edge case is copying, so it should not be a problem to have to
+call a method manually.</li>
+</ol>
+</li>
+</ul>
+<p>I have practiced all of this for some time and, for me, I don&rsquo;t miss
+anything, things are great, things are simpler, and I don&rsquo;t have a
+bunch of code executed on each closing bracket. I consider these
+things worth it.</p>
+<ul>
+<li>
+<p><strong>
+<span style=" color: #e34b4b;">
+   Template magic seems to be unnecessary use
+case 
+</span>
+
+</strong> At some point I heard the statement &ldquo;People
+invent problems to solve with templates&rdquo; and since then I cannot stop
+thinking about it. I&rsquo;ve noticed that most of the time I&rsquo;ve written
+some template-heavy code it has essentially been for the reason of
+&ldquo;wouldn&rsquo;t it be cool, if&hellip;&rdquo;. I guess it is cool, but also not
+necessary. Sometimes templates allow you to create more intuitive API
+but most of the time this quickly devolves into a huge unmaintainable
+mess that can&rsquo;t even be debugged properly. Also, again build times
+suffer greatly without having something that justifies the cost. I&rsquo;ve
+opted for very limited use of templates and I have not noticed me
+wanting to go back. To be clear, I still think that templates make
+sense for</p>
+</li>
+<li>
+<p>simple containers &ndash; maps and vectors</p>
+</li>
+<li>
+<p>some math utilities</p>
+</li>
+<li>
+<p>handling variadic arguments in a typesafe way</p>
+</li>
+<li>
+<p><strong>
+<span style=" color: #e34b4b;">
+   The std is bad for any concrete software
+  use case 
+</span>
+
+</strong> &ndash; even the C++ people agree that &ldquo;STD is a
+general use library that fits the needs of the general user of
+C++&rdquo;. My problem with this is that I strive to write to write
+&ldquo;non-general&rdquo; software. I write concrete software that solves
+concrete problems. And this concrete software has very concrete
+specifications where a lot of assumptions are made. In this sense, I
+don&rsquo;t want a general library that does everything. I want a very
+concrete piece of functionality which, generally, I have written to
+solve my hyper-concrete problem.</p>
+<p>My other gripe with the STD is its total disregard for memory
+allocations. I want to write code that allocates as little as
+possible (even not at all). This is simply not possible if you use
+the STD. Using the STD, it&rsquo;s very easy to have lines that allocate
+several times just to deallocate at the end of the scope (or when
+some temporary is destroyed). I really want to avoid that.</p>
+<p>Finally, build times. Heavy usage of STD slows by build with
+a noticeable amount of sends. Build times can increase with 10+ seconds
+if a good amount of std headers are included. For reference, my build
+times are ~3-5 seconds (that&rsquo;s for a full non-incremental build ).</p>
+<p>Again, I have been not using STD for some time now and things are
+going great. Sometimes I have to do a bit of extra work but I feel
+it&rsquo;s worth it and my code runs faster.</p>
+</li>
+<li>
+<p><strong>
+<span style=" color: #e34b4b;">
+   C++ style type casts are the oposite of
+  syntactic sugar
+</span>
+
+</strong> &ndash; not much to say here. I don&rsquo;t use
+them because I don&rsquo;t want to type some big ugly thing. I have been
+using C-styled casts and things have not been falling apart.</p>
+</li>
+</ul>
+<h2 id="rules-for-c-live">Rules for C++ live</h2>
+<p>To summarize my current attitudes toward C++, here is a list of
+things I do and do not do when working on my projects using C++.</p>
+<ul>
+<li>No constructors &ndash; I don&rsquo;t use &ldquo;resource acquisition&rdquo; on the object level;
+I don&rsquo;t want to execute code for every object on the stack;</li>
+<li>No destructors &ndash; I don&rsquo;t want to execute code on every closing
+bracket</li>
+<li>No RAII &ndash; I use only <code>Defer { ... };</code> and that seems to be enough</li>
+<li>Move = Copy = memcpy &ndash; I don&rsquo;t use &ldquo;resource acquisition&rdquo; on object
+level</li>
+<li>No exceptions &ndash; exceptions are slow and are often abused</li>
+<li>No STD headers &ndash; bloated, allocates unpredictably, compile times
+suffer</li>
+<li>No virtual functions &ndash; I don&rsquo;t need that much of a heavy mechanism
+for dynamic dispatch, a function pointer is enough</li>
+<li>No heavy templates &ndash; compile times suffer; the problems being
+solved with templates are generally non-problems</li>
+<li>No use of <code>private</code> &ndash; getters and setters are annoying</li>
+<li>Limited use of <code>const</code> &ndash; it&rsquo;s just annoying</li>
+<li>Limited use of operator overloading &ndash; not knowing what given piece
+of code executes makes it hard to reason about</li>
+<li>No storage of pointers to things &ndash; use indices instead,
+serialization theen becomes trivial</li>
+<li>No use of <code>malloc</code>/<code>free</code> or <code>new</code>/<code>delete</code> &ndash; malloc is slow and my goal is zero allocations/deallocations past initialization</li>
+</ul>
+</section>
+
+  
+  
+
+
+  
+  
+  <div id="disqus_thread"></div>
+
+<script>
+
+ function readCookie(name)
+ {
+   var nameEQ = name + "=";
+   var ca = document.cookie.split(';');
+   for(var i=0;i < ca.length;i++) {
+     var c = ca[i];
+     while (c.charAt(0)==' ') c = c.substring(1,c.length);
+     if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+   }
+   return null;
+ }
+
+ (function() {
+   let cookieValue = readCookie('consent-settings');
+   if (cookieValue)
+   {
+     var consentValue = cookieValue.toString();
+     if (consentValue[1] === "1")
+     {	    
+       const disqusShortname = 'palikar-github-io';
+       const script = document.createElement('script');
+       script.src = 'https://' + disqusShortname + '.disqus.com/embed.js';
+       script.setAttribute('data-timestamp', + new Date());
+       document.head.appendChild(script);
+     }
+   }
+ })();
+ 
+</script>
+
+  
+</article>
+
+
+    </main>
+
+    <footer class="opaco mx-auto flex h-[5rem] max-w-3xl items-center px-8 text-[0.9em] opacity-60">
+  <div class="mr-auto">
+    &copy; 2023
+    <a class="link" href="">Stanislav Arnaudov</a>
+  </div>
+  <a class="link mx-6" href="#cookies" onclick="document.getElementById('consent-notice').style.display = 'block'; ">Cookie Policy</a>
+  <a class="link mx-6" href="https://gohugo.io/" rel="noopener" target="_blank">Powered by Hugo</a>
+  Theme: 
+  <a class="link" href="https://github.com/nanxiaobei/hugo-paper" rel="noopener" target="_blank" >Paper 6</a>
+</footer>
+
+
+    <style>
+    #consent-notice {padding: 1rem 1rem; display: none; text-align: center; position: fixed; bottom: 0; width: calc(100% - 2rem); background: #222; color: white;}
+    #consent-notice span {margin-right: 1rem;}
+    #consent-notice button {cursor: pointer; display: inline-block; width: auto;}
+    #consent-notice span a {color: white; text-decoration: underline; text-decoration-color: rgba(255,255,255,0.5);}
+    #consent-notice button.btn {margin-left: 0.5rem;}
+    #consent-notice button.btn.manage-consent {background: rgba(255,255,255,0.1); font-weight: normal;}
+    
+    #consent-overlay {position: fixed; left: 0; top: 0; width: 100%; height: 100vh; display: none; background: rgba(0,0,0,0.75); z-index: 999999; overflow: auto; cursor: pointer;}
+    #consent-overlay.active {display: flex;}
+    #consent-overlay > div {background: white; width: 100%; max-width: 30rem; padding: 1.75rem; margin: auto; cursor: initial;}
+    #consent-overlay > div > div {display: flex; align-items: flex-start; margin-bottom: 1rem;}
+    #consent-overlay > div > div:last-child {margin: 0;}
+    #consent-overlay h3 {padding-top: 0;}
+    #consent-overlay input {margin-top: 0.3rem;}
+    #consent-overlay label {display: block; color: black; }
+    #consent-overlay .btn {margin-right: 0.5rem;}
+    #consent-overlay button.btn.save-consent {background: rgba(0,0,0,0.6); font-weight: normal;}
+
+    @media (max-width: 767px) {
+        #consent-overlay > div {padding: 1.75rem 1rem;}
+        #consent-notice span {display: block; padding-top: 3px; margin-bottom: 1.5rem;}
+        #consent-notice button.btn {position: relative; bottom: 4px;}
+    }
+</style>
+
+<div id="consent-notice">
+  <span>We would like to use <a class="manage-consent" href="#manage-consent">third party code</a> to improve the functionality of this website.</span>
+  <span><a class="link mx-6" href="/cookies" onclick="document.getElementById('consent-notice').style.display = 'block'; ">More Information</a></span>
+  <button class="btn manage-consent">Manage preferences</button>
+  <button class="btn deny-consent">Deny</button>
+  <button class="btn approve-consent">Allow</button>
+</div>
+
+<div id="consent-overlay">
+    <div>
+        
+            <div>
+                <input type="checkbox" id="item0" value="1" name="item0"  />
+                <label for="item0">
+                  <h3>Google Anaytics (functional)</h3>
+		  <p>This code gives us insight into the number of people that visit our website, where they are from and what they are clicking on.</p>
+                </label>
+            </div>
+        
+            <div>
+                <input type="checkbox" id="item1" value="1" name="item1"  />
+                <label for="item1">
+                  <h3>Disqus Comment service</h3>
+		  <p>The code allows to use the Disqus service for comments on the posts</p>
+                </label>
+            </div>
+        
+        <div>
+            <button id="save-consent" class="btn save-consent" data-consentvalue="00">Save preferences</button>
+            <button class="btn approve-consent">Allow all</button>
+        </div>
+    </div>
+</div>
+<script>
+
+    const scripts = [];
+    scripts[ 0 ] = "/js/ga.js";
+    scripts[ 1 ] = "/js/disqus.js";
+
+    function createCookie(name,value,days) {
+        var expires = "";
+        if (days) {
+            var date = new Date();
+            date.setTime(date.getTime() + (days*24*60*60*1000));
+            expires = "; expires=" + date.toUTCString();
+        }
+        document.cookie = name + "=" + value + expires + "; path=/";
+    }
+    function readCookie(name) {
+        var nameEQ = name + "=";
+        var ca = document.cookie.split(';');
+        for(var i=0;i < ca.length;i++) {
+            var c = ca[i];
+            while (c.charAt(0)==' ') c = c.substring(1,c.length);
+            if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+        }
+        return null;
+    }
+    function eraseCookie(name) {
+        createCookie(name,"",-1);
+    }
+    function denyAllConsentScripts() {
+        var consentValue = "";
+        scripts.forEach(function(){
+            consentValue = consentValue + "0";
+        });
+        acceptSomeConsentScripts(consentValue);
+    }
+    function acceptAllConsentScripts() {
+        var consentValue = "";
+        scripts.forEach(function(){
+            consentValue = consentValue + "1";
+        });
+        acceptSomeConsentScripts(consentValue);
+    }
+    function acceptSomeConsentScripts(consentValue) {
+        setConsentInputs(consentValue);
+        createCookie('consent-settings',consentValue,31);
+        document.getElementById('consent-notice').style.display = 'none';
+        document.getElementById('consent-overlay').classList.remove('active');
+        loadConsentScripts(consentValue);
+    }
+    function loadConsentScripts(consentValue) {
+        scripts.forEach(function(value,key){
+            
+            if(consentValue[key]=="1") {
+                var s = document.createElement('script');
+                s.type = 'text/javascript';
+                s.src = value;
+                document.body.appendChild(s);
+            }
+        });
+    }
+    function setConsentInputs(consentValue) {
+        var elements = document.querySelectorAll('#consent-overlay input:not([disabled])');
+        elements.forEach(function(el,index) {
+            if(consentValue[index]=="1") el.checked = true;
+            else el.checked = false;
+        });
+    }
+    function setConsentValue() {
+        var elements = document.querySelectorAll('#consent-overlay input:not([disabled])');
+        var consentValue = "";
+        elements.forEach(function(el) {
+            if(el.checked) consentValue = consentValue + "1";
+            else consentValue = consentValue + "0";
+        });
+        document.getElementById("save-consent").dataset.consentvalue = consentValue;
+    }
+ 
+    var elements = document.querySelectorAll('#consent-overlay input:not([disabled])');
+    elements.forEach(function(el) {
+        el.checked = false;
+    });
+
+    if(readCookie('consent-settings')) {
+        var consentValue = readCookie('consent-settings').toString();
+        setConsentInputs(consentValue);
+        loadConsentScripts(consentValue);
+    } else {
+      document.getElementById('consent-notice').style.display = 'block';
+    }
+ var elements = document.querySelectorAll('.manage-consent');
+    elements.forEach(function(el) {
+        el.addEventListener("click",function() {
+            document.getElementById('consent-overlay').classList.toggle('active');
+        });
+    });
+    var elements = document.querySelectorAll('.deny-consent');
+    elements.forEach(function(el) {
+        el.addEventListener("click",function() {
+            denyAllConsentScripts();
+        });
+    });
+    var elements = document.querySelectorAll('.approve-consent');
+    elements.forEach(function(el) {
+        el.addEventListener("click",function() {
+          acceptAllConsentScripts();
+        });
+    });
+    document.getElementById("save-consent").addEventListener("click",function() {
+        setConsentValue();
+        acceptSomeConsentScripts(this.dataset.consentvalue);
+    });
+    document.getElementById("consent-overlay").addEventListener("click",function(e) {
+        if (!document.querySelector("#consent-overlay > div").contains(e.target)){
+            this.classList.toggle('active');
+        }
+    });
+</script>
+
+
+    
+
+    
+
+
+  </body>
+</html>
