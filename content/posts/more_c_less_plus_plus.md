@@ -1,7 +1,7 @@
 +++
 title = "More C Less ++"
 author = "Stanislav Arnaudov"
-description = "A meditation on trying to attempt to remedy the C++ madness"
+description = "A meditation on trying to graple the C++ madness"
 date = "2022-12-30"
 draft = false
 weight = 100

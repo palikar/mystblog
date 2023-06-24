@@ -13,7 +13,7 @@ comments = false
 A PDF of my real [resume](/ox-hugo/cv.pdf).
 
 
-## My assigned character {#my-assigned-character}
+## My character {#my-character}
 
 I was born a human and I'm supposed to live on the planet till my body
 gives up and it's no longer suitable for sustaining the social
