@@ -7,6 +7,35 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     <item>
+      <title>Summary of my personal projects from over the years</title>
+      <link>/posts/projects_over_the_years/</link>
+      <pubDate>Sat, 24 Jun 2023 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/projects_over_the_years/</guid>
+      <description>Abstract This post is meant as an answer to questions of the type &amp;ldquo;Tell me about some of your personal projects&amp;rdquo;. I&amp;rsquo;ll go over every major endeavor that I&amp;rsquo;ve undertaken per my own initiative and I&amp;rsquo;ll give a little bit information on why I&amp;rsquo;ve chosen to write it, what has been the idea, and what I have learned in the process of making it.
+&amp;mdash; AdvancedResouceMenaging &amp;mdash; Github Repository
+A Java application from my high-school days.</description>
+    </item>
+    
+    <item>
+      <title>How DRY maybe hurting you</title>
+      <link>/posts/dry_maybe_bad/</link>
+      <pubDate>Sat, 18 Feb 2023 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/dry_maybe_bad/</guid>
+      <description>Abstract The current culture of software development puts a huge emphasis on the SOLID principles. In universities, in boot camps, and crash courses young developers are being told to follow these principles and this will eventually lead them to produce &amp;ldquo;good software&amp;rdquo;. Young developers, being young, follow the principles dogmatically, often without stopping to think why are they actually doing it and what the downstream consequences might be of their design/approach choices.</description>
+    </item>
+    
+    <item>
+      <title>DirectXer GPU Fame Walkthrough</title>
+      <link>/posts/frame_anlysis/</link>
+      <pubDate>Fri, 17 Feb 2023 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/frame_anlysis/</guid>
+      <description>Abstract List of covered topis The walkthrough </description>
+    </item>
+    
+    <item>
       <title>Watching and reading list of greatness</title>
       <link>/posts/watching_list/</link>
       <pubDate>Thu, 10 Feb 2022 00:00:00 +0000</pubDate>
