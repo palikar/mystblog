@@ -15,3 +15,5 @@ I've also written a bunch of [Posts]({{< ref "Posts.md" >}}) on various topics o
 
 If you want to know what types of personal projects I've had over the years, check out [this]({{< ref "projects_over_the_years.md" >}}) post.
 
+If it is relevant to you, here is also my [CV](/ox-hugo/cv.pdf).
+
